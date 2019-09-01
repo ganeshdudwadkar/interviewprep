@@ -18,7 +18,24 @@ public class ListNode {
         return Integer.toString(value);
     }
 
+    public boolean hasCycle() {
+        ListNode slow = this;
+        ListNode fast = this;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void printSeqNodes(){
+        if (this.hasCycle()){
+            System.out.println("This Sequence has cycle! Cannot Print!!");
+            return;
+        }
         ListNode iter = new ListNode(0);
         iter.next = this;
         while (iter.next != null) {

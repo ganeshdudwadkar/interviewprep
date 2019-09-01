@@ -74,5 +74,19 @@ public class IntersectionTwoLinkedLists {
         return a;
     }
 
-    
+    public static void main(String[] args){
+        ListNode head1 = new ListNode(3);
+        ListNode head2 = new ListNode(5);
+        head1.next = new ListNode(4);
+        head1.next.next = new ListNode(7);
+        head1.next.next.next = new ListNode(9); // interecting node
+        head2.next = new ListNode(8);
+        head2.next.next = head1.next.next.next;
+        head2.next.next.next = new ListNode(10);
+        head1.printSeqNodes();
+        head2.printSeqNodes();
+        IntersectionTwoLinkedLists inter = new IntersectionTwoLinkedLists();
+        ListNode node = inter.getIntersectionNode(head1, head2);
+        System.out.println(node);
+    }
 }

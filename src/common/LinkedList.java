@@ -52,8 +52,28 @@ public class LinkedList {
         }
     }
 
+    public boolean hasCycle() {
+        if (this.head == null){
+            return false;
+        }
+        ListNode slow = this.head;
+        ListNode fast = this.head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // covert linked list elements to string
     public String toString(){
+
+        if (hasCycle()) {
+            return "This list has cycle. Cannot Print!";
+        }
         ListNode iter = head;
         StringBuilder str = new StringBuilder();
         while (iter != null){

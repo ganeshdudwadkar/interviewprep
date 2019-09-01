@@ -15,6 +15,7 @@ Output: 1->4->3->2->5->NULL
 
  */
 
+import common.Examples;
 import common.LinkedList;
 import common.nodes.ListNode;
 
@@ -57,19 +58,11 @@ public class ReverseLinkedListII {
 
     public static void main(String[] args) {
         // ListNode head = new ListNode(10);
-        LinkedList myLinkedList = new LinkedList(10);
-        myLinkedList.add(13);
-        myLinkedList.add(9);
-        myLinkedList.add(12);
-        myLinkedList.add(24);
-        myLinkedList.add(80);
-        myLinkedList.add(123);
-
-        System.out.println(myLinkedList);
+        ListNode head = Examples.getLinkedListHead();
 
         ReverseLinkedListII reverseLinkedList = new ReverseLinkedListII();
 
-        ListNode myReversedListHead = reverseLinkedList.reverseBetween(myLinkedList.getHead(), 2, 5);
+        ListNode myReversedListHead = reverseLinkedList.reverseBetween(head, 2, 5);
         myReversedListHead.printSeqNodes();
 
     }

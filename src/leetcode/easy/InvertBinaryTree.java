@@ -26,6 +26,7 @@ Output:
 
  */
 
+import common.Examples;
 import common.nodes.TreeNode;
 
 public class InvertBinaryTree {
@@ -42,14 +43,7 @@ public class InvertBinaryTree {
 
     public static void main(String[] args){
 
-        TreeNode root = new TreeNode(15);
-        root.left = new TreeNode(10);
-        root.right = new TreeNode(20);
-        root.left.left = new TreeNode(5);
-        root.left.right = new TreeNode(12);
-        root.right.right = new TreeNode(25);
-        root.right.right.left = new TreeNode(22);
-        root.right.right.right = new TreeNode(30);
+        TreeNode root = Examples.getBST();
         root.print_inorder();
         System.out.println();
 

@@ -3,6 +3,7 @@ package tree;
 import java.util.List;
 import java.util.ArrayList;
 
+import common.Examples;
 import common.nodes.TreeNode;
 
 class Solution {
@@ -48,15 +49,8 @@ class Solution {
 public class PrintTreePaths {
 
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(15);
-        root.left = new TreeNode(5);
-        root.right = new TreeNode(7);
-        root.left.left = new TreeNode(13);
-        root.left.right = new TreeNode(8);
-        root.right.right = new TreeNode(70);
-        root.right.right.left = new TreeNode(32);
-        root.right.right.right = new TreeNode(45);
-
+        TreeNode root = Examples.getTree();
+        root.print_inorder();
         Solution s = new Solution();
         List<String> resultLs = s.binaryTreePaths(root);
         System.out.println(resultLs);
