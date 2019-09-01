@@ -2,7 +2,7 @@ package common.nodes;
 
 public class ListNode {
 
-    private int value;
+    public int value;
     public ListNode next;
 
     public ListNode(int value) {
