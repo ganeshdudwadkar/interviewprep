@@ -43,7 +43,7 @@ public class InvertBinaryTree {
 
     public static void main(String[] args){
 
-        TreeNode root = Examples.getBST();
+        TreeNode root = Examples.getExampleBSTRoot();
         root.print_inorder();
         System.out.println();
 

@@ -5,7 +5,7 @@ import common.nodes.TreeNode;
 
 public class Examples {
 
-    public static TreeNode getTree(){
+    public static TreeNode getExampleTreeRoot(){
         TreeNode root = new TreeNode(15);
         root.left = new TreeNode(5);
         root.right = new TreeNode(7);
@@ -17,7 +17,7 @@ public class Examples {
         return root;
     }
 
-    public static TreeNode getBST(){
+    public static TreeNode getExampleBSTRoot(){
         TreeNode root = new TreeNode(15);
         root.left = new TreeNode(10);
         root.right = new TreeNode(20);
@@ -26,6 +26,16 @@ public class Examples {
         root.right.right = new TreeNode(25);
         root.right.right.left = new TreeNode(22);
         root.right.right.right = new TreeNode(30);
+        return root;
+    }
+
+    public static TreeNode getBalancedTreeRoot(){
+
+        TreeNode root = new TreeNode(3);
+        root.right = new TreeNode(20);
+        root.left = new TreeNode(9);
+        root.right.left = new TreeNode(15);
+        root.right.right = new TreeNode(7);
         return root;
     }
 
@@ -38,7 +48,7 @@ public class Examples {
         myLinkedList.add(80);
         myLinkedList.add(123);
 
-        System.out.println(myLinkedList);
+        // System.out.println(myLinkedList);
         return myLinkedList.getHead();
     }
 

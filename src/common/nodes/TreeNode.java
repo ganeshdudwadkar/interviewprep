@@ -19,4 +19,9 @@ public class TreeNode {
             this.right.print_inorder();
         }
     }
+
+    @Override
+    public String toString() {
+        return Integer.toString(this.val);
+    }
 }

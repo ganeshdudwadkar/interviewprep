@@ -49,7 +49,7 @@ class Solution {
 public class PrintTreePaths {
 
     public static void main(String[] args) {
-        TreeNode root = Examples.getTree();
+        TreeNode root = Examples.getExampleTreeRoot();
         root.print_inorder();
         Solution s = new Solution();
         List<String> resultLs = s.binaryTreePaths(root);

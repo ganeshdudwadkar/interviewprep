@@ -27,7 +27,7 @@ public class PreOrderTraversal {
         if(root == null)
             return ls;
 
-        Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
 
         while(!stack.empty()){
@@ -47,7 +47,7 @@ public class PreOrderTraversal {
 
     public static void main(String[] args){
 
-        TreeNode root = Examples.getBST();
+        TreeNode root = Examples.getExampleBSTRoot();
         List<Integer> resultList1 = new ArrayList<>();
         List<Integer> resultList2 = new ArrayList<>();
 
@@ -56,7 +56,7 @@ public class PreOrderTraversal {
         obj.preorder(root, resultList1);
         System.out.println(resultList1);
 
-        obj.preorder(root, resultList2);
+        obj.preorderNonRec(root, resultList2);
         System.out.println(resultList2);
 
     }

@@ -79,7 +79,8 @@ public class LinkedListCycle {
         System.out.println(linkedListCycle.hasCycle(head));
         ListNode cycle = linkedListCycle.detectCycle(head);
         if (cycle != null){
-            System.out.println(cycle);
+            System.out.println("Cycle starts at : " + cycle);
         }
+        head.printSeqNodes();
     }
 }
