@@ -4,17 +4,17 @@ J2EE (Java 2 Enterprise Edition) is an environment for developing and deploying 
 J2EE platform consists of J2EE components, services, Application Programming Interfaces (APIs) and protocols that provide the functionality for developing multi-tiered and distributed Web based applications.
 
 Component Type		|  Components					| Packaged As
-Applet						|  applets							|  JAR (Java ARchive)
-Application Client		|  Client side java code	|  JAR (Java ARchive)
+Applet			|  applets					|  JAR (Java ARchive)
+Application Client	|  Client side java code			|  JAR (Java ARchive)
 Web component		|  JSP, Servlet					|  WAR (Web ARchive)
-EJBs						|  Session, Entity Beans	|  JAR (EJB Archive)
-Enterprise app			|  WAR, JAR, etc				|  EAR (Enterprise ARchive)
-Resource adapters	|  Resource adapters		|  RAR (Resource Adapter ARchive)
+EJBs			|  Session, Entity Beans			|  JAR (EJB Archive)
+Enterprise app		|  WAR, JAR, etc				|  EAR (Enterprise ARchive)
+Resource adapters	|  Resource adapters				|  RAR (Resource Adapter ARchive)
 
 A component is an application level software unit e.g. applet, JSP, Servlet, WAR etc
 A service is a component that can be used remotely through a remote interface either synchronously or asynchronously (e.g. Web service, messaging system, sockets, RPC etc).
 
-Service Oriented Architecture (SOA) - SOA is an evolution of the fundamentals governing a component based development. Component based development provides an opportunity for greater code reuse than what is possible with Object Oriented (OO) development. SOA provides even greater code reuse by utilizing OO development, component based development and also by identifying and organizing right services into a hierarchy of composite services. SOA results in loosely coupled application components, in which code is not necessarily tied to a particular database.
+Service Oriented Architecture (SOA) - `SOA is an evolution of the fundamentals governing a component based development. Component based development provides an opportunity for greater code reuse than what is possible with Object Oriented (OO) development. SOA provides even greater code reuse by utilizing OO development, component based development and also by identifying and organizing right services into a hierarchy of composite services. SOA results in loosely coupled application components, in which code is not necessarily tied to a particular database.`
 
 Web Containers and EJB Containers - Containers (Web & EJB containers) are the interface between a J2EE component and the low level platform specific functionality that supports J2EE components. Before a Web, enterprise bean (EJB), or application client component can be executed, it must be assembled into a J2EE module (jar, war, and/or ear) and deployed into its container.
 
@@ -300,12 +300,12 @@ Using Scriptlets :
      <title>simple  example<title>
    </head>
 <body>
-	 <%
+	<%
            for(int i=0; i<5; i++) {
-    %>
+        %>
 	<%= i %>
 	<br/>
-    <% } %>
+        <% } %>
 </body>
 </html>
 
@@ -411,10 +411,10 @@ Distributed Transaction (aka Global Transaction, JTA/XA transaction): The transa
 A two-phase commit is an approach for committing a distributed transaction in 2 phases.
 
 JTA transactions are more powerful than JDBC transaction because a JDBC transaction is limited to a single database whereas a JTA transaction can have multiple participants like:
-JDBC connections.
-JMS queues/topics.
-Enterprise JavaBeans (EJBs).
-Resource adapters that comply with J2EE Connector Architecture (JCA) specification.
+	JDBC connections.
+	JMS queues/topics.
+	Enterprise JavaBeans (EJBs).
+	Resource adapters that comply with J2EE Connector Architecture (JCA) specification.
 
 Web components like Servlets/JSPs may only start a transaction in its service() method and a transaction started in its service method must be completed before the service() method completes. A transaction cannot span across multiple web requests. Some of the considerations are as follows:
 • JTA transactions should start and complete within the thread in which service() method is called and any additional threads created in the servlet should not try to start any JTA transaction.
