@@ -85,7 +85,7 @@ Network Load Balancing:
 
 A load balancer is either software or a piece of hardware that can distribute traffic arriving at an IP address over multiple servers. Load balancers strive to spread the load evenly among the servers and allow you to dynamically add and remove the servers. The servers stay hidden behind the load balancer and since clients can see just the load balancer, you can add web servers anytime, without disrupting your services.
 
-Benefits of Using a Network Load Balancer:
+Benefits of Using a Network Load Balancer:-
 1. Security
 2. Transparent server maintenance
 3. Easily add servers to the pool
