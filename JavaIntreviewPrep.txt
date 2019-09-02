@@ -1,0 +1,698 @@
+JavaInterview Prep
+
+1. Core Java and concepts // collections and multithreading - cave of programming - program implementation***
+2. Data Structures and Algorithms
+3. Restful Services (jersey) - Knowledge of Restful Services
+4. Web development (Spring Core and mvc), request filtering, tracking etc - Spring Udemy John Purcell
+5. ER and Class Diagram //OOAD - design patterns - caveofprogramming
+6. Producer Consumer model // google - caveofprogramming
+7. Application Design/Blueprint (study 4-5 apps) - MVC architecture
+
+
+Interview Notes
+
+Collections in java is a framework that provides an architecture to store and manipulate the group of objects. Java Collection framework provides many interfaces (Set, List, Queue, Deque etc.) and classes (ArrayList, Vector, LinkedList, PriorityQueue, HashSet, LinkedHashSet, TreeSet etc).
+
+1. ArrayList vs LinkedList - both are implementations of interface List. ArrayList is useful in general but if there are lots of insertions at the beginning or middle of the the list then better go for LinkedList.
+2. HashMap is a Map (Dictionary implementation) and doesn't maintain order (keys not sorted).
+3. LinkedHashMap is a hashMap with doubly linked list
+4. TreeMap is a HashMap with tree like structure and sorted
+5. All three classes implement the Map interface and offer mostly the same functionality. The most important difference is the order in which iteration through the entries will happen:
+
+HashMap makes absolutely no guarantees about the iteration order. It can (and will) even change completely when new elements are added.
+TreeMap will iterate according to the "natural ordering" of the keys according to their compareTo() method (or an externally supplied Comparator). Additionally, it implements the SortedMap interface, which contains methods that depend on this sort order.
+LinkedHashMap will iterate in the order in which the entries were put into the map
+"Hashtable" is the generic name for hash-based maps. In the context of the Java API, Hashtable is an obsolete class from the days of Java 1.1 before the collections framework existed. It should not be used anymore, because its API is cluttered with obsolete methods that duplicate functionality, and its methods are synchronized (which can decrease performance and is generally useless). Use ConcurrrentHashMap instead of Hashtable.
+
+6.
+
+╔══════════════╦═════════════════════╦═══════════════════╦══════════════════════╗
+║   Property   ║       HashMap       ║      TreeMap      ║     LinkedHashMap    ║
+╠══════════════╬═════════════════════╬═══════════════════╬══════════════════════╣
+║              ║  no guarantee order ║ sorted according  ║                      ║
+║   Order      ║ will remain constant║ to the natural    ║    insertion-order   ║
+║              ║      over time      ║    ordering       ║                      ║
+╠══════════════╬═════════════════════╬═══════════════════╬══════════════════════╣
+║  Get/put     ║                     ║                   ║                      ║
+║   remove     ║         O(1)        ║      O(log(n))    ║         O(1)         ║
+║ containsKey  ║                     ║                   ║                      ║
+╠══════════════╬═════════════════════╬═══════════════════╬══════════════════════╣
+║              ║                     ║   NavigableMap    ║                      ║
+║  Interfaces  ║         Map         ║       Map         ║         Map          ║
+║              ║                     ║    SortedMap      ║                      ║
+╠══════════════╬═════════════════════╬═══════════════════╬══════════════════════╣
+║              ║                     ║                   ║                      ║
+║     Null     ║       allowed       ║    only values    ║       allowed        ║
+║ values/keys  ║                     ║                   ║                      ║
+╠══════════════╬═════════════════════╩═══════════════════╩══════════════════════╣
+║              ║   Fail-fast behavior of an iterator cannot be guaranteed       ║
+║   Fail-fast  ║ impossible to make any hard guarantees in the presence of      ║
+║   behavior   ║           unsynchronized concurrent modification               ║
+╠══════════════╬═════════════════════╦═══════════════════╦══════════════════════╣
+║              ║                     ║                   ║                      ║
+║Implementation║      buckets        ║   Red-Black Tree  ║    double-linked     ║
+║              ║                     ║                   ║       buckets        ║
+╠══════════════╬═════════════════════╩═══════════════════╩══════════════════════╣
+║      Is      ║                                                                ║
+║ synchronized ║              implementation is not synchronized                ║
+╚══════════════╩════════════════════════════════════════════════════════════════╝
+
+HashTable is obsolete and the corresponding ConcurrentHashMap class should be used.
+
+7. Key concepts :
+
+Refer cheat sheet image downloaded in resume folder
+
+//Map is key, value pair
+Map (Interface) ->  HashMap (Concrete)/ TreeMap (Concrete via SortedMap (I) and NavigableMap(I))
+					HashMap (Concrete) -> LinkedHashMap (Concrete)
+
+//Collection is for list of same type of data type
+Collection (Interace) -> List/Queue/Set (Interfaces)
+
+List (Interface)  -> ArrayList (Concrete) / LinkedList (Concrete) P.S. LinkedList is both list and queue
+Queue (Interface) -> PriorityQueue (Concrete) / LinkedList (Concrete)
+					 Deque (Interface) -> ArrayDeque (Concrete)
+Set (Interface)   -> HashSet (Concrete) / TreeSet (Concrete via SortedSet (I) and NavigableSet(I))
+					 HashSet (Concrete) -> LinkedHashSet (Concrete)
+
+-> All those contains 'Hash' are implemented using Hash Tables internally.
+-> All those contains 'Linked' are implemented using List internally and are by default doubly linked lists and maintains insertion order
+-> All those contains 'Set' means they doesn't contain duplicates.
+-> All those contains 'Tree' means they are implemented using Red-Black Tree concept internally and retrieve elements in sorted order
+-> HashMap, ArrayList & HashSet are lightweight
+-> Do not use TreeMap or TreeSet unless the requirement is to be in sorted order.
+-> If Maps and Collection standard primitive data types then can be entirely printed
+-> If Maps and Collections contains user defined objects then special care needs to be done in some cases :
+	1. If the Map or Collection is Hash based then you need to override the hashCode() object method to redefine the method with new need.
+	2. If the Map or Collection is Tree based or Set then equals() method needs to be overridden to redefine the criteria
+	Both implementations can be done automatically by selecting the object variables to be used for the criteria
+-> Map has put and get/getKey/getValue methods
+-> List has add/addAll and remove,removeAll
+-> Comparator Interface needs to be implemented and its object needs to be supplied to Collections.sort(collection,comparator interface obj) to sort the given collections
+-> A Comparator is its own definition of how to compare two objects, and can be used to compare objects in a way that might not align with the natural ordering. Implements compare() method
+-> When your class implements Comparable, the compareTo method of the class is defining the "natural" ordering of that object. That method is contractually obligated (though not demanded) to be in line with other methods on that object, such as a 0 should always be returned for objects when the .equals() comparisons return true.
+-> In comparable interface implementation has compareTo() and equals() mismatch then TreeSet/TreeMap or any ordered data structure may show unexpected results. e.g. if you use string instance variable to implement compareTo() based on the length of a string then if the two object has same length string instance variable then it will include only one in a Set assuming them to be unique in that way of notion of equality. : see https://www.caveofprogramming.com/java-collections-framework/natural-order-comparable-collection-java-collections-framework-video-tutorial-part-8.html
+-> Queue : Unbounded Queue - use LinkedList and Bounded Queue - use ArrayBlockingQueue (ABQ is Thread safe). add(e),remove() and element() throws exception but offer(e),poll() and peek() does same respectively without throwing exception. For ABQ, to ensure thread safety use put(e) and take() methods.
+-> Iterator interface can be used to iterate thru collection objects and Iterable interface can be implemented for a particular class to have its own iterator/next/hasNext method redefined.
+-> Iterator interface is implemented by all the collections and hence it can be used to iterate through the objects
+-> Java List Interface provides ListIterator interface and hence it can be used with ArrayList or LinkedList and also provides methods like hasPrevious() and previous() along with hasNext() and next(). This helps in unidirectional traverse
+
+##### Multithreading :
+
+=> Multithreading in java is a process of executing multiple threads simultaneously. Thread is basically a lightweight sub-process, a smallest unit of processing. Multiprocessing and multithreading, both are used to achieve multitasking. But we use multithreading than multiprocessing because threads share a common memory area. They don't allocate separate memory area so saves memory, and context-switching between the threads takes less time than process. Java Multithreading is mostly used in games, animation etc.
+=> Advantage of Java Multithreading :
+	1. It doesn't block the user because threads are independent and you can perform multiple operations at same time.
+	2. You can perform many operations together so it saves time.
+	3. Threads are independent so it doesn't affect other threads if exception occur in a single thread.
+=> The life cycle of the thread in java is controlled by JVM. The java thread states are as follows:
+	1. New - The thread is in new state if you create an instance of Thread class but before the invocation of start() method.
+	2. Runnable (Ready) - The thread is in runnable state after invocation of start() method, but the thread scheduler has not selected it to be the running thread.
+	3. Running - The thread is in running state if the thread scheduler has selected it.
+	4. Non-Runnable (Blocked) - This is the state when the thread is still alive, but is currently not eligible to run.
+	5. Terminated - A thread is in terminated or dead state when its run() method exits.
+=> Two ways of starting threads - a) Extend the Thread class and override run() method. b) Implement the Runnable interface by implementing run() method and pass it's object in Thread class constructor.
+=> Commonly used Constructors of Thread class:
+Thread()
+Thread(String name)
+Thread(Runnable r)
+Thread(Runnable r,String name)
+Thread(ThreadGroup group, Runnable r)
+=> Commonly used methods of Thread class:
+	public void run(): is used to perform action for a thread.
+	public void start(): starts the execution of the thread.JVM calls the run() method on the thread.
+	public void sleep(long miliseconds): Causes the currently executing thread to sleep (temporarily cease execution) for the specified number of milliseconds.
+	public void join(): waits for a thread to die.
+	public void join(long miliseconds): waits for a thread to die for the specified miliseconds.
+	public int getPriority(): returns the priority of the thread.
+	public int setPriority(int priority): changes the priority of the thread.
+	public String getName(): returns the name of the thread.
+	public void setName(String name): changes the name of the thread.
+	public Thread currentThread(): returns the reference of currently executing thread.
+	public int getId(): returns the id of the thread.
+	public Thread.State getState(): returns the state of the thread.
+	public boolean isAlive(): tests if the thread is alive.
+	public void yield(): A hint to the scheduler that the current thread is willing to yield its current use of a processor.
+	public void suspend(): is used to suspend the thread(depricated).
+	public void resume(): is used to resume the suspended thread(depricated).
+	public void stop(): is used to stop the thread(depricated).
+	public boolean isDaemon(): tests if the thread is a daemon thread.
+	public void setDaemon(boolean b): marks the thread as daemon or user thread.
+	public void interrupt(): interrupts the thread.
+	public boolean isInterrupted(): tests if the thread has been interrupted.
+	public static boolean interrupted(): tests if the current thread has been interrupted.
+=> Starting a thread - start() method of Thread class is used to start a newly created thread. It performs following tasks:
+1. A new thread starts(with new callstack).
+2. The thread moves from New state to the Runnable state.
+3. When the thread gets a chance to execute, its target run() method will run.
+=> Difference between preemptive scheduling and time slicing - Under preemptive scheduling, the highest priority task executes until it enters the waiting or dead states or a higher priority task comes into existence. Under time slicing, a task executes for a predefined slice of time and then reenters the pool of ready tasks. The scheduler then determines which task should execute next, based on priority and other factors.
+=> If you sleep a thread for the specified time,the thread scheduler picks up another thread and so on.
+=> Thread Priority
+	1. public static int MIN_PRIORITY
+	2. public static int NORM_PRIORITY
+	3. public static int MAX_PRIORITY
+Default priority of a thread is 5 (NORM_PRIORITY). The value of MIN_PRIORITY is 1 and the value of MAX_PRIORITY is 10.
+=> Daemon thread in java is a service provider thread that provides services to the user thread. Its life depend on the mercy of user threads i.e. when all the user threads dies, JVM terminates this thread automatically.
+There are many java daemon threads running automatically e.g. gc, finalizer etc.
+You can see all the detail by typing the jconsole in the command prompt. The jconsole tool provides information about the loaded classes, memory usage, running threads etc.
+=> The sole purpose of the daemon thread is that it provides services to user thread for background supporting task. If there is no user thread, why should JVM keep running this thread. That is why JVM terminates the daemon thread if there is no user thread. If you want to make a user thread as Daemon, it must not be started otherwise it will throw IllegalThreadStateException. Below methods can be used from Thread class :
+1)	public void setDaemon(boolean status)- is used to mark the current thread as daemon thread or user thread.
+2)	public boolean isDaemon()- is used to check that current is daemon.
+=> Volatile keyword - Sometimes variables are cached and it could cause damage to thread functioning so its safe to mark it as volatile so its never cached by jvm. This is most needed for variables used to communicate between threads. e.g. flags like stop threads or pause threads
+Hence volatile keyword is used for basic synchronization
+=> Use join() method if you want to have parent thread wait for sub thread to finish e.g. t1.join()
+=> Synchronization in java is the capability to control the access of multiple threads to any shared resource.
+=> The synchronization is mainly used to
+To prevent thread interference.
+To prevent consistency problem.
+=> Thread Synchronization - There are two types of thread synchronization : mutual exclusive and inter-thread communication.
+A) Mutual Exclusive
+	1. Synchronized method.
+	2. Synchronized block.
+	3. static synchronization.
+B) Cooperation (Inter-thread communication in java)
+=> Synchronization is built around an internal entity known as the lock or monitor. Every object has an lock associated with it. By convention, a thread that needs consistent access to an object's fields has to acquire the object's lock before accessing them, and then release the lock when it's done with them.
+From Java 5 the package java.util.concurrent.locks contains several lock implementations.
+=> synchronized keyword is used methods which modifies the shared data.
+	public synchronized void increment() {
+        count++;
+    }
+=> synchronized keyword gets a lock on the (this) object by default. Hence only one thread can access any one synchronized method at a time. It won't allow any other thread to run any other synchronized method of the same object. But another thread can access the static synchronized method if no other thread is accessing it (as the lock is at class level).
+=> If there are multiple synchronized methods then better choose to add a lock on particular block and assign a separate lock for each block if they are independent
+=> ExecutorService is a class provided by Executors factory method to manage the thread pools. These classes are part of java.util.concurrent package.
+	ExecutorService executor = Executors.newFixedThreadPool(2);
+    for(int i=0; i<5; i++) {
+        executor.submit(new Processor(i));
+    }
+It is used in Servlet and JSP where container creates a thread pool to process the request.
+=> Java Shutdown Hook - The shutdown hook can be used to perform cleanup resource or save the state when JVM shuts down normally or abruptly. Performing clean resource means closing log file, sending some alerts or something else. So if you want to execute some code before JVM shuts down, use shutdown hook.
+=> Instead of using executor.awaitTermination() logic for unpredictable time, we can use CountDownLatch to keep track of total threads to be submitted and when all threads are submitted, just call executor.await() method which will wait till CountDownLatch reaches 0.
+=> ABQ provides easy implementation of ProducerConsumer scenario
+=> For the same object lock (using synchronized block), one thread can issue wait() and then other thread starts (lock temporarily released?). Once the second thread runs notify() and finishes the execution of rest of the synchronized block then only the first thread resumes after wait() statement.
+=> Inter-thread communication or Co-operation is all about allowing synchronized threads to communicate with each other.
+Cooperation (Inter-thread communication) is a mechanism in which a thread is paused running in its critical section and another thread is allowed to enter (or lock) in the same critical section to be executed. It is implemented by following methods of Object class:
+wait()
+notify()
+notifyAll()
+=> Difference between wait and sleep:
+wait()				|				sleep()
+wait() method releases the lock	|	sleep() method doesn't release the lock.
+is the method of Object class	|	is the method of Thread class
+is the non-static method	|		is the static method
+should be notified by notify() or notifyAll() methods |	after the specified amount of time, sleep is completed.
+=> LowLevel Producer consumer - Use wait() notify() logic in synchronized blocks of producer and consumer. If producer has produced max products then add wait() so that consumer can consume the products and notify after consuming. If consumer has consumed all the products then issue wait until producer produces at least one product and notify consumer after producing.
+=> ReentrantLock is an implementation of Lock interface. ReentrantLock has newCondition() method that returns an object with await() and signal() method providing functionalities similar to wait() and notify(). Based on the logic, one can create multiple condition objects for various purposes.
+=> Deadlock situation arises if multiple thread tries to acquire a lock on multiple ReentrantLock objects in different orders. One need to take care of how locks are acquired. Common method can be written to provide all the required locks to a single thread at a time.
+=> A counting semaphore. Conceptually, a semaphore maintains a set of permits (basically a set of pool permits). Each acquire() blocks if necessary until a permit is available, and then takes it. Each release() adds a permit, potentially releasing a blocking acquirer. However, no actual permit objects are used; the Semaphore just keeps a count of the number available and acts accordingly.
+=> Callable Interface and Future class can be used to handle the threads which returns the value. Callable interface has call() unimplemented method instead of run(). The Future object must be used to store the returned value by call() method.
+=> One can issue interrupt() method on a thread. That just marks thread as interrupted and doesn't stops the execution. One has to add the check in the run() method of that thread to see if the thread was interrupted and if yes then stop the run() method execution accordingly at appropriate places. Thread stop() method has been deprecated.
+=> AtomicInteger - A small toolkit of classes that support lock-free thread-safe programming on single variables. In essence, the classes in this package extend the notion of volatile values, fields, and array elements to those that also provide an atomic conditional update operation of the form:
+   boolean compareAndSet(expectedValue, updateValue);
+More info - http://stackoverflow.com/questions/4818699/practical-uses-for-atomicinteger
+
+###### Java Garbage Collection #######
+
+=> In java, garbage means unreferenced objects. Garbage Collection is process of reclaiming the runtime unused memory automatically. In other words, it is a way to destroy the unused objects.
+=> Advantage of Garbage Collection
+a) It makes java memory efficient because garbage collector removes the unreferenced objects from heap memory.
+b) It is automatically done by the garbage collector(a part of JVM) so we don't need to make extra efforts.
+=> The finalize() method is invoked each time before the object is garbage collected. This method can be used to perform cleanup processing. This method is defined in Object class as:
+protected void finalize(){}
+=> The gc() method is used to invoke the garbage collector to perform cleanup processing. The gc() is found in System and Runtime classes.
+=> Java Runtime class is used to interact with java runtime environment. Java Runtime class provides methods to execute a process, invoke GC, get total and free memory etc. There is only one instance of java.lang.Runtime class is available for one java application.
+=> The Runtime.getRuntime() method returns the singleton instance of Runtime class.
+=> Example :
+public class Runtime1{
+ public static void main(String args[])throws Exception{
+  Runtime.getRuntime().exec("notepad");//will open a new notepad
+ }
+}
+=> Below trick can be used to check total and free memory
+  Runtime r=Runtime.getRuntime();
+  System.out.println("Total Memory: "+r.totalMemory());
+  System.out.println("Free Memory: "+r.freeMemory());
+
+
+###### Design Patterns ######
+
+A) Creational Patterns
+
+1. Factory Method Pattern - define an interface or abstract class for creating an object but let the subclasses decide which class to instantiate.
+2. Abstract Factory Pattern - define an interface or abstract class for creating families of related (or dependent) objects but without specifying their concrete sub-classes.
+3. Singleton - http://www.javatpoint.com/singleton-design-pattern-in-java
+	Always reusing only one object of a given class. The class object is created inside the same class as static object and the constructor is private so that no one creates an object from outside. Very useful approach. e.g. System.runtime() class is singleton class
+4. Prototype Design Pattern - cloning of an existing object instead of creating new one and can also be customized as per the requirement.
+5. Builder Design Pattern - construct a complex object from simple objects using step-by-step approach (Interface/Abstract Class/Concrete Class)
+6. Object Pool pattern - Reuse the object that are expensive to create for performance improvement e.g. ExecutorService of FixedThreadPool
+
+B) Structural Patterns - are concerned with how classes and objects can be composed, to form larger structures.
+
+1. Adapter Pattern - converts the interface of a class into another interface that a client wants
+2. Bridge Pattern - decouple the functional abstraction from the implementation so that the two can vary independently
+3. Composite Pattern - allow clients to operate in generic manner on objects that may or may not represent a hierarchy of objects
+4. Decorator Pattern - attach a flexible additional responsibilities to an object dynamically
+5. Facade Pattern - just provide a unified and simplified interface to a set of interfaces in a subsystem, therefore it hides the complexities of the subsystem from the client. Practically, every Abstract Factory is a type of Facade.
+6. FlyWeight Pattern - to reuse already existing similar kind of objects by storing them and create new object when no matching object is found
+7. Proxy Pattern - provides the control for accessing the original object
+
+
+C) Behavioral Patterns
+
+Observer - http://www.tutorialspoint.com/design_pattern/observer_pattern.htm
+
+1. Chain of Responsibility - avoid coupling the sender of a request to its receiver by giving multiple objects a chance to handle the request
+2. Command Pattern - encapsulate a request under an object as a command and pass it to invoker object. Invoker object looks for the appropriate object which can handle this command and pass the command to the corresponding object and that object executes the command
+3. Interpreter Pattern - to define a representation of grammar of a given language, along with an interpreter that uses this representation to interpret sentences in the language
+4. Iterator Pattern - to access the elements of an aggregate object sequentially without exposing its underlying implementation. java.util.Iterator interface uses Iterator Design Pattern.
+
+MVC pattern - http://www.tutorialspoint.com/design_pattern/mvc_pattern.htm
+
+
+Design Patterns (Udemy):
+Front end imports backend stuff
+Back end should never import front end stuff. Backend should work with different front ends (web/mobile)
+Write junit tests for backend. Test backend very thoroughly.
+
+MVC :
+Model -> Data
+View -> GUI
+Controller -> business logic
+refer wikipedia page
+
+View class has private variable model and constructor which takes model object.
+Controller class has private variable model, view and constructor takes model,view objects as args.
+
+public static void runApp(){
+	Model model = new Model();
+	View view = new View(model);
+	Controller controller = new Controller(view, model);
+}
+
+Observer (listener) pattern (hardest to understand) - EventListener is an example of observer pattern
+
+
+========================== Core Java Qs ==============================================
+Static Class loading :
+It happens using new Operator
+class MyClass {
+	public static void main(String args[]) {
+		Car c = new Car(); }
+}
+// A NoClassDefFoundException is thrown if a class is referenced with Java’s “new” operator (i.e. static loading) but the runtime system cannot find the referenced class.
+
+Dynamic Class Loading :
+
+Dynamic loading is a technique for programmatically invoking the functions of a class loader at run time. Let us look at how to load classes dynamically.
+
+Class.forName (String className); //static method which returns a Class
+The above static method returns the class object associated with the class name. The string className can be supplied dynamically at run time. Unlike the static loading, the dynamic loading will decide whether to load the class Car or the class Jeep at runtime based on a properties file and/or other runtime conditions. Once the class is dynamically loaded the following method returns an instance of the loaded class. It’s just like creating a class object with no arguments.
+
+class.newInstance (); //A non-static method, which creates an instance of a //class (i.e. creates an object).
+Jeep myJeep = null ;
+//myClassName should be read from a .properties file or a Constants class.
+// stay away from hard coding values in your program.
+String myClassName = "au.com.Jeep" ;
+Class vehicleClass = Class.forName(myClassName) ; myJeep = (Jeep) vehicleClass.newInstance(); myJeep.setFuelCapacity(50);
+
+A ClassNotFoundException is thrown when an application tries to load in a class through its string name using the following methods but no definition for the class with the specified name could be found:
+  The forName(..) method in class - Class.
+  The findSystemClass(..) method in class - ClassLoader.
+  The loadClass(..) method in class - ClassLoader.
+
+
+The Object Oriented Programming Languages directly represent the real life objects like Car, Jeep, Account, Customer etc. The features of the OO programming languages like polymorphism, inheritance and encapsulation make it powerful. [Tip: remember pie which, stands for Polymorphism, Inheritance and Encapsulation are the 3 pillars of OOPL]
+
+The ‘is a’ relationship is expressed with inheritance and ‘has a’ relationship is expressed with composition. Both inheritance and composition allow you to place sub-objects inside your new class. Two of the main techniques for code reuse are class inheritance and object composition.
+
+House is a Building (class House extends Building)
+class Building{ .......
+}
+class House extends Building{ .........
+}
+
+House has a bathroom
+class House {
+	Bathroom room = new Bathroom() ; ....
+	}
+}
+
+Aggregation is an association in which one class belongs to a collection. This is a part of a whole relationship where a part can exist without a whole.
+For example a line item is a whole and product is a part. If a line item is deleted then corresponding product need not be deleted. So aggregation has a weaker relationship.
+
+Composition is an association in which one class belongs to a collection. This is a part of a whole relationship where a part cannot exist without a whole. If a whole is deleted then all parts are
+deleted. For example An order is a whole and line items are parts.
+If an order is deleted then all corresponding line items for that order should be deleted. So composition has a stronger relationship.
+
+Inheritance
+1) Class Inheritance (statically at compile-time and is easy to use.) - You can extend an application’s functionality by reusing
+functionality in the parent class by inheriting all or some of the operations already implemented.
+2) Interface Inheritance (can be dynamically changed) - This is also known as subtyping. Interfaces provide a mechanism for
+specifying a relationship between otherwise unrelated classes, typically by specifying a set of common methods each implementing class must contain.
+
+Encapsulation – refers to keeping all the related members (variables and methods) together in an object. Specifying member variables as private can hide the variables and methods. Objects should hide their inner workings from the outside view. Good encapsulation improves code modularity by preventing objects interacting with each other in an unexpected way, which in turn makes future development and refactoring efforts easy.
+
+Design By Contract
+Design by contract specifies the obligations of a calling-method and called-method to each other. Design by
+contract is a valuable technique, which should be used to build well-defined interfaces. The strength of this programming methodology is that it gets the programmer to think clearly about what a function does, what pre and post conditions it must adhere to and also it provides documentation for the caller. Java uses the assert statement to implement pre- and post-conditions. Java’s exceptions handling also support design by contract especially checked exceptions (Refer Q39 in Java section for checked exceptions).
+
+Precondition on public method:
+public void setRate(int rate) {
+	if(rate <= 0 || rate > MAX_RATE){
+		throw new IllegalArgumentException(“Invalid rate   ” + rate); }
+	setCalculatedRate(rate);
+ }
+
+Precondition on non-public method:
+private void setCalculatedRate(int rate) {
+	assert (rate > 0 && rate < MAX_RATE) : rate;
+	//calculate the rate and set it.
+}
+
+Postcondition assertion:
+public double calcRate(int rate) {
+   if(rate <= 0 || rate > MAX_RATE){
+       throw new IllegalArgumentException(“Invalid rate !!! ”);
+    }
+    //logic to calculate the rate and set it goes here
+assert this.evaluate(result) < 0 : this; //message sent to AssertionError on failure
+    return result;
+ }
+
+The “java.util.concurrent” package collections like ConcurrentHashMap is threadsafe and at the same time safely permits any number of concurrent reads as well as tunable number of concurrent writes. The “java.util.concurrent” package also provides an efficient scalable thread-safe non-blocking FIFO queue like ConcurrentLinkedQueue.
+
+What are the benefits of the Java Collections Framework? Collections framework provides flexibility, performance,
+and robustness.
+  Polymorphic algorithms – sorting, shuffling, reversing, binary search etc.
+  Set algebra - such as finding subsets, intersections, and unions between objects.
+  Performance - collections have much better performance compared to the older Vector and Hashtable classes with
+the elimination of synchronization overheads.
+  Thread-safety - when synchronization is required, wrapper implementations are provided for temporarily
+synchronizing existing collection objects. For J2SE 5.0 use java.util.concurrent package.
+  Immutability - when immutability is required wrapper implementations are provided for making a collection
+immutable.
+  Extensibility - interfaces and abstract classes provide an excellent starting point for adding functionality and
+features to create specialized object collections.
+
+String class is designed with Flyweight design pattern. When you create a String constant as shown above in the variation, (i.e. String s3 = “A”, s4= “A”), it will be checked to see if it is already in the String pool. If it is in the pool, it will be picked up from the pool instead of creating a new one. Flyweights are shared objects and using them can result in substantial performance gains.
+
+A pool of Strings is maintained by the String class. When the intern() method is invoked equals(...) method is invoked to determine if the String already exist in the pool. If it does then the String from the pool is returned. Otherwise, this String object is added to the pool and a reference to this object is returned. For any two Strings s1 & s2, s1.intern() == s2.intern() only if s1.equals(s2) is true.
+
+What are the non-final methods in Java Object class, which are meant primarily for extension?
+The non-final methods are equals(), hashCode(), toString(), clone(), and finalize(). The other methods like wait(), notify(), notifyAll(), getClass() etc are final methods and therefore cannot be overridden. These non-final methods, which are meant primarily for extension (i.e. inheritance).
+
+The equals() and hashCode() methods prove to be very important, when objects implementing these two
+methods are added to collections. If implemented incorrectly or not implemented at all then your objects stored in a collection like a Set, List or Map may behave strangely and also is hard to debug.
+
+Reflexive -> o1.equals(o1)
+Symmetric -> o1.equals(o2) if and only o2.equals(o1)
+Transitive -> o1.equals(o2) && o2.equals(o3) implies that o1.equals(o3) as well
+
+o1.equals(o2) implies o1.hashCode() == o2.hashCode()   This is very important. If you define a equals() method then you must define a hashCode() method as well. Also it means that if you have two objects that are equal then they must have the same hashCode, however the reverse is not true (i.e. if two objects have the same hashCode does not mean that they are equal). So, If a field is not used in equals(), then it must not be used in hashCode() method.
+
+• If a class overrides equals(), it must override hashCode().
+• If 2 objects are equal, then their hashCode values must be equal as well.
+• If a field is not used in equals(), then it must not be used in hashCode().
+• If it is accessed often, hashCode() is a candidate for caching to enhance performance.
+• It is a best practice to implement the user defined key class as an immutable
+
+Clone can be disabled as follows:
+The clone() method can be disabled as follows:
+public final Object clone() throws CloneNotSupportedException {
+    throw new CloneNotSupportedException();
+}
+
+If you do happen to implement the finalize() method in some rare instances then remember to call the super.finalize() as shown below:
+protected void finalize() throws Throwable {
+     try{
+          //finalize subclass state
+     }
+     finally {
+         super.finalize();
+     }
+}
+
+
+What are the benefits of immutable objects?
+• Immutable classes can greatly simplify programming by freely allowing you to cache and share the references to the immutable objects without having to defensively copy them or without having to worry about their values becoming stale or corrupted.
+• Immutable classes are inherently thread-safe and you do not have to synchronize access to them to be used in a multi-threaded environment. So there is no chance of negative performance consequences.
+• Eliminates the possibility of data becoming inaccessible when used as keys in HashMaps or as elements in Sets. These types of errors are hard to debug and fix.
+
+What is Java Serial Version ID? Say you create a “Car” class, instantiate it, and write it out to an object stream. The flattened car object sits in the file system for some time. Meanwhile, if the “Car” class is modified by adding a new field. Later on, when you try to read (i.e. deserialize) the flattened “Car” object, you get the java.io.InvalidClassException – because all serializable classes are automatically given a unique identifier. This exception is thrown when the identifier of the class is not equal to the identifier of the flattened object. If you really think about it, the exception is thrown because of the addition of the new field. You can avoid this exception being thrown by controlling the versioning yourself by declaring an explicit serialVersionUID.
+
+public class Car {
+	static final long serialVersionUID = 1L; //assign a long value
+}
+
+Alternatively you can use the serialver tool comes with Sun’s JDK. This tool takes a full class name on the
+command line and returns the serialVersionUID for that compiled class.
+static final long serialVersionUID = 10275439472837494L; //generated by serialver tool.
+
+Java input and output is defined in terms of an abstract concept called a “stream”, which is a sequence of data.
+There are 2 kinds of streams.
+  Byte streams (8 bit bytes)   Abstract classes are: InputStream and OutputStream
+  Character streams (16 bit UNICODE)   Abstract classes are: Reader and Writer
+
+NIO
+
+A new set of non-blocking I/O classes have been introduced to the Java platform in java.nio package. The non-blocking I/O mechanism is built around Selectors and Channels. Channels, Buffers and Selectors are the core of the NIO.
+
+A Channel class represents a bi-directional communication channel (similar to InputStream and OutputStream) between datasources such as a socket, a file, or an application component, which is capable of performing one or more I/O operations such as reading or writing. Channels can be non-blocking, which means, no I/O operation will wait for data to be read or written to the network. The good thing about NIO channels is that they can be asynchronously interrupted and closed. So if a thread is blocked in an I/O operation on a channel, another thread can interrupt that blocked thread.
+
+A Selector class enables multiplexing (combining multiple streams into a single stream) and demultiplexing (separating a single stream into multiple streams) I/O events and makes it possible for a single thread to efficiently manage many I/O channels. A Selector monitors selectable channels, which are registered with it for I/O events like connect, accept, read and write. The keys (i.e. Key1, Key2 etc represented by the SelectionKey class) encapsulate the relationship between a specific selectable channel and a specific selector.
+
+Buffers hold data. Channels can fill and drain Buffers. Buffers replace the need for you to do your own buffer management using byte arrays. There are different types of Buffers like ByteBuffer, CharBuffer, DoubleBuffer, etc.
+
+NIO uses a reactor design pattern, which demultiplexes events (separating single stream into
+multiple streams) and dispatches them to registered object handlers. The reactor pattern is similar to an observer pattern (aka publisher and subscriber design pattern), but an observer pattern handles only a single source of events (i.e. a single publisher with multiple subscribers) where a reactor pattern handles multiple event sources (i.e. multiple publishers with multiple subscribers).
+
+The basic rules for speeding up I/O performance are
+  Minimize accessing the hard disk.
+  Minimize accessing the underlying operating system.
+  Minimize processing bytes and characters individually.
+
+a) Use buffering to minimize disk access and underlying operating system. e.g. BufferedInputStream for reading a file
+b) Use logging frameworks like Log4J with SLF4J instead of using System.out.println(..)
+c) Use the NIO package for I/O operations
+d) I/O performance can be improved by minimizing the calls to the underlying operating systems. The Java runtime itself cannot know the length of a file, querying the file system for isDirectory(), isFile(), exists() etc must query the underlying operating system.
+e) Where applicable caching can be used to improve performance by reading in all the lines of a file into a Java Collection class like an ArrayList or a HashMap and subsequently access the data from an in-memory collection instead of the disk.
+
+Explain types of references in Java? java.lang.ref package can be used to declare soft, weak and phantom references.
+  Garbage Collector won’t remove a strong reference.
+  A soft reference will only get removed if memory is low. So it is useful for implementing caches while avoiding memory leaks.
+  A weak reference will get removed on the next garbage collection cycle. Can be used for implementingcanonical maps. The java.util.WeakHashMap implements a HashMap with keys held by weak references.
+  A phantom reference will be finalized but the memory will not be reclaimed. Can be useful when you want to be notified that an object is about to be collected.
+
+Simple ProducerConsumer
+
+Class ConsumerProducer {
+	private int count;
+	public synchronized void consum e(){
+		while(count == 0) {
+			try{
+				wait()
+			}
+			catch(InterruptedException ie) {
+			//keep trying
+		 	}
+		}
+		count --; //consumed
+	}
+	private synchronized void produce(){
+		count++;
+		notify(); // notify the consumer that count has been incremented.
+	}
+}
+
+For regular classes you can use the Observer interface and the Observable class to implement the
+consumer/producer communications with a model/view/controller architecture. The Java programming language provides support for the Model/View/Controller architecture with two classes:
+• Observer -- any object that wishes to be notified when the state of another object changes.
+• Observable -- any object whose state may be of interest, and in whom another object may register an interest.
+
+If your job requires deeper understanding of threads then please refer to the following articles by Allen Holub at http://www.javaworld.com. There are number of parts (part 1 – Part - 8) to the article entitled “Programming Java threads in the real world”. URLs for some of the parts are:
+http://www.javaworld.com/javaworld/jw-09-1998/jw-09-threads.html
+http://www.javaworld.com/javaworld/jw-10-1998/jw-10-toolbox.html
+
+A socket is a communication channel, which facilitates inter-process communication (For example
+communicating between two JVMs, which may or may not be running on two different physical machines). A socket is an endpoint for communication. There are two kinds of sockets, depending on whether one wishes to use a connectionless or a connection-oriented protocol. The connectionless communication protocol of the Internet is called UDP. The connection-oriented communication protocol of the Internet is called TCP. UDP sockets are also called datagram sockets. Each socket is uniquely identified on the entire Internet with two numbers. The first number is a 32-bit (IPV4 or 128-bit is IPV6) integer called the Internet Address (or IP address). The second number is a 16-bit integer called the port of the socket. The IP address is the location of the machine, which you are trying to connect to and the port number is the port on which the server you are trying to connect is running. The port numbers 0 to 1023 are reserved for standard services such as e-mail, FTP, HTTP etc.
+
+The lifetime of the socket is made of 3 phases: Open Socket   Read and Write to Socket   Close Socket
+To make a socket connection you need to know two things: An IP address and port on which to listen/connect. In
+Java you can use the Socket (client side) and ServerSocket (Server side) classes.
+
+***Improving Java Application Performance***
+
+Pool valuable system resources like threads, database connections, socket connections etc. Emphasize on
+reuse of threads from a pool of threads. Creating new threads and discarding them after use can adversely affect performance. Also consider using multi-threading in your single-threaded applications where possible to enhance performance. Optimize the pool sizes based on system and application specifications and requirements. Having too many threads in a pool also can result in performance and scalability problems due to consumption of memory stacks (i.e. each thread has its own stack.
+
+Minimize network overheads by retrieving several related items simultaneously in one remote invocation if possible. Remote method invocations involve a network round-trip, marshaling and unmarshaling of parameters, which can cause huge performance problems if the remote interface is poorly designed.
+
+In general data should be lazily loaded (i.e. load only when required as opposed to pre-loading from the database with a view that it can be used later) from a database to conserve memory but there are use cases (i.e. need to make several database calls) where eagerly loading data and caching can improve performance by minimizing network trips to the database.
+
+Ganesh - I would do it at different level - code optimization, application level (multithreading, caching, design, front end rendering), middleware level(web logic related techniques), db level (hibernate caching), os level, h/w level (scaled servers,memory), n/w level (improved bandwidth?)
+
+When designing your new code, what level of importance would you give to the following attributes?
+-- Performance
+-- Maintainability
+-- Extendibility
+-- Ease of use
+-- Scalability
+You should not compromise on architectural principles for just performance. You should make effort to write architecturally sound programs as opposed to writing only fast programs. If your architecture is sound enough then it would allow your program not only to scale better but also allows it to be optimized for performance if it is not fast enough. If you write applications with poor architecture but performs well for the current requirements, what will happen if the requirements grow and your architecture is not flexible enough to extend and creates a maintenance nightmare where fixing a code in one area would break your code in another area. This will cause your application to be re-written. So you should think about extendibility (i.e. ability to evolve with additional requirements), maintainability, ease of use, performance and scalability (i.e. ability to run in multiple servers or machines) during the design phase. List all possible design alternatives and pick the one which is conducive to sound design architecturally (i.e. scalable, easy to use, maintain and extend) and will allow it to be optimized later if not fast enough. You can build a vertical slice first to validate the above mentioned design attributes as discussed in Q82 in the Java section.
+
+How would you detect and minimize memory leaks in Java?
+In Java, memory leaks are caused by poor program design where object references are long lived and the
+garbage collector is unable to reclaim those objects.
+Detecting memory leaks:
+  Use tools like JProbe, OptimizeIt etc to detect memory leaks.
+  Use operating system process monitors like task manager on NT systems, ps, vmstat, iostat, netstat etc on
+UNIX systems.
+  Write your own utility class with the help of totalMemory() and freeMemory() methods in the Java Runtime class. Place these calls in your code strategically for pre and post memory recording where you suspect to be causing memory leaks. An even better approach than a utility class is using dynamic proxies or Aspect Oriented Programming (AOP) for pre and post memory recording where you have the control of activating memory measurement only when needed.
+
+In Java, typically memory leak occurs when an object of a longer lifecycle has a reference to objects of a short life cycle. This prevents the objects with short life cycle being garbage collected. The developer must remember to remove the references to the short-lived objects from the long-lived objects. Objects with the same life cycle do not cause any issues because the garbage collector is smart enough to deal with the circular references
+
+Garbage Collector -> http://java.sys-con.com/node/84695
+
+Strengths:
+  Taking initiatives and being pro-active: You can illustrate how you took initiative to fix a transactional issue,
+a performance problem or a memory leak problem.
+  Design skills: You can illustrate how you designed a particular application using OO concepts.
+  Problem solving skills: Explain how you will break a complex problem into more manageable sub-sections and then apply brain storming and analytical skills to solve the complex problem. Illustrate how you went about identifying a scalability issue or a memory leak problem.
+  Communication skills: Illustrate that you can communicate effectively with all the team members, business analysts, users, testers, stake holders etc.
+  Ability to work in a team environment as well as independently: Illustrate that you are technically sound to work independently as well as have the interpersonal skills to fit into any team environment.
+  Hard working, honest, and conscientious etc are the adjectives to describe you.
+
+Weaknesses:
+Select a trait and come up with a solution to overcome your weakness. Stay away from personal qualities and concentrate more on professional traits for example:
+  I pride myself on being an attention to detail guy but sometimes miss small details. So I am working on applying the 80/20 principle to manage time and details. Spend 80% of my effort and time on 20% of the tasks, which are critical and important to the task at hand.
+  Some times when there is a technical issue or a problem I tend to work continuously until I fix it without having a break. But what I have noticed and am trying to practice is that taking a break away from the problem and thinking outside the square will assist you in identifying the root cause of the problem sooner.
+
+Career goals
+  Next 2-3 years to become a senior developer or a team lead.
+  Next 3-5 years to become a solution designer or an architect.
+
+Bug fix that you are proud of?
+
+Biggest issue handled -> WebSphere env got wiped out, no backup of config. Then sessions learned - automated using Jython
+
+References
+  Mastering EJB by Ed Roman.
+  EJB design patterns by Floyd Marinescu.
+  Bitter Java by Bruce Tate.
+  Thinking in Java by Bruce Eckel.
+  Effective Java by Joshua Bloch.
+
+Java websites
+http://www.theserverside.com, http://www.javaworld.com, http://www-136.ibm.com/developerworks/Java, http://www.precisejava.com, http://www.allapplabs.com, http://java.sun.com, http://www.martinfowler.com, http://www.ambysoft.com etc.
+
+Java-success.com caveofprogramming.com udemy.com javatpoint.com tutorialspoint.com
+
+If you are being interviewed for a position where you have to learn new pieces of technology/framework like dependency injection (e.g. Spring framework), component based web development frameworks like Tapestry, JSF etc, object to relational mapping frameworks like hibernate etc then you can explain with examples from your past experience where you were not only motivated to acquire new skills/knowledge but also proved that you are a quick and a pro-active learner. [Discussed in the Emerging Technologies/Frameworks section]
+
+ any role models in software development?
+  Scott W. Ambler, Martin Fowler, Ed Roman, Floyd Marinescu, Grady Booch etc.
+  Gavin King (Hibernate persistence framework), Rod Johnson (Spring framework), Howard M. Lewis Ship (Tapestry web framework and Hivemind framework), Dennis Sosnoski (JiBX XML binding framework) etc.
+
+
+******* Java – Key Points *******
+  Java is an object oriented (OO) language, which has built in support for multi-threading, socket communication, automatic memory management (i.e. garbage collection) and also has better portability than other languages across operating systems.
+  Java class loaders are hierarchical and use a delegation model. The classes loaded by a child class loader have visibility into classes loaded by its parents up the hierarchy but the reverse is not true.
+  Java packages help resolve naming conflicts when different packages have classes with the same names. This also helps you organize files within your project.
+  Java does not support multiple implementation inheritance but supports multiple interface inheritance.
+  Polymorphism, inheritance and encapsulation are the 3 pillar of an object-oriented language.
+  Code reuse can be achieved through either inheritance (“is a” relationship) or object composition (“has a” relationship). Favor object composition over inheritance.
+  When using implementation inheritance, make sure that the subclasses depend only on the behavior of the superclass, not the actual implementation. An abstract base class usually provides an implementation inheritance.
+  Favor interface inheritance to implementation inheritance because it promotes the deign concept of coding to interface and reduces coupling. The interface inheritance can achieve code reuse through object composition.
+  Design by contract specifies the obligations of a calling-method and called-method to each other using pre- conditions, post-conditions and class invariants.
+  When using Java collections API, prefer using ArrayList or HashMap as opposed to Vector or Hashtable to avoid any synchronization overhead. The ArrayList or HashMap can be externally synchronized for concurrent access by multiple threads.
+  Set the initial capacity of a collection appropriately and program in terms of interfaces as opposed to implementations.
+  The equals() - returns the results of running the equals() method of a user supplied class, which compares the attribute values. The equals() method provides “deep comparison” by checking if two objects are logically equal as opposed to the shallow comparison provided by the operator ==.
+  The non-final methods equals(), hashCode(), toString(), clone(), and finalize() are defined in the Object class and are primarily meant for extension. The equals() and hashCode() methods prove to be very important when objects implementing these two methods are added to collections.
+  If a class overrides the equals() method, it must implement the hashCode() method as well. If two objects are equal as per the equals() method, then calling the hashCode() method in each of the two objects must return the same hashCode integer result but the reverse is not true (i.e. If two objects have the same hashCode does not mean that they are equal). If a field is not used in equals()method, then it must not be used in hashCode() method.
+  When providing a user defined key class for storing objects in HashMap, you should override equals(), and hashCode() methods from the Object class.
+  Always override the toString() method, but you should override the clone() method very judiciously. The finalize() method should only be used in rare instances as a safety net or to terminate non-critical native resources.
+  String class is immutable and StringBuffer and StringBuilder classes are mutable. So it is more efficient to use a StringBuffer or a StringBuilder as opposed to a String in a computation intensive situations (i.e. in for, while loops).
+  Serialization is a process of writing an object to a file or a stream. Transient variables cannot be serialized.
+  Java I/O performance can be improved by using buffering, minimizing access to the underlying hard disk and operating systems. Use the NIO package for performance enhancing features like non-blocking I/O operation, buffers to hold data, and memory mapping of files.
+  Each time an object is created in Java it goes into the area of memory known as heap. The primitive variables are allocated in the stack if they are local method variables and in the heap if they are class member variables.
+  Threads share the heap spaces so it is not thread-safe and the threads have their own stack space, which is thread-safe.
+  The garbage collection cannot be forced, but you can nicely ask the garbage collector to collect garbage.
+  There two types of exceptions checked (i.e. compiler checked) and unchecked (Runtime Exceptions). It is not
+advisable to catch type Exception.
+  A process is an execution of a program (e.g. JVM process) but a thread is a single execution sequence within the
+process.
+  Threads can be created in Java by either extending the Thread class or implementing the Runnable interface.
+  In Java each object has a lock and a thread can acquire a lock by using the synchronized key word. The synchronization key word can be applied in method level (coarse-grained lock) or block level (fine-grained lock which offers better performance) of code.
+  Threads can communicate with each other using wait(), notify(), and notifyAll() methods. This communication solves the consumer-producer problem. These are non-final methods defined in the Object class.
+  Sockets are communication channels, which facilitate inter-process communication.
+  The J2SE 5.0 release is focused along the key areas of ease of development, scalability, performance, quality, etc. The new features include generics, metadata, autoboxing and auto-unboxing of primitive types, enhanced for loop, enumerated type, static import, C style formatted output with printf(), formatted input with the Scanner class, varargs, etc.
+  Swing uses the MVC paradigm to provide loose coupling and action architecture to implement a shared behavior between two or more user interface components.
+  Complex layouts can be simplified by using nested containers for example having panels within panels and each panel can use its own LayoutManager like FlowLayout, BorderLayout, GridLayout, BoxLayout, CardLayout etc. The containers like panels, dialog boxes, windows etc do not perform the actual laying out of the components. They delegate the layout functionality to layout managers. The layout managers make use of the strategy design pattern, which encapsulates family of algorithms for laying out components in the containers.
+  The AWT containers like panels, dialog boxes, windows etc do not perform the actual laying out of the components. They delegate the layout functionality to layout managers. The layout managers make use of the strategy design pattern, which encapsulates family of algorithms for laying out components in the containers.
+  Swing components should be accessed through an event-dispatching thread. There is a way to access the Swing event-dispatching thread from outside event-handling or drawing code, is using SwingUtilities’ invokeLater() and invokeAndWait() methods.
+  Like event handling code, painting code executes on the event-dispatching thread. So while an event is being handled, no painting will occur and similarly while painting is happening no events will take place.
+  The paint() method should not be explicitly invoked. Only repaint() method can be explicitly invoked (which implicitly calls paintComponent() method) and only paintComponent() method should be overridden if required.
+  Swing uses a delegation event model, in which the objects that receive user events notify the registered listeners of the user activity. In most cases the event receiver is a component.
+  A signed applet can become a trusted applet, which can work outside the sandbox.
+  In Java typically memory leak occurs when an object of longer life cycle has a reference to objects of a short life
+cycle.
+  You can improve performance in Java by :
+1. Pooling your valuable resources like threads, database and socket connections.
+2. Optimizing your I/O operations.
+3. Minimizing network overheads, calls to Date, Calendar related classes, use of “casting” or runtime type
+checking like “instanceof” in frequently executed methods/loops, JNI calls, etc
+4. Managing your objects efficiently by caching or recycling them without having to rely on garbage collection.
+5. Using a StringBuffer as opposed to String and ArrayList or HashMap as oppose to Vector or Hashtable
+6. Applying multi-threading where applicable.
+7. Minimizing any potential memory leaks.
+
+  Finally, very briefly familiarize yourself with some of the key design patterns like:
+1. Decorator design pattern: used by Java I/O API. A popular design pattern.
+2. Reactor design pattern/Observer design pattern: used by Java NIO API.
+3. Visitor design pattern: can be used to avoid instanceof and typecast constructs.
+4. Factory method/abstract factory design pattern: popular pattern, which gets frequently asked in interviews.
+5. Singleton pattern: popular pattern, which gets frequently asked in interviews.
+6. Composite design pattern: used by GUI components and also a popular design pattern
+7. MVC design pattern/architecture: used by Swing components and also a popular pattern.
+8. Command pattern: used by Swing action architecture and also a popular design pattern.
+9. Strategy design pattern: A popular design pattern used by AWT layout managers.
+
+
+
+======================================================================================
+
+eBay Questions
+1. MVC architecture? ***
+2. find the lowest common ancestor of two nodes in a binary tree  ***fav
+3. basic concepts about RESTful web service, data structure (hashtable and collision), algorithm and some coding challenges (tree, searching, array...)
+4. was asked questions/programs in Java (Collections, Multithreading, OO concepts) , Data-Structures (Stack and Queue), Design Patterns (Singleton), SQL, C++.
+5. what's the difference between stack and heap in memory
+6. Reverse a Linked List*** - practice
+7. Given a BS tree, give the median number in the tree with O(1) space.
+8. He wanted me to implement Google's "Did you mean" logic.
+9. coding questions like write all permutation of the string.
+10. How would we make Singleton thread protected except interviewer did not want to include Synchronized block in there.
+11. Fibonacci Series using recursion and iteration. Ask to reduce number of recursive calls.  ***
+12. was asked how to find middle node of a linked list and then follow up questions on that
+13. Asked a easy binary search question and asked me to write a sorting method. I wrote the quick sort.
+14. How would you implement a hash table in Java?
+15. transfer the string hexadecimal number "f3a6.123f" into decimal number.
+16. Using the characters on a telephone dial, give all the permutation of strings for given digits.
+17. Tree in order traversal, return the next node.ie, if the search node is found, return the next preorder traversal node.
+18. basic resume drilling, OOP theory questions, mutli-threading, synchronization, deadlock
+why String is immutable?
+Config files in Hibernate
+19. static/non static, variables/methods, final
+how would you sort a very very large file
+basic data structures
+design a basic inventory system
+20. How would you write the code find the subsequence with the maximum sum of n integers?
+21. How would you build a stock ticker service?
+22. Find all the pairs in array that add up to a certain number?
+23. weak hash map, finally, finalize, final
+24. which ds is used for maintaining connection pooling mechanism, sorting algorithm (how it works, how many times u compare and swap). diff between arraylist and linkedlist, wap to reverse string etc.
+25. Detect if a linked list has a loop.  ***
+26. What is a object reference, how is it difference from a physical object?
+27. DB questions, ACID explanation with real life examples
+28. Given two trees, check whether one is a subtree of the other ?
+29. Some questions about problem solving, like describing how a VPN system works.
+
+

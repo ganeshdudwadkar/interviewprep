@@ -1,0 +1,40 @@
+Spring Framework Notes:
+
+SOLID Principle:
+
+Single responsibility, Open-closed, Liskov substitution, Interface segregation, and Dependency inversion (SOLID) :
+1. Single Responsibility Principle (SIP): This principle states that a module, a class, or a method should have the responsibility of serving just one functionality of the underlying software. In other words, a module, a class or a method should have just one reason to change. Modules or classes following SIP have high cohesiveness, and thus, can be termed as reusable entities. Classes violating SIP are found to have high cyclomatic complexity, and thus, low testability.
+2. Open-Closed Principle (OCP): This principle states that the classes are open for extension, but closed for modification. Based on this principle, the core classes of the Spring Web MVC consist of some methods which are marked as final, which, essentially, means that these final methods can not be overridden with custom behavior.
+3. Liskov Substitution Principle (LSP): This principle states that if a class A (child class) is derived from class B (parent class), then the object of class B can be replaced by (or substituted with) an object of class A without changing any of the properties of class B. It can be inferred that the functions which use references of the base class must be able to use objects of the derived class without the need to know about the implementation of the base class. For example, let's consider the square and rectangle example. In the case where square derives from rectangle, then, as per LSP, an object of the class Rectangle can be substituted with an object of the class Square. However, in reality, this is not possible without doing appropriate implementation in the Square class setter methods, where setting either of length or breadth sets another side of equal length, and/or code using these classes do appropriate checks to find out whether the object is an instance of the class Square or Rectangle.
+4. Interface Segregation Principle (ISP): This principle states that the fat interfaces having large number of API definitions should be split into smaller interfaces defining a set of cohesive APIs. Not following this principle leads to the client providing empty implementations for unwanted APIs.
+5. Dependency Inversion Principle (DIP): This principle is pretty much related to the IOC principle, which is discussed in the next section. It states that the dependency relationship between higher-level modules with low-level modules is reversed, thus making these modules independent of each other's implementation details.
+
+
+Spring IOC Container -
+A Spring IOC container is a framework which, basically, manages the life cycle of plain old Java objects (POJOs), and injects them into the application as required. Java objects define their dependencies using one of the following methods:
+
+Dependencies are passed as arguments to the constructor method of the object. See how the object is passed as an argument to the constructor method in the example cited in the previous section.
+Dependencies are passed as arguments to the setter method of the object.
+Dependencies are passed as arguments to a factory method of the object.
+
+A Spring IOC container injects the dependencies after it creates the beans. Note the fact that dependencies are no longer managed by Java objects. They are rather managed and injected by the framework, and hence, Inversion of Control.
+
+The following are the packages which are core to the IOC container:
+
+org.springframework.beans
+org.springframework.context
+
+A Java application using Spring IOC Container is created by combining Business POJOs with the previously mentioned configuration metadata, and passing it on to the IOC Container (an instance of ApplicationContext).
+
+Spring Web MVC:
+
+Key building blocks of a Spring Web MVC application
+1. Dispatcher servlet: Dispatcher servlet, also termed the front controller, is at the core of the Spring Web MVC framework. Simply speaking, the Dispatcher servlet determines which controller class and method needs to be called when a page request or an API request arrives. In addition, it sends the response using the appropriate JSP page or JSON/XML objects. It dispatches the incoming requests to the appropriate handlers (custom controllers) with different handler mappings. This is integrated with the Spring IOC container, which allows it to use all the features that the Spring framework provides.
+2. Handler Mappings: Handler mappings are used to map the request URL with the appropriate handlers such as controllers. The Dispatcher servlet uses the handler mappings to determine the controllers which will process the incoming requests. The handler mappings are specified in the XML file, or as annotations such as @RequestMapping,  @GetMapping, or @PostMapping, and so on. The following diagram represents the @RequestMapping annotation that is used for URL mapping.
+3. Handler Interceptors: Handler interceptors are used to invoke preprocessing and post-processing logic before and after the invocation of the actual handler method respectively.
+4. Controllers: These are custom controllers created by the developers and used for processing the incoming requests. The controllers are tagged with annotations such as @Controller or @RestController. Controllers are used to access the application behavior through one or more service interfaces. Controllers are used to interpret the user input, pass them to the services for implementation of business logic, and transform the service output into a model which is presented to the user as a view.
+5. Services: These are the components coded by the developers. These components contain the business logic. One or more methods of services are invoked from within the Controller methods. Spring provides annotations such as @Service for identifying services.
+6. Data Access Objects (DAO): The classes which represent DOA, are used to do data processing with the underlying data sources. These classes are annotated with annotations such as @Repository.
+7. View Resolvers: View resolvers are components which map view names to views. They help in rendering models in the browser based on different view technologies such as JSP, FreeMarker, JasperResports, Tiles, Velocity, XML, and so on. Spring comes with different view resolvers such as InternalResourceViewResolver, ResourceBundleViewResolver, XMLViewResolver, and others. View resolvers are used by the Dispatcher servlet to invoke the appropriate view components.
+8. Views: Views are used to render the response data on the UI. They can be represented using different technologies such as JSP, Velocity, Tiles, and so on.
+

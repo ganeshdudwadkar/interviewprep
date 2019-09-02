@@ -1,0 +1,239 @@
+Book Name : Modern Linux Administration: How to Become a Cutting-Edge Linux Administrator
+
+Networking Concepts :
+
+Key concepts of n/w:
+- Packets
+- Headers
+- Routers
+- Protocols
+
+Packets - Network packets are the smallest chunk of data transmitted by a network – each of the packets contains the data we are transmitting across the network as well as some control data that helps the networking software and protocols determine where the packet should go.
+
+There are several types of network messages, some of which are the following:
+	Packets: Messages sent by protocols operating at the network layer of the OSI model are called packets, or IP packets, to be more accurate.
+	Datagrams: this is more or less synonymous with a packet and refers to the network layer as well. Often this term is used for messages sent at higher OSI levels.
+	Frames: these are messages that are sent at the lower levels of the OSI model, most commonly the data layer. Frames take higher-level packets or datagrams and add the header information needed at the lower levels.
+
+OSI Reference Model (7 layers)
+
+Lower layers (Layers 1,2, 3, and 4): these are the physical, data link, network and transport layers and are responsible for formatting, packaging, addressing, routing, and the transmitting data over the network. These layers aren’t concerned with the meaning of the data – they just move it.
+
+Upper Layers (Layers 5,6, and 7): these are the session, presentation and application layers – they concern themselves with software application related issues. The upper layers interact with the users and implement the applications that run over the network. The upper layers aren’t concerned with the low level details of how data moves over the network, instead depending on the lower layers to do that for them.
+
+TCP/IP (transaction communications protocol/internet protocol) is a set of networking communication protocols, and is the king of modern networking.
+
+There are two IP protocols – IPV4 and IPv6. IPV6 was created because IPV4 was going to run out of IP addresses. Although IPV4 did run out of IP addresses, it’s still going to be around. IPV6 isn’t really used for most end customers of Internet Service Providers (ISPs).
+
+TCP protocols are stateful, meaning that they manage the state of the connection. UDP is a stateless protocol and this doesn’t involve any handshaking. UDP is a faster protocol as a result, since there’s no mechanism in the form of state to control how data is transmitted, track the data transmission, and retransmit the data if there are any errors during the initial transmission. TCP effortlessly handles all of these aspects of message transmission, as a result of setting up a stateful session following the initial handshake between clients and servers.
+
+Internet Layer Protocols: IP (Internet Protocol), RIP (Routing Information Protocol) and BGP (Border Gateway Protocol)
+
+Host-to-Host Transport Layer Protocols: TCP (Trasmission Control Protocol) and UDP (User Datagram Protocol)
+
+Application Layer Protocols: HTTP, FTP, SMTP, DHCP and DNS.
+
+Address Ranges:-
+
+The 127.0.01 address is special: it’s a loopback address that every host (that uses IP) uses to refer to itself.
+
+The following are all private IP address blocks that you can’t allocate to anyone on the Internet, and are meant to be used for internal networks only.
+
+	All IP addresses in the 10.0.0 network
+
+	The networks ranging from 172.16 to 172.31
+
+	The network 192.168
+
+Netmask
+
+The netmask serves to let the IP stack know which portion of a network address belongs to the network and which part to the hosts. Depending on this, the stack learns whether a destination address is local (on the LAN), or it needs to be sent to a router for forwarding outside the LAN.
+
+The /24 notation in the addressing scheme is called a subnet mask, which means that the leftmost 24 bits (out of the total 0f 32 bits) of the network address define the subnet address. In this case, the subnet 224.1.1.0/24 consists of the three host interfaces with the addresses 224.1.1.1, 224.1.1.2, 224.1.1.3 and a router interface with the address 224.1.1.4. Additional hosts you attach to the subnet 224.1.1.0/24 would all be required to have addresses of the form 224.1.1.xxx.
+
+The Internet address assignment strategy is called Classless Interdomain Routing (CIDR), and is a way to generalize subnet addressing that I described earlier. Under CIDR, a 32-bit IP address has the dotted-decimal form a.b.c.d/x and is divided into two parts, with the x showing the number of bits ion the network portion (first part) of the IP address. The x number of leading bits are also called the network prefix (or just prefix) of the OP address.
+
+--
+
+DNS and DHCP are related in many ways.  DHCP is a way to provide a network device with an IP address, and whereas DNS maps IP addresses to hostnames. You can integrate DHCP and DNS, whereby when DHCP hands a network device an IP address, DNS automatically updated to reflect the device name.
+
+Network Address Translation (NAT) is a way to map your entire network to a single IP address. You use NAT when the number of IP addresses assigned to you is fewer than the total number of hosts that you want to provide Internet access for.
+
+COMMON ROUTING PROTOCOLS:
+
+Routing Information Protocol (RIP): This is the one of the oldest routing protocols, and is used extensively in the Internet, typically in lower layer ISPs and enterprise networks.
+
+Open Shortest Path First (OSPF): OSPF was designed to replace RIP and contains several advanced features such as enhanced security through authentication, and support for a hierarchical autonomous system within a single routing domain. OSPF is a link-state protocol that uses a least-cost path algorithm and also the flooding of link-state information
+
+Border Gateway Protocol (BGP): Unlike RIP and OSPF, BGP is an inter-AS routing protocol. It’s also known as BGP4. BGP provides an AS a way to obtain reachability information regarding neighboring ASs and determine the best route to subnets based on reachability and AS policies. In this protocol, routers exchange information over semi-permanent TCP connections.
+
+You can view the routing table using one of the following commands:
+
+netstat
+route
+ip route
+
+The Hypertext Transfer Protocol (HTTP)
+
+The Web is the most famous and most popular Internet application. The HyperText Transfer Protocol (HTTP) is the Web’s application-layer protocol, and is the foundation of the Web. HTTP is implemented in a pair of client and server programs that communicate through HTTP messages. The HTTP protocol defines the message structure and how exactly the client and the server exchange the messages.
+
+HTTP is a request-response protocol that enables clients and services to communicate with each other. The client can be a web browser and the server can be an application that runs on the server hosting a website. When a client submits a HTTP request to a server, the server returns a response that contains the request status, and most likely, the requested data as well.
+
+HTTP/2, the evolving alternative to the current HTTP protocol (HTTP/1.1) lets you create simpler, faster, and more robust web applications.
+
+Network Load Balancing:
+
+A load balancer is either software or a piece of hardware that can distribute traffic arriving at an IP address over multiple servers. Load balancers strive to spread the load evenly among the servers and allow you to dynamically add and remove the servers. The servers stay hidden behind the load balancer and since clients can see just the load balancer, you can add web servers anytime, without disrupting your services.
+
+Benefits of Using a Network Load Balancer:
+1. Security
+2. Transparent server maintenance
+3. Easily add servers to the pool
+4. Easily manage server failures
+5. Reduce web server resource usage
+
+Load Balancing with DNS
+Domain Name Service (DNS) based load balancing (also called the poor person’s load balancing) is very easy to set up – all you need to do is provide multiple IP addresses for a domain. That is, you need to add multiple A records for the same domain. When a client attempts a connection to the domain, DNS will hand the client a different IP address sequentially, in a round robin fashion.
+
+Enterprise Load Balancers
+When a client resolves a domain name to an IP address through DNS, the client needs to connect to that IP address to request a web page (or a web service endpoint). To enhance the scalability of your applications, it’s a good idea to let a load balancer act as the entry point to your data center, by letting users connect to the load balancer directly instead of to your data center.
+
+There are many types of load balancers from which you can choose, with the following three types being the most popular options:
+
+Software based load balancing
+Hardware based load balancing
+Using a Hosted Sever for load balancing
+
+Software Based Load Balancing:
+1. Using HAPROXY for Load Balancing:
+High Availability Proxy (HAProxy) is a pure load balancer, and you configure it in two ways.
+	a. Layer 4 - HAProxy uses just the TCP/IP headers to distribute traffic across the servers in the load balancer pool. This means that HAProxy can distribute traffic for all protocols, and not just for HTTP (or HTTPS), which enables it to distribute traffic for services such as message queues and databases as well, in addition to web servers.
+	b. When configured as a layer 7 load balancer, HAProxy contains enhanced load balancing capabilities such as SSL termination for example, but consumes more resources to inspect HTTP related information. It’s suitable for web sites crawling under high loads while requiring the persistence of Layer7 processing.
+
+2. Using NGINX for Load Balancing:
+NGINX, the new hotshot web server, also performs load balancing functions. NGINX is more than a pure load balancer – it also contains reverse HTTP proxy capabilities. This means it can cache HTTP responses from the web servers. NGINX is a great candidate when you need a reverse proxy as well as a load balancer.
+NGINX’s reverse HTTP proxy capabilities enable it to offer the following benefits:
+	a. Caching capabilities that reduce resource usage of your web services layer
+	b. Easy scaling of the web services layer by adding more servers to the NGINX pool
+
+Hardware Based Load Balancing:
+Hardware load balancers are meant for use within your own data center, and are useful when hosting heavily used websites. Hardware load balancers are the real deal: unlike software load balancers, which you can only scale horizontally (by adding more of them), a hardware load balancer is easier to scale vertically. Typically, a hardware load balancer can handle hundreds of thousands, or even millions of simultaneous connections. These load balancers provide high throughput and a very low latency, all of which dramatically increase the power of your network.
+
+Using a Hosted Load Balancer Service:
+Managing load balancers gets harder as the size of your infrastructure grows. As with other infrastructure services, it’s a good idea to consider using a hosted load balancer service such as the Elastic Load Balancer (ELB) service offered by Amazon AWS. You can benefit from a third-party service such as ELB regardless of whether you host your own applications or host them on Amazon AWS (or Azure).
+
+The three “Planes’ in Networking
+Computer networks use three distinct planes to perform their tasks – the data plane, the control plane and the management plane. Let me explain these three planes briefly:
+
+1. Data Plane: processes the packets received by a network by using the packet header information to determine whether the packet should be forwarded or dropped. If it decides to forward the packets, it must determine the host and port to which it should send the packet.
+2. Control plane: this plane computes the forwarding state used by the data plane to forward network packets, by calculating the state using distributed or centralized algorithms.
+3. Management plane: this plane coordinates the interactions between the data and the control planes.
+
+----
+
+Scalability, Web Applications, Web Services, and Microservices
+
+Scalability of Applications :
+
+	Application's the ability to handle an increasing number of users and their requests without deterioration in the performance of the applications.
+- Ability to handle higher concurrency
+- Processing More Data
+
+Scalability and performance are intertwined, and present two sides of the same coin. A system that can’t process things fast enough can’t scale very well. There are two major approaches to scaling applications – vertical scaling and horizontal scaling.
+
+a. Vertical Scaling: Upgrading the processing power of your systems without reconfiguring your application - Increase RAM (to reduce IO), Faster n/w, CPU upgrades, Improved Disk IO (SSDs), more powerful RAID controllers etc
+
+
+b. Horizontal Scaling: Horizontal scaling enhances your infrastructure’s processing capacity by adding more servers to your infrastructure. You can add more database servers or more web servers to support a growing volume of business.
+
+Content Delivery Networks :
+
+	Content Delivery Networks (CDNs) also help significantly improve scalability by taking some load off your web servers for providing static web content. One of the best ways to offload some of an application’s web traffic is to employ a third-party content delivery network (CDN) service, such as Akamai, CloudFare, Rackspace (Rackspace Cloud Files Service), and Amazon’s Elastic Compute Cloud (EC2). Currently Akamai is the worldwide market leader. Content delivery networks are hosted services using a distributed network of caching servers that work somewhat similar to the way caching proxies work, and are typically used for distributing an application’s static files such as images, CSS, JavaScript, PDF documents and videos.
+
+GEODNS
+	Normal DNS servers resolve domain names to IP addresses. A GeoDNS takes this concept a bit further: they serve IP addresses (of the web servers or most commonly, the IP addresses of the load balancers) based on the location of the client, allowing clients to connect to web servers running closer to where they’re located. Obviously, minimizing network latency is the goal in using a GeoDNS strategy.
+
+Edge-cache Servers
+	Large companies can also reduce network latency by hosting several edge-cache servers across the world. Edge-cache servers are HTTP cache servers that are situated closer to the clients, enabling them to (partially) cache their HTTP content. The edge-cache servers handle all requests from a client browser and can serve entire web pages if they have it in the cache, or they can use cache fragments of HTTP responses to assemble complete web pages by sending background requests to the company’s web servers.
+
+Stateful vs Stateless Service:
+A stateful service holds data relating to users and their sessions. Data in this context could relate to user session data, local files or locks.
+
+A stateless service (or server) doesn’t hold any data. Data in this case captures the state and stateless services let external services such as a database handle the maintenance of a client’s state. Since they don’t have any data, all the service instances are identical.
+
+USING CACHING TO SCALE THE FRONT-END:
+a. Using a Proxy server: You can use a reverse proxy server such as NGINX (or Varnish) to better control both the type and the duration of the cached web content.
+b. Caching in the web browser (HTTP caching): Today’s web browsers can store large amounts of data, ranging into multiple megabytes in size. Modern web applications such as Single Page Applications (SPAs) can access the local browser storage from the application’s (JavaScript) code, thus reducing the workload of the web servers.
+c. Using an object cache: Both Redis and Memcached are very powerful shared distributed object caches that can help you scale applications to millions of users through clusters of caching servers.
+
+The NGINX Web Server:
+	NGINX isn’t just a high performance HTTP server – it’s also a reverse proxy, as well as an IMAP/POP3 proxy server.
+-> Nginx can work as a load balancer and contains advanced features such as WebSockets and throttling.
+-> You can also configure NGINX to override HTTP headers, which lets you apply HTTP caching to applications that don’t implement caching headers correctly
+-> Since Nginx is also FastCGI server, you can run web applications on the same web server stack as the reverse proxies.
+-> Nginx is highly efficient since it uses asynchronous processing always: this allows the server to proxy tens of thousands of simultaneous web connections with an extremely minimal connection overhead.
+
+CACHING PROXIES:
+	A caching proxy is a server that caches HTTP content. Local caching proxy servers sit in the network, in between your web servers and the clients and all HTTP traffic is routed through the caching servers so they can cache as many web requests as possible. Caching proxies use what’s called a read-through cache to store web responses which can be reused by sending them to multiple servers instead of generating new web traffic for each user. More than corporate networks, it’s Internet Service Providers (ISPs) that install caching proxies to reduce the web traffic generated by users.
+
+REVERSE PROXIES
+	A reverse proxy doesn’t reverse anything – it does the something as a caching proxy! These types of proxy servers are called reverse proxy servers because of their location – you place them inside your data centers to cache the response of your web servers and thus reduce their workload.
+
+Handling Data Storage with Databases
+A. Relational databases (RDBMS) - Oracle, MySQL, PostGres
+B. NOSQL databases - MongoDB, Cassandra
+C. Caching databases - Memcache, Redis
+
+ACID properties:
+1. Atomicity: This is the all-or-none principle which requires that if even one element of a transaction fails, the entire transaction fails. The transaction succeeds only if all of its tasks are performed successfully.
+
+2. Consistency: This property ensures that transactions are always fully completed, by requiring that the database must be in a consistent state both at the beginning and at the end of a transaction.
+
+3. Isolation: Each transaction is considered independent of the other transactions. No transaction has access to any other transaction that’s in an unfinished state.
+
+4. Durability: Once a transaction completes, it’s “permanent”. That is, the transaction is recorded to persistent storage and will survive a system breakdown such as a power or disk failure.
+
+
+MongoDB as a Backend Database
+
+	MongoDB is a highly scalable open source NoSQL database that provides high performance for document-oriented storage.
+
+For Single Page Applications(SPAs) MongoDB’s document-oriented storage works great, since JavaScript uses JSON as well and so you can easily check the database without having to transform the data from the native format of the application. If you were using a relational database instead, you’d need to first convert everything into SQL to store the data in the database and then, to read the data, change it back into JSON, which is very inefficient. The single data format (JSON) used by MEAN applications leads to better performance.
+
+The CAP theorem:
+
+Consistency: this is the same as the ACID consistency property. Satisfying this requirement means that all the nodes in a cluster see all the data they’re supposed to be able to view.
+
+Availability: the system must be available when requested.
+
+Partition Tolerance: failure of a single node in a distributed system mustn’t lead to the failure of the entire system. The system must be available even if there’s some data loss or a partial system failure.
+
+The problem is, at any given time, a distributed system can usually support only two out of the three requirements listed here. This means that tradeoffs are almost always inevitable when using distributed data stores such as the popular NoSQL databases.
+
+BASE :
+Basically Available: the system guarantees the availability of data in the sense that it’ll respond to any request. However, the response could be a “failure” to obtain the request data set, or the data set returned may be in an inconsistent or changing state.
+
+Soft: the state of the system is always “soft, in the sense that the “eventual consistency” (the final requirement) may be causing changes in the system state at any given time
+
+Eventually Consistent: The system will eventually become consistent once it stops receiving new data inputs. As long as the system is receiving inputs, it doesn’t check for the consistency of each transaction before it moves to the next transaction.
+
+Caching
+
+A. HTTP Based Caching
+Static contents can be cached forever.
+	1. Browser Cache - does by the browser at the client end
+	2. Caching Proxies - Web proxies sit between server and client and use read-through cache to reduce the web traffic. Both ISPs and corp network use a caching proxy.
+	3. Reverse Proxies - Managed at the data center of the app. The reverse proxy server intercepts web traffic from clients connecting to a site and forwards the requests to the web server if they can’t serve it directly from their own cache. Also used for overriding HTTP headers. A hardware load balancer or NGINX can be used as reverse proxy.
+
+B. Custom Object Caching
+	Object caching falls under the category of application caching, where the application developers assume the responsibility for the content to be cached, as well as the time for which the content must be cached. Use memcache to store the http page content for a given time.
+	1. Client-side caching is also used with the help of JavaScript. JavaScript running in the browser can retrieve the cached objects from the cache. Note that the users can always wipe the cache clean. Single-page applications (SPAs) that we learned about earlier in this chapter, benefit from the client-side cache since they run a lot of code within the browser, and also rely on asynchronous web requests (AJAX). This is especially true for SPAs explicitly designed for mobile devices.
+
+	2. Local Caching : It doesn’t involve an external caching database. This is instead stored on an application server and hence it is not distributed.
+
+	3. Distributed object Caching : using Memcache and Redis
+	Unlike local cache, distributed cache is remotely hosted on a separate server. A cache server such as Memcached or Redis is really a database, and thus offers most of the capabilities of a key-value store, such as replication, query optimization and efficient use of memory.
+
+Asynchronous Processing, Messaging Applications and MOM
+
+

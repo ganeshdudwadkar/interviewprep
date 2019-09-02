@@ -1,0 +1,64 @@
+Read about System Design Concepts ->
+
+Horizontal Scaling -> means that you scale by adding more machines into your pool of resources
+
+Vertical Scaling -> means that you scale by adding more power (CPU, RAM) to an existing machine.
+
+CAP Theorem -> CAP Theorem is a concept that a distributed database system can only have 2 of the 3: Consistency, Availability and Partition Tolerance. CAP Theorem is very important in the Big Data world, especially when we need to make trade off's between the three, based on our unique use case.
+
+ACID DB Properties ->
+ACID vs BASE -> Basically Available, Soft state, Eventual consistency
+A BASE system gives up on consistency.
+
+Basically available indicates that the system does guarantee availability, in terms of the CAP theorem.
+Soft state indicates that the state of the system may change over time, even without input. This is because of the eventual consistency model.
+Eventual consistency indicates that the system will become consistent over time, given that the system doesn't receive input during that time.
+
+Partition vs Sharding Data ->
+
+Partitioning is a general term used to describe the act of breaking up your logical data elements into multiple entities for the purpose of performance, availability, or maintainability.
+
+Sharding is the process of storing data records across multiple machines and is MongoDB’s approach to meeting the demands of data growth. As the size of the data increases, a single machine may not be sufficient to store the data nor provide an acceptable read and write throughput. Sharding solves the problem with horizontal scaling. With sharding, you add more machines to support data growth and the demands of read and write operations.
+
+Consistent Hashing
+
+
+Optimistic Vs Pessimistic Locking
+Strong Vs Eventual Consistency
+RDBMS vs NoSQL
+Types of NoSQL -> Key Value, Wide Column, Document Based, Graph Based
+Caching
+Data Centers/ RACs/Hosts
+CPU/Memory/Hard Drive/ N/W bandwidth
+Random Vs Sequential read/write on disk
+http vs http2 vs websockets
+TCP/IP Model
+IPV4 vs IPV6
+DNS lookup
+HTTPS and TLS
+Public Key Infrastructure and Certificate Authority
+Symmetric vs Asymmetric key
+Load Balancer -> L4 vs L7
+CDNs and Edge
+Bloom filters vs Count-min sketch
+Design Patterns and Object Oriented Designs
+Virtual Machines Vs Containers
+Publisher / Subscriber or Queue
+Map Reduce
+Multithreading, concurrency, locks, synchronization, CAS
+
+Read about Technologies ->
+
+Cassandra
+MongoDB / CouchDB
+MySQL
+Memcache
+Redis
+Zookeeper
+Kafka
+Nginx
+HAProxy
+Solr, ElasticSearch
+Blobstore like Amazon S3
+Docker - Kubernetes / Mesos
+Hadoop/Spark -> HDFS

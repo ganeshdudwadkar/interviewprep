@@ -1,0 +1,1399 @@
+What is J2EE? What are J2EE components and services?
+
+J2EE (Java 2 Enterprise Edition) is an environment for developing and deploying enterprise applications. The
+J2EE platform consists of J2EE components, services, Application Programming Interfaces (APIs) and protocols that provide the functionality for developing multi-tiered and distributed Web based applications.
+
+Component Type		|  Components					| Packaged As
+Applet				|  applets						|  JAR (Java ARchive)
+Application Client	|  Client side java code	    |  JAR (Java ARchive)
+Web component		|  JSP, Servlet					|  WAR (Web ARchive)
+EJBs				|  Session, Entity Beans	    |  JAR (EJB Archive)
+Enterprise app		|  WAR, JAR, etc				|  EAR (Enterprise ARchive)
+Resource adapters	|  Resource adapters		    |  RAR (Resource Adapter ARchive)
+
+A component is an application level software unit e.g. applet, JSP, Servlet, WAR etc
+A service is a component that can be used remotely through a remote interface either synchronously or asynchronously (e.g. Web service, messaging system, sockets, RPC etc).
+
+Service Oriented Architecture (SOA) - SOA is an evolution of the fundamentals governing a component based development. Component based development provides an opportunity for greater code reuse than what is possible with Object Oriented (OO) development. SOA provides even greater code reuse by utilizing OO development, component based development and also by identifying and organizing right services into a hierarchy of composite services. SOA results in loosely coupled application components, in which code is not necessarily tied to a particular database.
+
+Web Containers and EJB Containers - Containers (Web & EJB containers) are the interface between a J2EE component and the low level platform specific functionality that supports J2EE components. Before a Web, enterprise bean (EJB), or application client component can be executed, it must be assembled into a J2EE module (jar, war, and/or ear) and deployed into its container.
+
+Server supports various protocols. Protocols are used for access to Internet services. J2EE platform supports HTTP (HyperText Transfer Protocol), TCP/IP (Transmission Control Protocol / Internet Protocol), RMI (Remote Method Invocation), SOAP (Simple Object Access Protocol) and SSL (Secured Socket Layer) protocol.
+
+Component model technology - Java Servlet, JavaServer Pages(JSP), Enterprise JavaBeans(EJB).
+
+Web Services technology - JAXP (Java API for XML Processing), JAXR (Java API for XML Registries), SAAJ (SOAP with attachment API for Java), JAX-RPC (Java API for XML-based RPC), JAX-WS (Java API for XML-based Web Services).
+
+Other - JDBC (Java DataBase Connectivity), JNDI (Java Naming and Directory Interface), JMS (Java Messaging Service), JCA (J2EE Connector Architecture), JTA (Java Transaction API), JavaMail, JAF (JavaBeans Activation Framework – used by JavaMail), JAAS (Java Authentication and Authorization Service), JMX (Java Management eXtensions).
+
+MVC architecture - MVC stands for Model-View-Controller architecture. It divides the
+functionality of displaying and maintaining of the data to minimize the degree of coupling (i.e. promotes loose coupling) between components. It is often used by applications that need the ability to maintain multiple views like HTML, WML, Swing, XML based Web service etc of the same data. Multiple views and controllers can interface with the same model. Even new types of views and controllers can interface with a model without forcing a change in the model design.
+
+A model represents the core business logic and state. A model commonly maps to data in the database and will also contain core business logic. e.g. Entity/Session Beans (EJB), Plain Old Java Classes
+
+A view renders the contents of a model. A view accesses the data from the model and adds display logic to present the data. e.g. JSP, JavaBeans, Swing, Custom Tags, etc
+
+A controller acts as the glue between a model and a view. A controller translates interactions with the view into actions to be performed by the model. User interactions in a Web application appear as GET and POST HTTP requests. The actions performed by a model include activating business processes or changing the state of the model. Based on the user interactions and the outcome of the model actions, the controller responds by selecting an appropriate view. e.g. Servlets
+
+Web Server - Supports HTTP protocol. When the Web server receives an HTTP request, it responds with an HTTP response, such as sending back an HTML page (static content) or delegates the dynamic response generation to some other program such as CGI scripts or Servlets or JSPs in the application server. Uses various scalability and fault-tolerance techniques.
+
+Application Server - Exposes business logic and dynamic content to the client through various protocols such as HTTP, TCP/IP, IIOP, JRMP etc. Uses various scalability and fault-tolerance techniques. In addition provides resource pooling, component life cycle management, transaction management, messaging, security etc. Provides services for components like Web container for servlet components and EJB container for EJB components.
+
+Deployment Descriptors - A deployment descriptor is an XML based text file with an “.xml” extension that describes a component's deployment settings. A J2EE application and each of its modules has its own deployment descriptor.
+
+application.xml: is a standard J2EE deployment descriptor, which includes the following structural information: EJB jar modules, Web war modules, <security-role> etc.
+
+web.xml: is a standard deployment descriptor for a Web module. It contains Servler, Servlet Mapping, taglibs, security related info
+
+Explain J2EE class loaders?
+J2EE application server sample class loader hierarchy is shown below. (Also refer to Q5 in Java section). As per
+the diagram the J2EE application specific class loaders are children of the “System –classpath” class loader. When the parent class loader is above the “System –classpath” class loader in the hierarchy as shown in the diagram (i.e. bootstrap class loader or extensions class loader) then child class loaders implicitly have visibility to the classes loaded by its parents. When a parent class loader is below a “System -classpath” class loader in the hierarchy then the child class loaders will only have visibility into the classes loaded by its parents only if they are explicitly specified in a manifest file (MANIFEST.MF) of the child class loader.
+
+Servlets and JSPs are server-side presentation-tier components managed by the web container within an application server. Web applications make use of http protocol, which is a stateless request-response based paradigm.
+
+Traditional CGI (Common Gateway Interface) - Traditional CGI creates a heavy weight process to handle each http request. N number of copies of the same traditional CGI programs is copied into memory to serve N number of requests.
+
+Java Servlet - Spawns a lightweight Java thread to handle each http request. Single copy of a type of servlet but N number of threads (thread sizes can be configured in an application server).
+
+A Servlet is a Java class that runs within a web container in an application server, servicing multiple client requests concurrently forwarded through the server and the web container. The web browser establishes a socket connection to the host server in the URL , and sends the HTTP request. Servlets can forward requests to other servers and servlets and can also be used to balance load among several servers.
+
+A browser and a servlet communicate using the HTTP protocol (a stateless request/response based protocol).
+
+A “ServletRequest” object, which encapsulates client request from the client and the “ServletResponse” object, which encapsulates the communication from the servlet back to the client.
+
+Request Parameters - Parameters are form data that are sent in the request from the HTML page. These parameters are generally form fields in an HTML.
+Request attributes - Once a servlet gets a request, it can add additional attributes, then forward the request off to other servlets or JSPs for processing. Servlets and JSPs can communicate with each other by setting and getting attributes.
+
+Data saved in request-scope goes out of scope once a response has been sent back to the client (i.e. when the request is completed).
+Data saved in a session-scope is available across multiple requests. Data saved in the session is destroyed when the session is destroyed (not when a request completes but spans several requests).
+Data saved in a ServletContext scope (application scope) is shared by all servlets and JSPs in the context. The data stored in the servlet context is destroyed when the servlet context is destroyed.
+
+HTTP is a stateless protocol, so, how do you maintain state? How do you store user data between requests?
+
+HTTP Sessions are the recommended approach. A session identifies the requests that originate from the same browser during the period of conversation. All the servlets can share the same session. The JSESSIONID is generated by the server and can be passed to client through cookies, URL re-writing (if cookies are turned off) or built-in SSL mechanism. Care should be taken to minimize size of objects stored in session and objects stored in session should be serializable.
+
+getSession(true): This method will check whether there is already a session exists for the user. If a session exists, it returns that session object. If a session does not already exist then it creates a new session for the user.
+getSession(false): This method will check whether there is already a session exists for the user. If a session exists, it returns that session object. If a session does not already exist then it returns null.
+
+Sessions can be timed out (configured in web.xml) or manually invalidated.
+
+Cookies: A cookie is a piece of text that a Web server can store on a user’s hard disk. Cookies allow a website to store information on a user’s machine and later retrieve it. These pieces of information are stored as name-value pairs. The cookie data moves in the following manner:
+  If you type the URL of a website into your browser, your browser sends the request to the Web server. When the browser does this it looks on your machine for a cookie file that URL has set. If it finds it, your browser will send all of the name-value pairs along with the URL. If it does not find a cookie file, it sends no cookie data.
+  The URL’s Web server receives the cookie data and requests for a page. If name-value pairs are received, the server can use them. If no name-value pairs are received, the server can create a new ID and then sends name-value pairs to your machine in the header for the Web page it sends. Your machine stores the name value pairs on your hard disk.
+
+Cookies can be used to determine how many visitors visit your site. It can also determine how many are new versus repeated visitors. The way it does this is by using a database. The first time a visitor arrives; the site creates a new ID in the database and sends the ID as a cookie. The next time the same user comes back, the site can increment a counter associated with that ID in the database and know how many times that visitor returns. The sites can also store user preferences so that site can look different for each visitor.
+
+Servlet lifecycle - The Web container is responsible for managing the servlet’s life cycle. The Web container creates an instance of
+the servlet and then the container calls the init() method. At the completion of the init() method the servlet is in ready state to service requests from clients. The container calls the servlet’s service() method for handling each request by spawning a new thread for each request from the Web container’s thread pool. Before destroying the instance the container will call the destroy() method. After destroy() the servlet becomes the potential candidate for garbage collection.
+
+The directory structure of a Web application:
+A public resource directory (document root): The document root is where JSP pages, archives, and static Web resources are stored.
+A private directory called WEB-INF: which contains following files and directories:
+  a) web.xml: Web application deployment descriptor.
+  b) application server specific deployment descriptor e.g. jboss-web.xml etc.
+  c) *.tld: Tag library descriptor files.
+  d) classes: A directory that contains server side classes like servlets, utility classes, JavaBeans etc.
+  e) lib: A directory where JAR (archive files of tag libraries, utility libraries used by the server side classes)
+files are stored.
+
+JSP resources usually reside directly or under subdirectories of the document root, which are directly
+accessible to the user through the URL. If you want to protect your Web resources then hiding the JSP files behind the WEB-INF directory can protect the JSP files from direct access.
+
+GET - The request parameters are transmitted as a query string appended to the request. All the parameters get appended to the URL in the address bar. Allows browser bookmarks but not appropriate for transmitting private or sensitive information. GET was originally intended for static resource retrieval. GET is not appropriate when large amounts of input data are being transferred. Limited to 1024 characters.
+
+POST - The request parameters are passed with the body of the request. Its secure. POST was intended for form submits where the state of the model and database are expected to change. Since it sends information through a socket back to the server and it won’t show up in the URL address bar, it can send much more information to the server. Unlike doGet(), it is not restricted to sending only textual data. It can also send binary data such as serialized Java objects.
+
+ServletConfig - The ServletConfig parameters are for a particular Servlet. The parameters are specified in the web.xml (i.e. deployment descriptor). It is created after a servlet is instantiated and it is used to pass initialization information to the servlet.
+
+ServletContext - The ServletContext parameters are specified for the entire Web application. The parameters are specified in the web.xml (i.e. deployment descriptor). Servlet context is common to all Servlets. So all Servlets share information through ServletContext.
+
+GenericServlet - A GenericServlet has a service() method to handle requests. Protocol independent. GenericServlet is for servlets that might not use HTTP (for example FTP service).
+
+HttpServlet - The HttpServlet extends GenericServlet and adds support for HTTP protocol based methods like doGet(), doPost(), doHead() etc. All client requests are handled through the service() method. The service method dispatches the request to an appropriate method like doGet(), doPost() etc to handle that request. HttpServlet also has methods like doHead(), doPut(), doOptions(), doDelete(), and doTrace(). Protocol dependent (i.e. HTTP).
+
+What is the difference between forwarding a request and redirecting a request?
+Both methods send you to a new resource like Servlet, JSP etc.
+redirecting - sendRedirect() - Sends a header back to the browser, which contains the name of the resource to be redirected to. The browser will make a fresh request from this header information. Need to provide absolute URL path. Has an overhead of extra remote trip but has the advantage of being able to refer to any resource on the same or different domain and also allows book marking of the page.
+Forward - Forward action takes place within the server without the knowledge of the browser. Accepts relative path to the servlet or context root. No extra network trip.
+
+Filters -> A filter dynamically intercepts requests and responses to transform or use the information contained in the
+requests or responses but typically do not themselves create responses. Filters can also be used to transform the response from the Servlet or JSP before sending it back to client. Filters improve reusability by placing recurring tasks in the filter as a reusable unit. A good way to think of Servlet filters is as a chain of steps that a request and response must go through before reaching a Servlet, JSP, or static resource such as an HTML page in a Web application.
+
+**** JSP *****
+
+Both Servlets and JSPs are complementary technologies. You can look at the JSP technology from an HTML designer’s perspective as an extension to HTML with embedded dynamic content and from a Java developer’s as an extension of the Java Servlet technology. JSP is commonly used as the presentation layer for combining HTML and Java code. While Java Servlet technology is capable of generating HTML with out.println(“<html>..... </html>”) statements, where “out” is a PrintWriter. This process of embedding HTML code with escape characters is cumbersome and hard to maintain. The JSP technology solves this by providing a level of abstraction so that the developer can use custom tags and action elements, which can speed up Web development and are easier to maintain.
+
+Model 0 pattern (Model-less pattern) - In this pattern, business logic is embedded within JSP. This pattern is difficult when there is more business and data access logic is involved. Good for basic project.
+
+Model 1 pattern - JSPs retain the responsibility of a controller, and view renderer with display logic but delegates the business processing to java classes known as Java Beans (Model). The Java Beans are Java classes, which adhered to certain standards like:
+
+  Implement java.io.Serializable or java.io.Externalizable interface.
+  Provide a no-arguments constructor.
+  Private properties must have corresponding getXXX/setXXX methods.
+
+In this pattern, JSP has control and display logic, Java Beans has processing logic which interact with the db. JSP page is alone responsible for processing the incoming request and replying back to the user.
+
+Model 2 pattern (MVC – Model, View, Controller architecture) - is a hybrid approach for serving dynamic content, since it combines the use of both Servlets and JSPs. It takes advantage of the predominant strengths of both technologies where a Servlet is the target for submitting a request and performing flow-control tasks and using JSPs to generate the presentation layer. The servlet acts as the controller and is responsible for request processing and the creation of any beans or objects used by the JSP as well as deciding, which JSP page to forward or redirect the request to (i.e. flow control) depending on the data submitted by the user. The JSP page is responsible for retrieving any objects or beans that may have been previously created by the servlet, and as a template for rendering the view as a response to be sent to the user as an HTML.
+
+Servlet (Controller, control logic) instantiates Java Beans (Model, processing logic). Either Servlet or Java Beans then calls JSP (View, display logic) to render the response.
+
+Example 1 :  Post/Redirect/Get pattern to prevent multiple submits due to clicking “refresh button”
+
+1) Request : A link is clicked using the above URL to request for a purchase order form.
+Address bar: http://localhost:8080/myWebCtxt/ requestForAPurchaseForm.do
+
+2) Servlet RequestForAPurchaseFormServlet.class processes the requests and calls required jsp
+public class RequestForAPurchaseFormServlet extends HttpServlet { //...
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/requestForAPurchaseForm.jsp").forward(req, resp);
+	}
+}
+
+3) JSP form requestForAPurchaseForm.jsp to convert it into html
+<%@page contentType="text/html" %> <html>
+<h1>Output to Browser</h1> <body>
+	<form action="/myWebCtxt/purchase.do" method="POST">
+		<input type="text" value="" />
+		<input type="submit" value="submit" />
+	</form> </body>
+</html>
+
+4) html sent to browser from JSP
+ Address bar: http://localhost:8080/myWebCtxt/ requestForAPurchaseForm.do (no change still)
+<html>
+	<title>Simple JSP Page</title> <h1>Output to Browser</h1>
+	<body>
+		<form action="/myWebCtxt/purchase.do" method="POST">
+			<input type="text" value="" />
+			<input type="submit" value="submit"/>
+		</form>
+	</body>
+</html>
+
+5) POST action is called
+PurchaseServlet.class
+public class PurchaseServlet extends HttpServlet {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	//code to update database and model through a business delegate
+	// & data acess logic classes. Not safe to be repeated unintentionally.
+	//note that sendRedirect requires an absolute path
+	resp.sendRedirect("http://localhost:8080/myWebCtxt/display.jsp"); }
+}
+
+6) New GET request call to display.jsp
+<%@page contentType="text/html" %>
+<!-- simple JSP Page -->
+<html>
+	<title>Thanks for your purchase</title>
+	<body>
+		<h1>Thanks for your purchase</h1>
+	</body>
+</html>
+
+7) HTML is sent to brower:
+<!-- simple JSP Page -->
+<html>
+	<title>Thanks for your purchase</title>
+	<body>
+		<h1>Thanks for your purchase</h1>
+	</body>
+</html>
+
+Front Controller pattern : The Front Controller pattern uses a single servlet, which acts as initial point of contact for handling all the requests, including invoking services such as security (authentication and authorization), logging, gathering user input data from the request, gathering data required by the view etc by delegating to the helper classes, and managing the choice of an appropriate view with the dispatcher classes. These helper and dispatcher classes are generally instances of a command design pattern and therefore usually termed as command objects.
+
+The Front Controller pattern centralizes services like security, internationalization, auditing, logging etc to improve manageability, and improves reusability by moving common behavior among command objects into the centralized controller or controller managed helper classes.
+
+web.xml with the Front Controller pattern - There will be only one central controller servlet configured in the web.xml file.
+
+<servlet>
+	<servlet-name>MyControllerServlet</servlet-name>
+	<servlet-class>com. MyControllerServlet </servlet-class>
+</servlet>
+<servlet-mapping>
+	<servlet-name> MyControllerServlet </servlet-name>
+	<url-pattern>*.do</url-pattern>
+</servlet-mapping>
+
+The popular request based web framework Struts uses the Front Controller pattern, where a centralized single servlet is used for channeling all requests and creating instances of “Action” classes for processing user requests. The Struts “Action” classes are command objects.
+
+JSPs have a translation or a compilation process where the JSP engine translates and compiles a JSP file into a JSP Servlet. The translated and compiled JSP Servlet moves to the execution phase (run time) where they can handle requests and send responses. JSP files are compiled the first time they are accessed. On large production sites, or in situations involving complicated JSP files, compilation may cause unacceptable delays to users first accessing the JSP page. The JSPs can be compiled ahead of time (i.e. precompiled) using application server tools/settings or by writing your own script.
+
+Lifecycle of a JSP
+
+  Pre-translated: Before the JSP file has been translated and compiled into the Servlet.
+  Translated: The JSP file has been translated and compiled as a Servlet.
+  Initialized: Prior to handling the requests in the service method the container calls the jspInit() to initialize the
+Servlet. Called only once per Servlet instance.
+  Servicing: Services the client requests. Container calls the _jspService() method for each request.
+  Out of service: The Servlet instance is out of service. The container calls the jspDestroy() method.
+
+There are two types of data in a JSP page.
+      Static part (i.e. HTML, CSS etc), which gets copied directly to the response by the JSP Engine.
+  	  Dynamic part, which contains anything that can be translated and compiled by the JSP Engine.
+
+There are three types of dynamic elements. (TIP: remember SAD as an abbreviation for Scripting, Action and Directive elements).
+
+A) Scripting Elements: A JSP element that provides embedded Java statements. There are three types of scripting elements. They are Declaration, Expression and Scriplet elements:
+1. Declaration Element: is the embedded Java declaration statement, which gets inserted at the Servlet class level.
+<%! Calendar c = Calendar.getInstance(); %>
+2. Expression Element: is the embedded Java expression, which gets evaluated by the service method.
+<%= new Date() %>
+3. Scriptlet Element: are the embedded Java statements, which get executed as part of the service method.
+<%
+  	String username = null;
+	username = request.getParameter("userName"); //”request” is a JSP implicit object
+%>
+Not recommended to use Scriptlet elements because they don’t provide reusability and
+maintainability. Use custom tags like JSTL, JSF tags, etc or beans instead.
+
+B) Action Elements: A JSP element that provides information for execution phase.
+
+ <jsp:useBean id="object_name" class="class_name"/>
+ <jsp:include page="scripts/login.jsp" />
+ <jsp:forward page=”/anotherPage.jsp” />
+ <jsp:forward page=”/servlet/crm.do”>
+	<jsp:param name=”userName” value=”Peter” />
+ </jsp:forward>
+ <% request.setAttribute(“userName”, ”Peter”); %>
+ <% session.setAttribute (“userName”, “Peter”); %>
+
+C) Directive Elements: A JSP element that provides global information for the translation phase. There are three types of directive elements. They are page, include and taglib.
+<%-- page directives examples: --%>
+<%@ page import=”java.util.Date” %> //to import
+<%@ page contentType=”text/html
+
+<%-- include directive example: --%>
+<%@ include file=”myJSP” %> // to include another file
+
+<%-- taglib directive example: --%>
+<%@ taglib uri=”tagliburi” prefix=”myTag”%>
+
+Different scope values or what are the different scope values for <jsp:usebean>
+Scope - Object - Comment
+Page - PageContext - Available to the handling JSP page only.
+Request - Request - Available to the handling JSP page or Servlet and forwarded JSP page or Servlet.
+Session - Session - Available to any JSP Page or Servlet within the same session.
+Application - Application - Available to all the JSP pages and Servlets within the same Web Application.
+
+Implicit objects are the objects that are available for the use in JSP documents without being declared first. These objects are parsed by the JSP engine and inserted into the generated Servlet. The implicit objects are:
+Implicit object - Scope - comment
+request - Request - Refers to the current request from the client.
+response - Page - Refers to the current response to the client.
+pageContext - Page - Refers to the page’s environment.
+session - Session - Refers to the user’s session.
+application - Application - Same as ServletContext. Refers to the web application’s environment.
+out - Page - Refers to the outputstream
+config - Page - same as ServletConfig. Refers to the servlet’s configuration.
+page - Page - Refers to the page’s Servlet instance.
+exception - Page - exception created on this page. Used for error handling. Only available if it is an errorPage with the following directive:
+<%@ page isErrorPage="true" %>
+
+JSP EL (Expression Language)
+One major component of JSP 2.0 is the new expression language named EL. EL is used extensively in JSTL (Java Standard Tag Library). However EL is a feature of JSP and not of JSTL. The EL is a language for accessing runtime data from various sources.
+
+JSTL stands for Java Standard Tag Library and is nothing more than a set of simple and standard tag libraries that
+encapsulates the core functionality commonly needed when writing dynamic JSP pages. JSTL was introduced to allow JSP programmers to code with tags rather than embedding Java code as scriptlets.
+
+Using Scriptlets :
+<html>
+   <head>
+     <title>simple  example<title>
+   </head>
+<body>
+	 <%
+           for(int i=0; i<5; i++) {
+    %>
+	<%= i %>
+	<br/>
+    <% } %>
+</body>
+</html>
+
+Using JSTL tags - easy to read and maintain
+<%@ taglib prefix=”c” uri=”http//java.sun.com/jstl/core”>
+<html>
+	<head><title>simple example<title></head>
+	<body>
+		<c:forEach var=”i” begin=”1” end=”5” step=”1”>
+			<c:out value=”${i}”> <br/>
+		</c:forEach>
+	</body>
+</html>
+
+JSTL consists of 4 tag libraries:
+1. Core Tag Library – looping, condition evaluation, basic input, output etc. (Tag Prefix c)
+<c:out value=”${hello}” />
+<c:if test=”${param.name=’Peter’}”> ...
+<c:forEach items=”${addresses}” var=”address”> ...
+2. Formatting/Internationalization Tag Library – parse data such as number, date, currency etc (Tag Prefix fmt)
+<fmt:formatNumber value=”${now.time}” />
+3. XML Tag Library – tags to access XML elements (Tag Prefix x)
+<x:forEach select="$doc/books/book" var="n">
+	<x:out select="$n/title" />
+</x:forEach>
+4. Database Tag Library - tags to access SQL databases and should be used only to create prototype programs.
+<sql:query var=”emps” sql=”SELECT * FROM Employee”>
+
+JSP custom tags
+
+Custom JSP tag is a tag you define. You define how a tag, its attributes and its body are interpreted, and then group your tags into collections called tag libraries that can be used in any number of JSP files. So basically it is a reusable and extensible JSP only solution. The pre-built tags also can speed up Web development.
+
+JSP Best Practices:
+
+1. Separate HTML code from the Java code: Combining HTML and Java code in the same source code can make the code less readable. Mixing HTML and scriptlet will make the code extremely difficult to read and maintain. The display or behavior logic can be implemented as a custom tags by the Java developers and Web designers can use these tags as the ordinary XHTML tags.
+
+2. Place data access logic in JavaBeans: The code within the JavaBean is readily accessible to other JSPs and Servlets.
+
+3. Factor shared behavior out of Custom Tags into common JavaBeans classes: The custom tags are not used outside JSPs. To avoid duplication of behavior or business logic, move the logic into JavaBeans and get the custom tags to utilize the beans.
+
+4. Choose the right “include” mechanism: What are the differences between static and a dynamic include? Using includes will improve code reuse and maintenance through modular design. Which one to use?
+
+5. Use style sheets (e.g. css), template mechanism (e.g. struts tiles etc) and appropriate comments (both hidden and output comments).
+
+Interview Tip : Every body is nervous for interviews and being a little nervous is natural. But if you are too nervous then you can overcome this by preparing for your interviews and by treating each interview as a free technical/behavioral training course. Have an attitude that even if you are not going to get the job, you are going to learn something good out of it. If you go with this attitude you will put yourself in a win/win situation and you might really get the offer. If you take this attitude you can learn a lot from your interviews. Also never think that you have to answer all the questions correctly. Do not get put off by a tricky or a difficult question. What really earns you a job is the combination of your knowledge + experience + attitude.
+
+**** JDBC & JTA ****
+
+JDBC - JDBC stands for Java Database Connectivity. It is an API which provides easy connection to a wide range of databases. To connect to a database we need to load the appropriate driver and then request for a connection object.
+
+The Class.forName(....) will load the driver and register it with the DriverManager.
+
+Class.forName(“oracle.jdbc.driver.OracleDriver”); //dynamic class loading
+String url = jdbc:oracle:thin:@hostname:1526:myDB;
+Connection myConnection = DriverManager.getConnection(url, “username”, “password”);
+
+The DataSource interface provides an alternative to the DriverManager for making a connection. DataSource makes the code more portable than DriverManager because it works with JNDI and it is created, deployed and managed separately from the application that uses it. If the DataSource location changes, then there is no need to change the code but change the configuration properties in the server.
+
+  JNDI Name   jdbc/myDataSource
+  URL   jdbc:oracle:thin:@hostname:1526:myDB
+  UserName, Password
+  Implementation classname   oracle.jdbc.pool.OracleConnectionPoolDataSource
+  Classpath   ora_jdbc.jar
+  Connection pooling settings like   minimum pool size, maximum pool size, connection timeout, statement cache size etc.
+
+Once the DataSource has been set up, then you can get the connection object as follows:
+Context ctx = new InitialContext();
+DataSource ds = (DataSource)ctx.lookup("jdbc/myDataSource");
+Connection myConnection = ds.getConnection(“username”,”password”);
+
+Data Access Object (DAO pattern)
+A DAO class provides access to a particular data resource in the data tier (e.g. relational database, XML ,
+mainframe etc) without coupling the resource’s API to the business logic in the business tier. For example
+you may have a EmployeeBO business object class access all of its employees in the database using a DAO interface EmployeeDAO. If your data resource change from a database to a Mainframe system, then reimplementing EmployeeDAO for a different data access mechanism (to use a mainframe Connector) would have little or no impact on any classes like EmployeeBO that uses EmployeeDAO because only the implementation (e.g. EmployeeDAOImpl) would change but the interface remains the same. All the classes that use the DAO should code to interface not implementation. If you happen to use the popular Spring framework, then you can inject your DAO classes into your Business Object classes. Spring framework promotes the design principle of “code to interface not to implementation”
+
+Business Objects represent the data client. They are the objects that require access to the datasource to obtain and store data. Data Access Objects abstract the underlying data access implementation for the business objects to enable transparent access to the datasource.
+
+JDBC Statements:
+
+Statement stmt = myConnection.createStatement();
+ResultSet rs = stmt.executeQuery(“SELECT id, name FROM myTable where id =1245”); // to read
+OR
+stmt.executeUpdate(“INSERT INTO (field1,field2) values (1,3)”);//to insert/update/delete/create
+
+The types of statements are:
+  Statement (regular statement as shown above)
+  PreparedStatement (more efficient than statement due to pre-compilation of SQL)
+  CallableStatement (to call stored procedures on the database)
+
+Transaction ACID Properties
+
+Atomicity: All the individual operations should either complete or fail.
+Consistency: The design of the transaction should update the database correctly.
+Isolation: Prevents data being corrupted by concurrent access by two different sources. It keeps transactions isolated or separated from each other until they are finished.
+Durability: Ensures that the database is definitely updated once the Transaction is completed.
+
+Transactions maintain data integrity. A transaction has a beginning and an end like everything else in life. The setAutocommit(....), commit() and rollback() are used for marking the transactions (known as transaction demarcation).
+
+Local transaction: Transaction is within the same database. You can combine multiple SQL statements into a single transaction, but the transactional scope is limited to a single database connection. A JDBC transaction cannot span multiple databases.
+
+Distributed Transaction (aka Global Transaction, JTA/XA transaction): The transactions that constitute a distributed transaction might be in the same database, but more typically are in different databases and often in different locations. For example A distributed transaction might consist of money being transferred from an account in one bank to an account in another bank. You would not want either transaction committed without assurance that both will complete successfully. The Java Transaction API (JTA) and its sibling Java Transaction Service (JTS), provide distributed transaction services for the J2EE platform.
+
+A two-phase commit is an approach for committing a distributed transaction in 2 phases.
+
+JTA transactions are more powerful than JDBC transaction because a JDBC transaction is limited to a single database whereas a JTA transaction can have multiple participants like:
+JDBC connections.
+JMS queues/topics.
+Enterprise JavaBeans (EJBs).
+Resource adapters that comply with J2EE Connector Architecture (JCA) specification.
+
+Web components like Servlets/JSPs may only start a transaction in its service() method and a transaction started in its service method must be completed before the service() method completes. A transaction cannot span across multiple web requests. Some of the considerations are as follows:
+• JTA transactions should start and complete within the thread in which service() method is called and any additional threads created in the servlet should not try to start any JTA transaction.
+• JDBC connection objects should not be stored in static fields or instance fields (for multi-threaded model). JDBC connection objects should be acquired and released within the same invocation of the service() method.
+
+Difference between statements and prepared statements:
+  Prepared statements offer better performance, as they are pre-compiled. Prepared statements reuse the
+same execution plan for different arguments rather than creating a new execution plan every time. Prepared statements use bind arguments, which are sent to the database engine. This allows mapping different requests with same prepared statement but different arguments to execute the same execution plan.
+  Prepared statements are more secure because they use bind variables, which can prevent SQL injection attack.
+
+**** JNDI & LDAP ****
+
+JNDI stands for Java Naming and Directory Interface. It provides a generic interface to LDAP (Lightweight
+Directory Access Protocol) and other directory services like NDS, DNS (Domain Name System) etc. It provides a means for an application to locate components that exist in a name space according to certain attributes. A J2EE application component uses JNDI interfaces to look up and reference system-provided and user-defined objects in a component environment. JNDI is not specific to a particular naming or directory service. It can be used to access many different kinds of systems including file systems.
+
+LDAP stands for Lightweight Directory Access Protocol. This is an extensible open network protocol standard that provides access to distributed directory services. LDAP is an Internet standard for directory services that run on TCP/IP.
+
+Difference between LDAP and RDBMS : LDAP is more useful when the information is often searched but rarely modified. (Another difference is that RDBMS systems store information in rows of tables whereas LDAP uses object oriented hierarchies of entries.)
+
+**** Java Remote Method Invocation (RMI) ****
+Java Remote Method Invocation (RMI) provides a way for a Java program on one machine to communicate with
+objects residing in different JVMs (i.e. different processes or address spaces). The important parts of the RMI architecture are the stub class, object serialization and the skeleton class. RMI uses a layered architecture where each of the layers can be enhanced without affecting the other layers.
+
+**** JMS (Java Message Service) ****
+Java Message Service (JMS) is a Java API that allows applications to create, send, receive, and read messages in a standard way. Designed by Sun and several partner companies, the JMS API defines a common set of interfaces and associated semantics that allow programs written in the Java programming language to communicate with other messaging implementations (e.g. SonicMQ, TIBCO etc). The JMS API minimizes the set of concepts a programmer must learn to use messaging products but provides enough features to support sophisticated messaging applications.
+
+****  XML ****
+
+XML stands for eXtensible Markup Language. XML is a grammatical system for constructing custom markup languages for describing business data, mathematical data, chemical data etc. XML loosely couples disparate applications or systems utilizing JMS, Web services etc. XML uses the same building blocks that HTML does: elements, attributes and values.
+
+Why is XML important?
+• Scalable: Since XML is not in a binary format you can create and edit files with anything and it’s also easy to debug. XML can be used to efficiently store small amounts of data like configuration files (web.xml, application.xml, struts- config.xml etc) to large company wide data with the help of XML stored in the database.
+• Fast Access: XML documents benefit from their hierarchical structure. Hierarchical structures are generally faster to access because you can drill down to the section you are interested in.
+• Easy to identify and use: XML not only displays the data but also tells you what kind of data you have. The mark up tags identifies and groups the information so that different information can be identified by different application.
+• Stylability: XML is style-free and whenever different styles of output are required the same XML can be used with different style-sheets (XSL) to produce output in XHTML, PDF, TEXT, another XML format etc.
+• Linkability, in-line usability, universally accepted standard with free/inexpensive tools etc
+
+Disadvantages : XML is verbose and it can be 4-6 times larger in size compared to a csv or a tab delimited file. If your network lacked bandwidth and/or your content is too large and network throughput is vital to the application then you may consider using a csv or tab delimited format instead of an XML.
+
+A SAX (Simple API for XML) parser does not create any internal structure. Instead, it takes the occurrences of components of an input document as events (i.e., event driven), and tells the client what it reads as it reads through the input document. Use SAX parser when
+  Input document is too big for available memory.
+  When only a part of the document is to be read and we create the data structures of our own.
+  If you use SAX, you are using much less memory and performing much less dynamic memory allocation.
+
+A DOM (Document Object Model) parser creates a tree structure in memory from an input document and then waits for requests from client.
+Use DOM when
+  Your application has to access various parts of the document and using your own structure is just as complicated as the DOM tree.
+  Your application has to change the tree very frequently and data has to be stored for a significant amount of time.
+
+Use JAXP (Java API for XML Parsing) which enables applications to parse and transform XML documents independent of the particular XML parser.
+
+XML stands for eXtensible Markup Language.
+DTD stands for Document Type Definition. XML provides an application independent way of sharing data.
+XSD stands for Xml Schema Definition, which is a successor of DTD. So XSD is a building block of an XML document.
+XSL stands for eXtensible Stylesheet Language. The XSL consists of 3 parts:
+	• XSLT: Language for transforming XML documents from one to another.
+	• XPath: Language for defining the parts of an XML document.
+	• XSL-FO: Language for formatting XML documents. For example to convert an XML document to a PDF document etc.
+JAXP stands for Java API for XML Processing. This provides a common interface for creating and using SAX, DOM, and XSLT APIs in Java regardless of which vendor’s implementation is actually being used (just like the JDBC, JNDI interfaces).
+JAXB stands for Java API for XML Binding. This standard defines a mechanism for writing out Java objects as XML (Marshaling) and for creating Java objects from XML structures (unMarshaling). (You compile a class description to create the Java classes, and use those classes in your application.)
+
+**** SQL, Database, and O/R mapping ****
+
+Explain Joins
+
+Normalization is a design technique that is widely used as a guide in designing relational databases. Normalization
+is essentially a two step process that puts data into tabular form by removing repeating groups and then removes duplicated data from the relational tables.
+
+1NF -> A database is said to be in First Normal Form when all entities have a unique identifier or key, and when every column in every table contains only a single value and doesn't contain a repeating group or composite field.
+
+2NF -> A database is in Second Normal Form when it is in First Normal Form plus every non-primary key column in the table must depend on the entire primary key, not just part of it, assuming that the primary key is made up of composite columns.
+
+3NF -> A database is in Third Normal Form when it is in Second Normal Form and each column that isn't part of the primary key doesn't depend on another column that isn't part of the primary key.
+
+Typically, transactional databases are highly normalized. This means that redundant data is eliminated and replaced with keys in a one-to-many relationship. Data that is highly normalized is constrained by the primary key/foreign key relationship, and thus has a high degree of data integrity. Denormalized data, on the other hand, creates redundancies; this means that it's possible for denormalized data to lose track of some of the relationships between atomic data items. However, since all the data for a query is (usually) stored in a single row in the table, it is much faster to retrieve.
+
+One-to-One relationship can be implemented as a single table and rarely as two tables with primary and foreign
+key relationships.
+
+One-to-Many relationships are implemented by splitting the data into two tables with primary key and foreign key relationships.
+
+Many-to-Many relationships are implemented using join table with the keys from both the tables forming the composite primary key of the junction table.
+
+DB Performance Tuning:
+  Denormalize your tables where appropriate.
+  Proper use of index columns: An index based on numeric fields is more efficient than an index based on
+character columns.
+  Reduce the number of columns that make up a composite key.
+  Proper partitioning of tablespaces and create a special tablespace for special data types like CLOB,
+BLOB etc.
+  Data access performance can be tuned by using stored procedures to crunch data in the database server
+to reduce the network overhead and also caching data within your application to reduce the number of accesses.
+
+View is a precompiled SQL query, which is used to select data from one or more tables. A view is like a table but it doesn’t physically take any space (i.e. not materialized). Views are used for
+  Providing inherent security by exposing only the data that is needed to be shown to the end user.
+  Enabling re-use of SQL statements.
+  Allows changes to the underlying tables to be hidden from clients, aiding maintenance of the database schema (i.e. encapsulation).
+
+Views with multiple joins and filters can dramatically degrade performance because views contain no data and any retrieval needs to be processed. The solution for this is to use materialized views or create de-normalized tables to store data. This technique is quite handy in overnight batch processes where a large chunk of data needs to be processed. Normalized data can be read and inserted into some temporary de- normalized table and processed with efficiency.
+
+A trigger is a fragment of code that you tell to run before or after a table is modified. There are typically three triggering EVENTS that cause trigger to 'fire':
+• INSERT event (as a new record is being inserted into the database).
+• UPDATE event (as a record is being changed).
+• DELETE event (as a record is being deleted).
+Triggers can restrict access to specific data, perform logging, or audit access to data.
+
+Constraints enable the RDBMS enforce the integrity of the database automatically, without needing you to create triggers, rule or defaults.
+Types of constraints: NOT NULL, CHECK, UNIQUE, PRIMARY KEY, FOREIGN KEY
+
+**** UML ****
+
+The more complicated the underlying system, the more critical the communication among everyone involved in developing and deploying the software. UML is a software blueprint language for analysts, designers and developers. UML provides a common vocabulary for the business analysts, architects, developers etc.
+
+UML is applicable to the Object Oriented problem solving. UML begins with a model; A model is an abstraction of the underlying problem. The domain is the actual world from which the problem comes. The model consists of objects. The objects interact with each other by sending and receiving messages. The objects are characterized by attributes and operations (behaviors). The values of an object’s attributes determine its state. The classes are the blueprints (or like templates) for objects. A class wraps attributes and methods into a single distinct entity. The objects are the instances of classes.
+
+Use case diagrams: Depicts the typical interaction between external users (i.e. actors) and the system. The emphasis is on what a system does rather than how it does it. A use case is a summary of scenarios for a single task or goal. An actor is responsible for initiating a task. The connection between actor and use case is a communication association.
+
+Class diagrams: Class diagram technique is vital within Object Oriented methods. Class diagrams describe the types of objects in the system and the various static relationships among them. Class diagrams also show the attributes and the methods.
+
+***** Struts Overview ****
+
+Struts is a framework with set of cooperating classes, servlets and JSP tags that make up a reusable MVC 2 design.
+
+	Client (Browser): A request from the client browser creates an HTTP request. The Web container will respond to the request with an HTTP response, which gets displayed on the browser.
+
+    Controller (ActionServlet class and RequestProcessor class): The controller receives the request from
+the browser, and makes the decision where to send the request based on the struts-config.xml. Design
+pattern: Struts controller uses the command design pattern by calling the Action classes based on the
+configuration file struts-config.xml and the RequestProcessor class’s process() method uses template method design pattern by calling a sequence of methods like:
+• processPath(request, response)   read the request URI to determine path element.
+• processMapping(request,response)   use the path information to get the action mapping
+• processRoles(request,respose,mapping)   Struts Web application security which provides an
+authorization scheme. By default calls request.isUserInRole(). For example allow “/addCustomer” action
+if the role is executive.
+       <action path=”/addCustomer” roles=”executive”>
+• processValidate(request,response,form,mapping)   calls the validate() method of the ActionForm.
+• processActionCreate(request,response,mapping)  gets the name of the action class from the “type” attribute of the <action> element.
+• processActionPerform(req,res,action,form,mapping)   This method calls the execute method of the Action class which is where business logic is written.
+	ActionServlet class is the controller part of the MVC implementation and is the core of the framework. It processes user requests, determines what the user is trying to achieve according to the request, pulls data from the model (if necessary) to be given to the appropriate view, and selects the proper view to respond to the user. As discussed above ActionServlet class delegates the grunt of the work to the RequestProcessor and Action classes.
+
+  Workflow Logic (Action class): The Servlet dispatches the request to Action classes, which act as a thin wrapper to the business logic (the actual business logic is carried out by either EJB session beans and/or plain Java classes). The action class helps control the workflow of the application. (Note: The Action class should only control the workflow and not the business logic of the application). The Action class uses the Adapter design pattern. The Action class is a wrapper around the business logic. The purpose of the Action class is to translate the HttpServletRequest to the business logic. To use the Action class, subclass and overwrite the execute() method. The actual business logic should be in a separate package or EJB to allow reuse of business logic in a protocol independent manner (i.e. the business logic should be used not only by HTTP clients but also by WAP clients, EJB clients, Applet clients etc).
+
+  ActionForm class: Java representation of HTTP input data. They can carry data over from one request to another, but actually represent the data submitted with the request. The ActionForm class maintains the state for the Web application. ActionForm is an abstract class, which is subclassed for every input form model. The struts-config.xml file controls, which HTML form request maps to which ActionForm.
+
+  View (JSP): The view is a JSP file. There is no business or flow logic and no state information. The JSP should just have tags to represent the data on the browser.
+
+The ExceptionHandler can be defined to execute when the Action class’s execute() method throws an Exception. For example
+When an IOException is thrown then it will be handled by the execute() method of the my.ExceptionHandler class. The struts-config.xml configuration information is translated into ActionMapping, which are put into the ActionMappings collection.
+
+Struts action classes are not thread-safe. Struts action classes are cached and reused for performance optimization at the cost of having to implement the action classes in a thread-safe manner.
+
+An action mapping is a configuration file (struts-config.xml) entry that, in general, associates an action name with an action. An action mapping can contain a reference to a form bean that the action can use, and can additionally define a list of local forwards that is visible only to this action.
+
+Struts is based on model 2 MVC (Model-View-Controller) architecture. Struts controller uses the command design pattern (Refer Q11 in How would you go about section) and the action classes use the adapter design pattern. The process() method of the RequestProcessor uses the template method design pattern (Refer Q11 in How would you go about section). Struts also implement the following J2EE design patterns
+  Service to Worker (Refer Q25 in Enterprise section).
+  Dispatcher View (Refer Q25 in Enterprise section).
+  Composite View (Struts Tiles) (Refer Q25 in Enterprise section)
+  Front Controller (Refer Q24 in Enterprise section).
+  View Helper (Refer Q25 in Enterprise section).
+  Synchronizer Token (Refer Q111 in Enterprise section).
+
+**** Web and Application servers ****
+
+Web Servers - Apache, Microsoft IIS, Netscape, Domino etc
+Application Servers - IBM WebSphere, BEA WebLogic, Apache Tomcat, Borland Enterprise Server, Fujitsu Interstage, JBoss, ATG Dynamo etc
+Portal servers - Websphere Portal Server, JBoss Portal Server, etc
+LDAP Servers - IPlanet’s directory server, SiemensDirX etc
+Database Servers - IBM DB2, Oracle, SQL Server, Sybase, Informix
+
+In general, an application server prepares data for a Web server -- for example, gathering data from databases, applying relevant business rules, processing security checks, and/or storing the state of a user’s session.
+
+Web Server - Supports HTTP protocol. When a Web server receives an HTTP request, it responds with an HTTP response, such as sending back an HTML page (static content) or delegates the dynamic response generation to some other program such as CGI scripts or Servlets or JSPs in an application server. Uses various scalability and fault-tolerance techniques.
+
+Application Server - Exposes business logic and dynamic content to a client through various protocols such as HTTP, TCP/IP, IIOP, JRMP etc.
+Uses various scalability and fault-tolerance techniques. In addition provides resource pooling, component life cycle management, transaction management, messaging, security etc.
+
+Virtual Hosts - The term virtual host refers to the practice of maintaining more than one server on one machine. They are differentiated by their host names. You can have name based virtual hosts and IP address based virtual hosts.
+
+Application Server Clustering - An application server cluster consists of a number of application servers loosely coupled on a network. The server cluster or server group is generally distributed over a number of machines or nodes. The important point to note is that the cluster appears as a single server to its clients.
+The goals of application server clustering are: Scalability, Load balancing, High availability
+
+A portal is a Web site or service that offers broad range of resources and services like e-mail, forums, search engines, on-line shopping, news, weather information, stock quotes, etc. Portal is a term generally synonymous with the terms gateway or grand entrance into the Internet for many users. E.g. www.yahoo.com, www.aol.com, www.msn.com etc.
+
+Give some tips on J2EE application server performance tuning ->
+
+a. Set the Web container threads, which will be used to process incoming HTTP requests. The minimum size should be tuned to handle the average load of the container and maximum should be tuned to handle the peak load. The maximum size should be less than or equal to the number of threads in your Web server.
+
+b. Application servers maintain a pool of JDBC resources so that a new connection does not need to be created for each transaction. Application servers can also cache your prepared statements to improve performance. So you can tune the minimum and maximum size of these pools.
+
+c. Tune your initial heap size for the JVM so that the garbage collector runs at a suitable interval so that it does not cause any unnecessary overhead. Adjust the value as required to improve performance.
+
+d. Set the session manager settings appropriately based on following guidelines:
+  Set the appropriate value for in memory session count.
+  Reduce the session size.
+  Don’t enable session persistence unless required by your application.
+  Invalidate your sessions when you are finished with them by setting appropriate session timeout.
+
+e. If a servlet or JSP file is called frequently with identical URL parameters then they can be dynamically cached to improve performance.
+
+f. Turn the application server tracing off unless required for debugging.
+
+g. Some application servers support lazy loading and dirty marker strategies with EJB to improve
+performance.
+
+J2EE Best Practices :
+
+a. Recycle your valuable resources by either pooling or caching. You should create a limited number of
+resources and share them from a common pool (e.g. pool of threads, pool of database connections, pool of objects etc). Caching is simply another type of pooling where instead of pooling a connection or object, you are pooling remote data (database data) and placing it in the memory (using Hashtable etc).
+
+b. Avoid embedding business logic in a protocol dependent manner like in JSPs, HttpServlets, Struts action classes etc. This is because your business logic should be not only executed by your Web clients but also required to be shared by various GUI clients like Swing based stand alone application, WAP clients etc.
+
+c. Automate the build process with tools like Ant, CruiseControl, and Maven etc. In an enterprise application the build process can become quite complex and confusing.
+
+d. Build test cases first (i.e. Test Driven Development (TDD), refer section Emerging Technologies) using tools like JUnit. Automate the testing process and integrate it with build process.
+
+e. Separate HTML code from the Java code: Combining HTML and Java code in the same source code can make the code less readable. Mixing HTML and scriptlet will make the code extremely difficult to read and maintain. The display or behavior logic can be implemented as a custom tags by the Java developers and Web designers can use these Tags as the ordinary XHTML tags.
+
+f. It is best practice to use multi-threading and stay away from single threaded model of the servlet unless otherwise there is a compelling reason for it. Shared resources can be synchronized or used in read-only manner or shared values can be stored in a database table. Single threaded model can adversely affect performance.
+
+g. Apply the following JSP best practices:
+
+  1. Place data access logic in JavaBeans: The code within the JavaBean is readily accessible to other
+JSPs and Servlets.
+  2. Factor shared behavior out of Custom Tags into common JavaBeans classes: The custom tags are not used outside JSPs. To avoid duplication of behavior or business logic, move the logic into JavaBeans and get the custom tags to utilize the beans.
+  3. Choose the right “include” mechanism: What are the differences between static and a dynamic include? Using includes will improve code reuse and maintenance through modular design. Which one to use? Refer Q31 in Enterprise section.
+  4. Use style sheets (e.g. css), template mechanism (e.g. struts tiles etc) and appropriate comments (both hidden and output comments).
+
+h. Use the J2EE standard packaging specification to improve portability across Application Servers.
+
+i. Use proven frameworks like Struts, Spring, Hibernate, JSF etc.
+
+j. Apply appropriate proven J2EE design patterns to improve performance and minimize network communications cost (Session façade pattern, Value Object pattern etc).
+
+k. Batch database requests to improve performance. Also use “PreparedStatements” instead of ordinary “Statements” for repeated reads.
+
+l. Avoid resource leaks by
+  1. Closing all database connections after you have used them.
+  2. Cleaning up the objects after you have finished with them especially when an object having a long life
+cycle refers to a number of objects with short life cycles, then you have the potential for memory leak.
+  3. Having the resource (i.e. database connections, statements, etc) clean up code in a finally {} block,
+which is always executed, even if an exception is thrown.
+
+m. Handle and propagate exceptions correctly. Decide between checked and unchecked (i.e. RunTime) exceptions.
+
+n. Minimize serialization costs by marking references (like file handles, database connections etc), which do not require serialization by declaring them ‘transient’. Use pass-by-reference where possible as opposed to pass by value.
+
+o. Set appropriate timeouts: for the HttpSession objects, after which the session expires, set idle timeout for stateful session beans etc.
+
+p. Improve the performance of database operations with the following tips:
+
+  1. Database connections should be released when not needed anymore, otherwise there will be potential resource leakage problems.
+  2. Apply least restrictive but valid transaction isolation level.
+  3. Use JDBC prepared statements for overall database efficiency and for batching repetitive inserts and updates. Also batch database requests to improve performance.
+  4. When you first establish a connection with a database by default it is in auto-commit mode. For better performance turn auto-commit off by calling the connection.setAutoCommit(false) method.
+  5. Where appropriate (you are loading 100 objects into memory but use only 5 objects) lazy load your data to avoid loading the whole database into memory using the virtual proxy pattern. Virtual proxy is an object, which looks like an object but actually contain no fields until when one of its methods is called does it load the correct object from the database.
+  6. Where appropriate eager load your data to avoid frequently accessing the database every time over the network.
+
+ How do you get a thread dump of a Java process in a UNIX machine?
+ kill -3 <process-id>
+
+ What tools/commands do you use to help you identify an out of control Java process in a UNIX machine?
+UNIX stat tools/commands like jvmstat, vmstat, iostat etc.
+
+**** Logging, testing and deployment ****
+
+Log4j is a logging framework for Java. Log4J is designed to be fast and flexible. Log4J has 3 main components which work together to enable developers to log messages:
+  Loggers
+  Appenders
+  Layout
+
+How do you initialize and use Log4J?
+public class MyApp {
+	//Logger is a utility wrapper class to be written with appropriate printing methods
+	static Logger log = Logger.getLogger (MyApp.class.getName());
+
+	public void my method() {
+		if(log.isDebugEnabled(){
+			log.debug(“This line is reached.............................” + var1 + “-” + var2);
+		}
+	}
+}
+
+Test Phases and Cycles :
+
+  A. Unit tests (e.g. JUnit etc, carried out by developers).
+There are two popular approaches to testing server-side classes: mock objects, which test classes by simulating the server container, and in-container testing, which tests classes running in the actual server container. If you are using Struts framework, StrutsTestCase for JUnit allows you to use either approach, with very minimal impact on your actual unit test code.
+
+  B. System tests or functional tests (carried out by business analysts and/or testers).
+  C. Integration tests (carried out by business analysts, testers, developers etc).
+  D. Regression tests (carried out by business analysts and testers).
+  E. Stress volume tests or load tests (carried out by technical staff).
+  F. User acceptance tests (UAT – carried out by end users).
+
+Load testing tools: Rational Robot, JMeter, LoadRunner, etc.
+Source control systems: CVS, Subversion, VSS (Visual Source Safe), Rational clear case etc. Refer Q14 in How would you go about section.... for CVS.
+Operating systems: NT, Unix, Linux, Solaris etc
+Online technical resources : http://www.javaranch.com
+
+Performance optimization considerations
+
+A) Application level -
+  Application design.
+  Application Server tuning.
+  Application coding.
+  Drivers etc.
+  Database partitioning, tuning etc
+
+B)  Java infra -
+  JVM selection
+  JVM tuning (min & max heap size, perm size etc)
+
+C) System level -
+  Network I/O, Disk I/O etc
+  Operating System
+  System configuration, topology etc
+  Hardware (CPU, memory, I/O etc)
+
+  Imp : Hence forth refer Section III  and IV of "Java J2EE Job Interview Companion" book starting page 239 for examples and summaries
+
+  SOA is a software design principle and an architectural pattern for implementing loosely coupled, reusable and coarse grained services. You can implement SOA using any protocols such as HTTP, HTTPS, JMS, SMTP, RMI, IIOP (i.e. EJB uses IIOP), RPC etc. Messages can be in XML or Data Transfer Objects (DTOs).
+
+  Web service is an implementation technology and one of the ways to implement SOA. You can build SOA based applications without using Web services – for example by using other traditional technologies like Java RMI, EJB, JMS based messaging, etc. But what Web services offer is the standards based and platform-independent service via HTTP, XML, SOAP, WSDL and UDDI, thus allowing interoperability between heterogeneous technologies such as J2EE and .NET. Interfaces must be based on Internet protocols such as HTTP, FTP and SMTP. There are two main styles of Web services: SOAP and REST. Messages must be in XML and binary data attachments.
+
+ SOAP stands for Simple Object Access Protocol. It is an XML based lightweight protocol, which allows software components and application components to communicate, mostly using HTTP (can use SMTP etc). SOAP sits on top of the HTTP protocol. SOAP is nothing but XML message based document with pre-defined format. SOAP is designed to communicate via the Internet in a platform and language neutral manner and allows you to get around
+irewalls as well. Let’s look at thr structure of a SOAP messages:
+• A SOAP message MUST be encoded using XML
+• A SOAP message MUST use the SOAP Envelope namespace
+• A SOAP message MUST use the SOAP Encoding namespace
+• A SOAP message must NOT contain a DTD reference
+• A SOAP message must NOT contain XML Processing Instructions
+
+WSDL stands for Web Services Description Language. A WSDL document is an XML document that describes how the messages are exchanged. Let’s say we have created a Web service. Who is going to use that and how does the client know which method to invoke and what parameters to pass? There are tools that can generate WSDL from the Web service. Also there are tools that can read a WSDL document and create the necessary code to invoke the Web service. So the WSDL is the Interface Definition Language (IDL) for Web services.
+
+UDDI stands for Universal Description Discovery and Integration. UDDI provides a way to publish and discover information about Web services. UDDI is like a registry rather than a repository. A registry contains only reference information like the JNDI, which stores the EJB stub references. UDDI has white pages, yellow pages and green pages. If the retail industry published a UDDI for a price check standard then all the retailers can register their services into this UDDI directory. Shoppers will search the UDDI directory to find the retailer interface. Once the interface is found then the shoppers can communicate with the services immediately.
+	The Web services can be registered for public use at http://www.uddi.org. Once the Web service is selected through the UDDI then it can be located using the discovery process.
+	Before UDDI, there was no Internet standard for businesses to reach their customers and partners with information about their products and services. Neither was there a method of how to integrate businesses into each other's systems and processes. UDDI uses WSDL to describe interfaces to Web services.
+=======================================================================================================
+
+Java WebServices (JAX-WS)
+
+http://www.tutorialspoint.com/webservices/what_are_web_services.htm
+
+A web service is a collection of open protocols and standards used for exchanging data between applications or systems. Software applications written in various programming languages and running on various platforms can use web services to exchange data over computer networks like the Internet in a manner similar to inter-process communication on a single computer. This interoperability (e.g., between Java and Python, or Windows and Linux applications) is due to the use of open standards.
+
+Components of Web Services
+The basic web services platform is XML + HTTP. All the standard web services work using the following components
+
+SOAP (Simple Object Access Protocol)
+UDDI (Universal Description, Discovery and Integration)
+WSDL (Web Services Description Language)
+
+How Does a Web Service Work?
+A web service enables communication among various applications by using open standards such as HTML, XML, WSDL, and SOAP. A web service takes the help of:
+
+XML to tag the data
+SOAP to transfer a message
+WSDL to describe the availability of service.
+
+Benefits
+
+1. Exposing the Existing Function on the network
+2. Interoperability
+3. Standardized Protocol
+4. Low Cost
+
+Web services use SOAP over HTTP protocol, so you can use your existing low-cost internet for implementing web services. This solution is much less costly compared to proprietary solutions like EDI/B2B. Besides SOAP over HTTP, web services can also be implemented on other reliable transport mechanisms like FTP.
+
+Characteristics
+
+XML-Based
+Loosely Coupled
+Coarse-Grained
+Ability to be Synchronous or Asynchronous
+Supports Remote Procedure Calls(RPCs)
+Supports Document Exchange
+
+Web Service Roles
+1. Service Provider
+2. Service Requestor
+3. Service Registry
+
+Technologies
+
+1. XML-RPC - This is the simplest XML-based protocol for exchanging information between computers.
+2. SOAP - SOAP is an XML-based protocol for exchanging information between computers.
+3. WSDL - WSDL is an XML-based language for describing web services and how to access them
+4. UDDI - UDDI is an XML-based standard for describing, publishing, and finding web services.
+
+There are three specific security issues with web services:
+
+Confidentiality
+Authentication
+Network Security
+
+
+---------------
+
+Koushik
+
+********* SOAP WebService *********
+
+Web Services - service made available over the web
+
+WebSite - Human consumption
+WebService - Code consumption
+
+Advantages -
+Interoperability
+
+WSDL - (Web Service Descriptive Languange), tools generate the wsdl for us wsdl role is same as interfaces (method, args, return type)
+WSDL is an interface provided by the app which hosts the web service
+UDDI (Universal Description Discovery and Integration) - These directories (registry) helps us explore the available web services - not much used
+XML - info exchange formal (neutral format)
+SOAP (Simple Object Access Protocol) is used to send the request/response
+SEI (Service Endpoint Interface) is used by client app to act as an interface to the endpoint (WS)
+At client app side, SEI automatically translates the webservice call into a SOAP message. We don't have to code SEI, its done automatically.
+
+How to write client app which calls the webservice? (Web Service Client)s
+e.g. write a client app which upon calls a webservice geoIpService, it takes ip and returns the country that ip belongs to.
+1. write a core java program as usual
+2. use tool wsimport (available as part of jdk)
+wsimport [options] <WSDL_URL>
+The command looks at the WSDL_URL, parses the WSDL, generates the .java files, compiles them into classes and removes java files. Other options available to keep java files or create a jar file to use as lib
+3. Add those classes in your project, import the required classes and use them as local method calls
+
+Basically wsimports creates a set of classes (called stubs - because remote names are same) which acts as simple regular classes to avoid complexity of the webservices.
+
+Building JAX-WS Services
+
+Need J2EE JDK edition and Glassfish app server
+Eclipse Kepler version
+
+Only this much to create webservice ->
+Annotate the class as @WebService
+import javax.jws
+
+If you annotate entire class as @WebService then it considers all its public methods as webservices. If you want to make only one method as webservice then only mark that as @WebMethod
+
+For advance ws, things can be customized
+
+Two ways webservices can be written
+1. Service first (code impl first)
+2. Contract first (WSDL first) -> better approach as clients need not make changes upon service changes
+
+WSDL contains xsd links (for document style) where we can change the schema type and binding styles
+Use @SOAPBinding annotation to change binding style (Document vs RPC)
+Document is preferred for complex web services as it creates separate xsd file for types
+When RPC style is used, no schema (xsd file) gets generated for types
+
+
+JAXB converts java object into an XML and vice-versa
+
+XML operations - input message, output message, fault message (exception)
+
+LeetCode :
+convert org.koushik.javabrains to http://javabrains.koushik.org
+
+SOAP UI - Useful for testing
+
+********* REST WebService *********
+
+JAX-WS uses SOAP protocol for communication. JAX-RS doesn't use any standard protocol. It uses simply XML, Text or JSON data type to communicate. Header meta deta specifies what type of data is being used. Any http method can be used for JAX-RS communication (get,post,put etc) and no rule as such. JAX-WS strictly uses POST method. The version is JAX-RS 2.0
+
+NO WSDL as service defination.. Best designed rest services wouldn't need any documentation.
+
+Representational State Transfer
+
+REST Architecture + Web Services = RESTful Web Services
+
+Good RESTful API design makes the right choice of below methods
+
+GET
+POST
+PUT
+DELETE
+
+Resource Based URIs
+
+-- Designing RESTful APIs -- action based (old) vs resource based (restful)
+
+To get particular message -> messages/{messageId}
+To get particular comment on particular message -> messages/{messageId}/comments/{commentId}
+To get particular like id for particular message - > messages/{messageId}/likes/{likeId}
+To get particular share id for particular message - > messages/{messageId}/share/{shareId}
+
+Instance Resource URIs - always have unique id to identify the resource e.g. messages/{message_id}
+Collection Resource URIs - Collection of instance resources e.g. messages/ or messages/{message_id}/comments
+
+Filtering results (paginations)
+
+Use Query parameters to filter or paginate the results
+e.g. /messages?offset=30&limit=10
+or	/messages?year=2014
+
+**** Standard HTTP Methods :
+GET -> To get a resource (uses instance resource uri)
+POST -> To create a resource (It uses Collection URI for that resource) e.g. /messages/  here POST body has the message
+PUT -> To update or change any resource (practically uses instance resource uri for particular resource)
+DELETE -> To delete a message (practically uses instance resource uri for particular resource)
+HEAD
+OPTIONS
+
+e.g.
+POST /messages (with the request body containing the new message) creates a new message with the content in the request body. Response to this request contains the message ID that was created.
+
+DELETE /messages/20 deletes message ID 20 and its comments obviously.
+
+DELETE on /messages/10/comments deletes all comments associated with message 10.
+
+POST on /messages/10/comments creates a new comment for message ID 10 with the request body containing the new comment information and returns comment id in response.
+
+PUT /messages/20 (with the request body containing the new message content) replaces the message ID 20 with the content in the request body.
+
+PUT on /messages/20/comments replaces the list of comments for message ID 20 with a new list of comments in the PUT body. (This kind of API is not commonly used though)
+
+DELETE on /messages deletes all messages (Again, not commonly used, and not something you'd want to implement)
+
+**** Method Idempotence
+
+Wikipedia definition of idempotence
+
+Idempotence is the property of certain operations in mathematics and computer science, that can be applied multiple times without changing the result beyond the initial application.
+
+The HTTP specification requires GET, PUT and DELETE methods to always be idempotent. If a client makes a request with one of these methods, they do not have to worry about making duplicate requests. But if they are making a POST request, they cannot safely make duplicate requests without any side effects.
+
+Which is why resource creation should be a POST method. Because resource creation requests are not idempotent.
+
+Idempotent - GET, PUT, DELETE
+Non-Idempotent - POST
+
+GET - repeats read request of particular resource - no harm
+PUT - repeats update operation of particular resource - no harm
+DELETE - repeats delete operation of particular resource - no harm
+
+POST - repeats creation of new resource and returns new id hence non-idempotent
+
+Browser, upon refresh, only warns if last action was POST so that client doesn't resubmits the request. Hence it is must to use POST method for resource creation.
+
+Imp point - As such, PUT method can also be used to create a resource but RESTful api design guidelines doesn't allow it and it leads to confusion. The only way you can safely use PUT for creating a new resource is in scenarios where the client specifies the new ID of the resource being created. In which case, the client sends the request for creating a resource to the actual instance resource URL that includes the ID. If you were to implement this, then resource creation request is idempotent. This is the only scenario where you can use PUT for creating resources.
+
+**** REST Response
+
+XML - more verbose
+JSON - much more compact and less verbose. Easy for java script client to convert the json response to javascript object
+
+HTTP Status Codes
+
+1XX -> Informational
+2XX -> Success Codes
+	200 -> OK
+	201 -> Created (for POST)
+	204 -> No Content (Ideally used for Delete)
+3XX -> Redirection Codes
+	302 -> Found
+	304 -> Not Modified
+	307 -> Temporary Redirect
+4XX -> Client Error in Request
+	400 -> Bad Request
+	401 -> Unauthorized
+	403 -> Forbidden
+	404 -> Not Found
+	415 -> Unsupported Media Type
+5XX -> Server Error
+	500 -> Internal Server Error
+
+Let's look at the same CRUD use cases we saw in the previous tutorial, and identify what the status codes should be for the message resource
+
+Operation		URI					Method	Success / Failure	Status code
+Get message	/messages/{messageId}	GET		Success				200
+											Not found			404
+											Failure				500
+Delete message	/messages/{messageId}DELETE	Success				200 or 204
+											Not found			404
+											Failure				500
+Edit message	/messages/{messageId}	PUT	Success				200
+											Wrong format / data	400 or 415
+											Not found			404
+											Failure				500
+Create message	/messages			POST	Success				201
+											Wrong format / data	400 or 415
+											Failure				500
+
+**** HATEOAS (Hypermedia as the Engine of Application State)
+Idea is to send related restful uris in a response so that it comes handy for client
+e.g.
+{
+  "id": "1",
+  "content": "Hello World!",
+  "author": "koushik",
+  "postedDate": "03-01-2014",
+  "href": "/messages/1"
+}
+
+Or further ->
+
+{
+  "id": "1",
+  "content": "Hello World!",
+  "author": "koushik",
+  "postedDate": "03-01-2014",
+   "links" : [
+                {
+                    "href": "/messages/1",
+                    "rel": "self"
+                },
+                {
+                    "href": "/messages/1/comments",
+                    "rel": "comments"
+                },
+                {
+                    "href": "/messages/1/likes",
+                    "rel": "likes"
+                },
+                {
+                    "href": "/messages/1/shares",
+                    "rel": "shares"
+                },
+                {
+                    "href": "/profiles/koushik",
+                    "rel": "author"
+                }
+            ]
+}
+
+Now the client doesn't need to remember the link property values. They just have to find the link with the right rel value for the resource they want and then look up the href value from that link.
+
+Is HATEOAS being used for trending logic (also viewed logic in amazon)?
+
+**** Richardson Maturity Model
+Level 0 -> Not restful at all, every operation uses single uri and message body contains the entire req
+Level 1 -> Somewhat restful but no proper use of HTTP methods
+Level 2 -> HTTP methods used correctly and uri are designed as per the guidelines
+Level 3 -> Implements HATEOAS
+
+Lets implement :
+
+JAX-RS (Rest) Libraries options - RestEasy, Restlet, Jersey
+JAX-RS are basically interfaces and annotations. The real implementation is provided by their libraries
+Hence we can seamlessly replace one library with other library.
+
+Why Jersey -> "Reference Implementation" for JAX-RS specifications
+
+Setup :
+
+Open Eclipse J2EE
+Create New Maven Project
+Search jersey archtype
+
+http://stackoverflow.com/questions/31721013/adding-org-glassfish-jersey-archetypes-in-eclipse
+
+Sample project deployed on tomcat run as is
+
+To handle a request, you write an associated class in Resources
+
+
+J2EE Rest API Design Example :
+
+Packages :
+	Model ->
+		Status - Enum that defines all the possible values of Status
+			Pending, Running, Failed, Completed, Aborted, Unknown, Purged, Successful, Diffs, MassDiffs
+		TipBranch - Contains all branch specific information
+		TipUris - Contains all url information for given tip-tip preflights
+		TipTip - members are - TipBranch, TipStatus, TipUris
+		TipStatus - Collection of Status for each run. Creates a template for status and sets the status
+		TipRequest
+		TipResponse
+		ErrorMessage -> To catch exception and send error response
+	Resources ->
+		TipTipResource - This is the starting point and it defines all the urls, it receives requests and pass it onto the TipTipService object
+	Services ->
+		TipTipService - Here lies the core logic to deal with Models. It reads the properties from file for the given branch, creates/sets necessary model objects and reads/creates the status files and send the appropriate response back
+	Exception ->
+		DataNotFoundException (extends RuntimeException)
+		DataNotFoundExceptionMapper (extends ExceptionMapper<DataNotFoundException>)
+		GenericExceptionMapper (extends ExceptionMapper<Throwable>) -> to catch all the errors
+
+Different Params that you can access in REST
+
+	PathParam -> Path variable e.g. variable that is a part of the path itself -> messageId, tipBranch etc
+	QueryParam -> Query variable that used for pagination or filtering. e.g. ?year=2015 or ?page=10
+	MatrixParam -> Variable that is separated by semicolon in the url itself e.g. name=ganesh;address=fremont
+	HeaderParam -> Variable that is supplied in the header of the request e.g. authSessionId or similar confidential stuff
+	CookieParam -> Cookie variable that is sent as part of request
+	FormParam -> Form submission data - not widely used with rest apis // POST can be used to get the body conents
+
+	Context annotation can be used to get all the context info specific to supported classes like UriInfo and HttpHeaders.
+
+	@GET
+	@Path("testcontext")
+	public String getParamsUsingContext(@Context UriInfo uriInfo, @Context HttpHeader headers){
+		String path = uriInfo.getAbsolutePath().toString(); //URI
+		String cookies = headers.getCookies().toString();//Map
+		return "Path :" + path + " Cookies :" + cookies;
+	}
+
+	There is final BeanParam for which we need to define it a class and use that to represent all the queryParams to keep the code clean
+
+	e.g. For MessageResource, define MessageFilterBean and use @QueryParam year and @QueryParam page as member variables of it.
+	Then replace all query params with one single BeanParam of MessageFilterBean and access its member variables for filtering
+
+
+	Create Subresources java files if there are multiple Path Params in the url
+
+	e.g. /webapp/messages/{messageId}/comments/{commentId}
+
+	Here there should be two resources - MessageResource.java and sub resource as CommentsResource.java
+
+How to raise exceptions :
+
+1) Handling Exceptions using CustomExceptions (Preferred by Kaushik)
+   We must send an error in JSON format instead of throwing the exception which is a string.
+   Create custom exception like DataNotFoundException
+   Create ErrorMessage class in Model
+   Create DataNotFoundExceptionMapper (annotate with @Provider so Jersey registers it) and implement toResponse method
+   In that toResponse method, build the ErrorMessage custom object in Response format and send it across which will be in JSON format
+   Similarly create GenericExceptionMapper that catches all the exceptions instead of creating ExceptionMapper for all types of exceptions
+
+2) Handing Exceptions using	WebApplicationExceptions ->
+	There are already WebApplicationExceptions that Jersey already knows and we can utilize those here
+	But we need to define that logic in Services package which is a bad idea as it gets mixed with Business logic
+	There are further subclasses of WebApplicationExceptions like ClientErrorException (400-499 error codes), RedirectionException (300+) and ServerErrorException (500+). There are further subclasses of these like NotFoundException
+
+
+Content Negotiation
+
+Both client and server negotiates on the format of data exchange. e.g. Text, JSON or xml
+Use Accepts Header to specify what format is requested in response. If the mentioned format is not what server produces then it sends HTTP 406 status code - Not Acceptable
+clients Accepts Header maps to @Produces annotation of the Server
+Using Accepts Header value, we can map two get methods if we want to process the same request differently for XML or JSON types
+Same is the case with Content-Type Header where client can define what format it is sending the data and similarly server can have different methods to process that data in different ways for each data type
+client's Content-Type header maps to @Consumes annotation of the Server
+If client sends the content-type that is not supported by server then it sends HTTP 415 - Unsupported Media Type error code
+
+ MediaType.APPLICAITION_JSON -> "application/json"
+
+ The code behind MediaType formats :
+ public final static String APPLICATION_JSON = "application/json"
+ public final static String TEXT_PLAIN = "text/plain"
+ public final static String TEXT_XML = "text/xml"
+
+
+******** Advance Jax-Rs *********
+
+Tomcat 8 and JDK8 to use Servlet 3 features
+
+In previous session (web.xml use means there is a servlet in picture. we had servlet and servlet-mapping tags in it), we learned how servlet handles the jax-rs requests, now we will learn how to bootstrap the jax-rs application (without web.xml means no servlet). The servlet approach restricts you to a servlet container. The Application class is deployment-agnostic.
+
+New Maven Project -> maven-archtype-webapp
+Group Id - org.kaushik.javabrains
+Artifact Id - advanced-jaxrs
+Update pom.xml as this archtype is way to old and uses jdk1.5 and other old stuff. Use maven-compiler-plugin to override with jdk1.7, get below dependencies
+
+org.glassfish.jersey.bundles - jaxrs-ri - 2.16
+org.glassfish.jersey.media - jersey-media-moxy - 2.16
+
+In this case, instead of configuring the web.xml, we need to do following in a java class :
+
+package org.kaushik.javabrains.rest;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+
+@ApplicationPath("webapi")
+public class MyApp extends Application {
+
+}
+
+The above code maps the url-pattern "webapi" the same was as that of web.xml. The Application class defines the components of JAX-RS application and supplies meta-data. This Application class is an abstract class but all the methods are implemented. We can override those methods as per our need.
+
+Resource Life Cycle :
+The Resource java class instance is created for each call/request as its a default behaviour. To make the resource singleton instead, just annotate the class with @Singleton instance.
+
+We can declare QueryParam and PathParam as members of the class so that they can be accessed by all the methods of the Resource class.
+
+@Path("{pathParam}/test")
+public class MyResource{
+
+	@PathParam("pathParam") private String pathParamExample;
+	@QueryParam("query") private String queryParamExample;
+
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public String testMethod(){
+		return "Path Param used : " + pathParamExample + " and Query Param : " + queryParamExample;
+	}
+}
+
+request -> http://localhost:8080/advance-jaxrs/webapi/mypath/test?query=queryValue
+response -> "Path Param used : mypath and Query Param : queryValue
+
+ParamConverters can be used to receive the custom data type as part of url or rest request. To achieve this, we need to implement ParamConverterProvider and ParamConverter interfaces.
+
+MessageBodyReaders & MessageBodyWriters
+
+MessageBodyWriter -> For Producing the response in readable format
+MessageBodyReader -> For Reading the request (post or put) in standard format
+
+Implement MessageBodyWriter generic class and implement isWriteable and writeTo class.
+Implement MessageBodyReader  generic class and implement isReadable and readFrom class.
+
+Custom MediaTypes
+
+You can create your own custom MediaType like "text/shortdate" and write a MessageBodyWriter accordingly
+
+Download project from https://github.com/koushikkothagal/messenger
+
+* JAX-RS Client :
+
+
+
+* Authentication :
+
+A) Filters (To manipulate/authenticate the  headers, URIs like meta-data etc) -> e.g. PoweredBy filter
+We have to implement ContainerRequestFilter and ContainerResponseFilters to perform filter. e.g, if we want to add specific header value in the Request header for all the requests (or some requests) then accordingly we can add header values (may be for authentication purpose or similar)
+
+In classic client server model, client sends the userid/password to server and server provides a session token back to the client. Then client sends requests using that token and makes the transactions.
+
+But the above doesn't work with REST APIs as it is stateless so no session exists. We need to use techniques like Basic Auth or OAuth:
+
+In Basic Auth, client sends user id and password every time but using below way to generate authorization key:
+authorization key = "Basic "+Base64encode($userid+":"+$password)
+Then server decodes it. This is not secured. Hence it has to be sent over https to secure it.
+Encoding is only to make string http compatible and avoid unsupported characters.
+
+Advantages of Basic Auth
+	1. Simple
+	2. Supports Stateless Server architecture (Rest API)
+	3. Supported by all browsers
+Disadvantages of Basic Auth
+	1. Requires HTTPS
+	2. Subject to replay attacks - anybody who can get hold of the request can redo it multiple times
+	3. Logout is tricky
+
+Other Auths
+	1. Digest Access Authentication
+	2. Asymmetric cryptography (public key exchange)
+	3. OAuth 1.0
+	4. OAuth 2.0 (Popular)
+	5. JSON Web Tokens (Growing trend)
+	(Read all on wiki)
+
+Filters example :
+
+
+Usage : Security/Logging
+
+Server Side Filters : ContainerRequestFilter and ContainerResponseFilters
+Client Side Filters : ClientRequestFilter and ClientResponseFilters
+
+B) Interceptors (to manipulate the request/response body)
+
+	1. ReaderInterceptor
+	2. WriterInterceptor
+
+	e.g. GZIPWriter (to compress the data?)
+
+Usage : Encoding an entity response
+
+Same names for server and client sides.
+
+JAX-RS Client to JAX-RS Server flow :
+On client side : ClientRequestFilter -> WriterInterceptor -> MessageBodyWriter
+On Server side : ContainerRequestFilter -> ReaderInterceptor -> MessageBodyReader
+
+JAX-RS Server to JAX-RS Client flow :
+On Server Side : ContainerResponseFilter -> WriterInterceptor -> MessageBodyWriter
+On Client Side : ClientResponseFilter -> ReaderInterceptor -> MessageBodyReader
+
+http://www.techbeamers.com/rest-api-interview-questions-answers/
+
+
+The purpose of a URI is to locate a resource(s) on the server hosting the web service. A URI is of the following format-
+
+<protocol>://<service-name>/<ResourceType>/<ResourceID>
+
+If you like Scala, then you should be using Play framework to develop RESTful web services.
+
+
+====================================== SPRING BOOT ===========================================
+
+What is spring boot?
+	Spring boot is a tool that makes it easy to create stand-alone, production-grade applications that you can "just run".
+
+What is spring?
+	-> App framework
+	-> Programming and configuration model
+	-> Provides infra support
+
+Problems with Spring?
+	-> Huge framework
+	-> Multiple Config/Setup Steps
+	-> Multiple build/deploy steps
+
+
+Why spring boot?
+	* end to end app development
+	* Solves problems of Spring framework
+	* Helps focus on business logic
+	* Convention over Configuration
+	* Stand alone
+	* Production Ready
+
+Which IDE to use?
+	Spring TS (tool suite) - flavor of eclipse
+
+Create a maven project with required pom.xml entries and create an App class with main method and just mark it as @SpringBootApplication. The call SprintApplication.run(App.class,args) in the main method.
+
+
+Q. How do you identify a Java process id in a UNIX machine?
+$> ps –def | grep java
+Q. How do you get a thread dump of a Java process in a UNIX machine?
+$> kill -3 <process-id>
+Q. If you have multiple java processes running in a UNIX machine, how would you identify a particular process?
+$> /usr/ucb/bin/ps auxwww | grep java | grep <specific-process-description>
+Q. What tools/commands do you use to help you identify an out of control Java process in a UNIX machine?
+UNIX stat tools/commands like jvmstat, vmstat, iostat etc.
+Q. How would you display the number of active established connections to localhost in a UNIX machine?
+$> netstat –a | grep EST
+Q. How do you find out drive statistics in a UNIX machine?
+$> iostat -E
+
+Q 05: How would you go about improving performance in your Java/J2EE application?
+
+Application level
+Java infrastructure
+System level
+
+
+Let us discuss some of the aspects in detail:
+  Java/J2EE application code related performance bottlenecks:
+
+  Java/J2EE design related performance bottlenecks. Application design is one of the most important considerations for performance. A well-designed application will not only avoid many performance pitfalls but will also be easier to maintain and modify during the performance-testing phase of the project.
+  Use proper design patterns to minimize network trips (session facade, value object Refer etc Q83- Q87 in Enterprise section).
+  Minimize serialization cost by implementing session beans with remote interfaces and entity beans with local interfaces (applicable to EJB 2.x) or even the session beans can be implemented with local interfaces sharing the same JVM with the Web tier components. For EJB1.x some EJB containers can be configured to use pass-by-reference instead of pass-by-value (pass-by-value requires serialization) Refer Q69, Q82 in Enterprise section.
+  Use of multi-threading from a thread-pool (say 10 – 50 threads). Using a large number of threads adversely affects performance by consuming memory through thread stacks and CPU by context switching.
+
+  Database related performance bottlenecks.
+
+  Use proper database indexes. Numeric indices are more efficient than character based indices. Minimize the number of columns in your composite keys. Performing a number of “INSERT” operations is more efficient when fewer columns are indexed and “SELECT” operations are more efficient when, adequately indexed based on columns frequently used in your “WHERE” clause. So it is a trade-off between “SELECT” and “INSERT” operations.
+  Minimize use of composite keys or use fewer columns in your composite keys.
+  Partition the database for performance based on the most frequently accessed data and least frequently
+accessed data.
+  Identify and optimize your SQL queries causing performance problems (Refer Q97 in Enterprise section).
+  De-normalize your tables where necessary for performance (Refer Q98 in Enterprise section).
+  Close database connections in your Java code in the finally block to avoid any “open cursors” problem
+(Refer Q45 in Enterprise section).
+  Use optimistic concurrency as opposed to pessimistic concurrency where appropriate (Refer Q78 in
+Enterprise section).
+How to increase db performance
+1. Set auto commit to false
+2. Use batch processing for multiple sql statements and execute them at once
+
+  ApplicationServer, JVM, OperatingSystem, and/or hardware related performance bottlenecks.
+
+  Application Server: Configure the application server for optimum performance (Refer Q88, Q123 in Enterprise section).
+  Operating System: Check for any other processes clogging up the system resources, maximum number of processes it can support or connect, optimize operating system etc.
+  Hardware: Insufficient memory, insufficient CPU, insufficient I/O, limitation of hardware configurations, network constraints like bandwidth, message rates etc.
+
+  System Dependent effects ->
+Hardware : CPU, Memory, cache..
+Software : compiler, interpreter, garbage collector etc
+System   : OS, n/w, other apps etc
+
+Q. ACID Properties :
+
+Atomicity[edit]
+Main article: Atomicity (database systems)
+Atomicity requires that each transaction be "all or nothing": if one part of the transaction fails, then the entire transaction fails, and the database state is left unchanged. An atomic system must guarantee atomicity in each and every situation, including power failures, errors and crashes. To the outside world, a committed transaction appears (by its effects on the database) to be indivisible ("atomic"), and an aborted transaction does not happen.
+
+Consistency[edit]
+Main article: Consistency (database systems)
+The consistency property ensures that any transaction will bring the database from one valid state to another. Any data written to the database must be valid according to all defined rules, including constraints, cascades, triggers, and any combination thereof. This does not guarantee correctness of the transaction in all ways the application programmer might have wanted (that is the responsibility of application-level code), but merely that any programming errors cannot result in the violation of any defined rules.
+
+Isolation[edit]
+Main article: Isolation (database systems)
+The isolation property ensures that the concurrent execution of transactions results in a system state that would be obtained if transactions were executed sequentially, i.e., one after the other. Providing isolation is the main goal of concurrency control. Depending on the concurrency control method (i.e., if it uses strict - as opposed to relaxed - serializability), the effects of an incomplete transaction might not even be visible to another transaction.
+
+Durability[edit]
+Main article: Durability (database systems)
+The durability property ensures that once a transaction has been committed, it will remain so, even in the event of power loss, crashes, or errors. In a relational database, for instance, once a group of SQL statements execute, the results need to be stored permanently (even if the database crashes immediately thereafter). To defend against power loss, transactions (or their effects) must be recorded in a non-volatile memory.
+
+
