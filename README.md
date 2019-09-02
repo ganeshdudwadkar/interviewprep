@@ -1,38 +1,39 @@
-Complete Interview Preparation Doc - Based on GooglePrep.txt
+## Complete Interview Preparation Doc - Based on GooglePrep.txt
 
-Suggested Books
+#### Suggested Books
 
-Programming Interviews Exposed: Secrets to Landing Your Next Job, John Mongan, Eric Giguere, Noah Suojanen, Noah Kindler, John Wiley & Sons
-Introduction to Algorithms, Thomas H. Cormen
-Cracking the Coding Interview, Gayle Laakmann McDowell
+* Programming Interviews Exposed: Secrets to Landing Your Next Job, John Mongan, Eric Giguere, Noah Suojanen, Noah Kindler, John Wiley & Sons
 
-Suggest Problem Solving Practise WebSites
+* Introduction to Algorithms, Thomas H. Cormen
 
-www.oj.leetcode.com/
-www.codeforces.com/
-www.hackerrank.com
+* Cracking the Coding Interview, Gayle Laakmann McDowell
 
-Suggested Videos
+#### Suggest Problem Solving Practise WebSites
 
-http://www.youtube.com/watch?v=oWbUtlUhwa8&feature=youtu.be
-http://steve-yegge.blogspot.com/2008/03/get-that-job-at-google.html
-https://www.youtube.com/watch?v=rEJzOhC5ZtQ
+1. www.oj.leetcode.com/
+1. www.codeforces.com/
+1. www.hackerrank.com
 
-Suggested Tutorials
+#### Suggested Videos
 
-https://www.topcoder.com/community/data-science/data-science-tutorials/
-http://bigocheatsheet.com/
+1. http://www.youtube.com/watch?v=oWbUtlUhwa8&feature=youtu.be
+1. http://steve-yegge.blogspot.com/2008/03/get-that-job-at-google.html
+1. https://www.youtube.com/watch?v=rEJzOhC5ZtQ
 
+#### Suggested Tutorials
 
-Sorting -
+1. https://www.topcoder.com/community/data-science/data-science-tutorials/
+1. http://bigocheatsheet.com/
+
+#### Sorting -
 	Quick Sort
 	Merge Sort
 	Heap Sort
 	Trade-off
 
-Hashtables and its implementations
+#### Hashtables and its implementations
 
-Trees
+#### Trees
 	binary trees
 	n-ary trees
 	trie-trees
@@ -44,26 +45,26 @@ Trees
 		AVL tree
 		Implementation
 
-Graphs
+#### Graphs
 	There are 3 basic ways to represent a graph in memory (objects and pointers, matrix, and adjacency list)
 	BFS traversal
 	DFS traversal
 
-Union-Find - See NumberOfIslands2 problem
-Greedy/Backtracking/BitManipulation
+#### Union-Find - See NumberOfIslands2 problem
+#### Greedy/Backtracking/BitManipulation
 
-NP-complete problems
+#### NP-complete problems
 	Traveling salesman
 	Knapsack problem
 	Identify given problems are NP-complete or not
 
-Discrete Math
+#### Discrete Math
 	Probability
 	Counting
 	Permutation
 	Combination
 	(added - Factorial, Fibonnaci)
-OS
+#### OS
 	Processes (resource need, context switching, overheads, implementation)
 	Threads (resource need, context switching, overheads, implementation)
 	Concurrency issues
