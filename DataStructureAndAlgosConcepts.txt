@@ -1,0 +1,150 @@
+Data Structure and Algo basics
+
+The simplest data structures are primitive variables. (others are user defined? or collections)
+
+Arrays - Arrays are a very simple data structure, and may be thought of as a list of a fixed length.
+
+Linked Lists - A linked list is a data structure that can hold an arbitrary number of data items, and can easily change size to add or remove items.
+
+Queues - A queue is a data structure that is best described as "first in, first out". A real world example of a queue is people waiting in line at the bank.
+
+Stacks - Stacks are, in a sense, the opposite of queues, in that they are described as "last in, first out". Example is recursive function.
+
+Trees - Trees are a data structure consisting of one or more data nodes. One of the most common examples of a tree is an XML document. The top-level document element is the root node, and each tag found within that is a child. Each of those tags may have children, and so on. The file storage system on most disks is also a tree structure.
+
+Binary Trees - A special type of tree is a binary tree. A binary tree also happens to be one of the most efficient ways to store and read a set of records that can be indexed by a key value in some way. The idea behind a binary tree is that each node has, at most, two children. Used for representing expressions where operands are leaf and operators are non-leaf nodes.
+
+Complete tree - A very simple definition of a complete tree is one where no branch is n + 1 levels deep until all other branches are n levels deep. Furthermore, it is always the leftmost node(s) that are filled first.
+
+Hash Tables - Hash tables are a unique data structure, and are typically used to implement a "dictionary" interface, whereby a set of keys each has an associated value. The key is used as an index to locate the associated values. This is not unlike a classical dictionary, where someone can find a definition (value) of a given word (key).
+
+Algorithm - method or way for solving a problem
+Data Structure - method to store information
+algorithms + data structures = programs
+
+data types - stack, queue, bag, union-find, priority queue
+sorting - quicksort, mergesort, heapsort, radix sort
+searching - linear search, BST, red-black BST, hash table
+graphs - BFS, DFS, Prim, Krushal, Dijkstra
+
+great algorithms are the poetry of computation
+
+An Introduction to Programming in Java: An Interdisciplinary Approach
+
+practice
+Square matrix multiplication
+
+System Independent effects ->
+Algorithms
+Input Data
+
+System Dependent effects ->
+Hardware : CPU, Memory, cache..
+Software : compiler, interpreter, garbage collector etc
+System   : OS, n/w, other apps etc
+
+Common - Order-of-growth
+
+Constant - 1 e.g. Statement
+Logarithmic - logN e.g. Binary Search (divide in half)
+Linear - N e.g. Single Loop
+Linearithmic - NlogN e.g. merge-sort (divide and conquer)
+
+Below are worst :
+Quadratic - N(sqr) e.g. double loop
+Cubic - N(cube) e.g. triple loop
+Exponential - 2 power N e.g. exhaustive search
+
+In 2006, a bug was found in java library’s binary search implementation. LOL
+
+3-SUM problem is N^3. Better solution is sort it and search for (a[i]+a[j]) using binary search -> N(sqr)LogN
+
+Analyze the Algorithm for Best Case (min cost), Worst Case (max cost) and Average Case (avg cost).
+
+Notations used in theory of algorithms
+Tilde -> approximate model
+Big Theta
+Big O (develops upper bound)
+Big Omega (develops lower bound)
+
+Good algorithms are better than Super computers.
+
+Find better way to do in-place merge (without using aux array in merge sort)
+
+Java
+Use Comparable interface when using with Generics to sort on only one field of a class
+Use Comparator interface to sort on different fields of a class e.g. Student by Name or Grades
+
+Sorting Stability: if you try to sort objects by multiple keys (fields) then it should preserve the ordering. Eg first sorted by Grades then sorted by Names. In that case, it should be sorted by Name first then Grades. This means Grade sorting should be preserved.
+
+Stable sorts -> Insertion Sort, Merge Sort (All these depends on code and when the exchange happens. The key is -> the swap should not happen if the fields are same. If the exchange NOT happening with previous or next item then its NOT going to be stable.)
+
+Merge Sort is efficient and stable
+
+Quick Sort doesn’t take extra space like Merge Sort. Suffering is required for performance guarantees because quick sort worst case scenario is when array is already sorted.
+
+Quick Sort is not stable and hence used to sort primitive types by Java.
+Tunes Quick Sort is used for sorting primitives and Tuned Merge Sort is used for Objects for stability.
+
+Quick sort takes quadratic time if most of the elms are duplicate
+
+3-way quick sort - Dijakstra implemented it for solving duplicate key issues with QSort
+
+My Sorting logic -> get to the middle and sort middle, previous and next recursively?
+
+Priority Q -> Q which removes the max or min number/key (min is always the root)
+
+In Priority Q, new element is inserted in sorted order. Complete binary tree is used for the implementation of Priority Queue. Complete Binary Tree has each node value higher than its 2 child nodes.
+Swim Operation -> New node when added at the leaf level is promoted up in the order until it is lesser than its parent or it becomes root.
+Sink Operation -> When the root is deleted, the lowest element is made the root and then it in swapped with its child until it is has smaller child than itself.
+
+Heap Sort uses complete binary tree and then use sink operation to sort it.
+Heap Sort uses more inner loops which takes longer than Quick Sort.
+Heap Sort is not stable.
+
+Symbol Tables (key,value pair) -> like associative arrays
+Frequency Counter (count frequency of each word occurring in a text) can be implemented using ST
+ST implementations are imp
+a) using linked list unordered and use sequential search
+b) using sorted array (insertion of key is costly as many array elements needs to be moved) and use binary search
+c) BSTs to combine a and b (most of the operations takes ‘h’ time which is height of the tree.. h ~ logN if keys are inserted in random order (if keys are sorted then tree is not well balanced and height increases means time for each operation increases and may become sqrt(N) which is unacceptable)
+d) 2-3 using Red black trees
+e) Hashing (without search sort)
+f)
+
+BST (Binary Search Trees)- BST is a binary tree in symmetric order
+symmetric order - Each node has a key and every node’s key is :
+->larger than all keys in its left subtree
+->smaller than all keys in its right subtree
+
+It is implemented using linked list.
+
+So STs can be implemented using BSTs
+
+Inorder, preorder postorder operations can be performed in BST
+
+
+2-3 Tree (skip) - Guaranteed logarithmic performance for search and insert as tree is balanced
+
+Red Black Trees (A way to represent 2-3 trees)
+
+Hashing
+
+HAST TABLE
+1) Hash functions
+2) Separate Chaining (Using Linked List for collisions)
+3) Linear Probing (If the hast entry is full (collision), put the value in next available slot (like car parking on a one way road in a linear probing way. Displacement is expected entry to actual entry)
+
+Java Supports :
+Red-black BSTs: java.util.TreeMap, java.util.TreeSet (Useful for non-duplicate stuff)
+Hash Tables: java.util.HashMap, java.util.IdentityHashMap (useful for unique identification)
+
+GRAPHS
+
+Vertex
+
+Depth first search -> Put unvisited vertices on stack hence implemented using recursion (Helpful in finding all connected nodes/vertices from a given node/vertex)
+Breadth first search -> Put unvisited vertices on Queue (Helpful in finding shortest paths)
+
+Most of the graph problems can be solved using DFS
+Traveling sales person problem - Find a cycle that visits every vertex exactly once. Its called Hamiltonian cycle and classical NP-complete problem. Nobody knows the efficient solution for large graphs. (PS finding a cycle that visits edge exactly once is a different and simpler problem)
