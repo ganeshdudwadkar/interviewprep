@@ -32,21 +32,20 @@ public class PlusOne {
     public static int[] plusOne(int[] digits) {
         int l = digits.length;
         int len = l;
-        while(--len >= 0){
-            if(digits[len] == 9){
+        while (--len >= 0) {
+            if (digits[len] == 9) {
                 digits[len] = 0;
-            }
-            else {
+            } else {
                 digits[len] += 1;
                 return digits;
             }
         }
 
-        if(digits[0] == 0){
-            int[] newDigits =  new int[l+1];
+        if (digits[0] == 0) {
+            int[] newDigits = new int[l + 1];
             newDigits[0] = 1;
-            for(int i=0;i<l;i++){//not needed as rest all will be zeros always
-                newDigits[i+1] = digits[i];//
+            for (int i = 0; i < l; i++) {//not needed as rest all will be zeros always
+                newDigits[i + 1] = digits[i];//
             }
             return newDigits;
         } else {
@@ -60,8 +59,8 @@ public class PlusOne {
     public static int[] plusOneEasy(int[] digits) {
 
         int n = digits.length;
-        for(int i=n-1; i>=0; i--) {
-            if(digits[i] < 9) {
+        for (int i = n - 1; i >= 0; i--) {
+            if (digits[i] < 9) {
                 digits[i]++;
                 return digits;
             }
@@ -69,16 +68,16 @@ public class PlusOne {
             digits[i] = 0;
         }
 
-        int[] newNumber = new int [n+1];
+        int[] newNumber = new int[n + 1];
         newNumber[0] = 1;
 
         return newNumber;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
-        int[] num1 = new int[]{1,2,3};
-        int[] num2 = new int[]{9,9,9,9};
+        int[] num1 = new int[]{1, 2, 3};
+        int[] num2 = new int[]{9, 9, 9, 9};
         System.out.println(Arrays.toString(PlusOne.plusOne(num1)));
         System.out.println(Arrays.toString(PlusOne.plusOne(num2)));
 

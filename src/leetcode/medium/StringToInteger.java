@@ -51,7 +51,7 @@ Explanation: The number "-91283472332" is out of the range of a 32-bit signed in
 public class StringToInteger {
 
     public int myAtoi(String str) {
-        if (str == null || str.length()==0){
+        if (str == null || str.length() == 0) {
             return 0;
         }
         int res = 0;
@@ -60,24 +60,23 @@ public class StringToInteger {
         int start = 0;
         int digit;
         int base = (int) '0';
-        if(str.charAt(0)=='-'){
+        if (str.charAt(0) == '-') {
             digits--;
             neg = true;
             start++;
-        }
-        else if(str.charAt(0)=='+'){
+        } else if (str.charAt(0) == '+') {
             digits--;
             start++;
         }
-        for(int i=start;i<str.length();i++){
+        for (int i = start; i < str.length(); i++) {
             digit = (int) str.charAt(i) - base;
-            res += digit*Math.pow(10,--digits);
+            res += digit * Math.pow(10, --digits);
             //System.out.println("Digit " + digit + " res " + res);
         }
-        return (neg?-res:res);
+        return (neg ? -res : res);
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         StringToInteger obj = new StringToInteger();
         System.out.println(obj.myAtoi("42"));

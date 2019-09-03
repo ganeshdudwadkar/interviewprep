@@ -11,35 +11,34 @@ public class PostOrderTraversal {
 
     // recursive
     public void postorderTraversal(TreeNode root, List<Integer> ls) {
-        if(root==null) return;
-        postorderTraversal(root.left,ls);
-        postorderTraversal(root.right,ls);
+        if (root == null) return;
+        postorderTraversal(root.left, ls);
+        postorderTraversal(root.right, ls);
         ls.add(root.val);
     }
 
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();
 
-        if(root==null) {
+        if (root == null) {
             return res;
         }
 
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
 
-        while(!stack.isEmpty()) {
+        while (!stack.isEmpty()) {
             TreeNode temp = stack.peek();
-            if(temp.left==null && temp.right==null) {
+            if (temp.left == null && temp.right == null) {
                 TreeNode pop = stack.pop();
                 res.add(pop.val);
-            }
-            else {
-                if(temp.right!=null) {
+            } else {
+                if (temp.right != null) {
                     stack.push(temp.right);
                     temp.right = null;
                 }
 
-                if(temp.left!=null) {
+                if (temp.left != null) {
                     stack.push(temp.left);
                     temp.left = null;
                 }

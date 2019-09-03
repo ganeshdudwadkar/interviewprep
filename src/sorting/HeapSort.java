@@ -1,4 +1,5 @@
 package sorting;
+
 import java.util.Arrays;
 
 public class HeapSort {
@@ -14,12 +15,14 @@ public class HeapSort {
             sink(a, 1, N);
         }
     }
+
     //Construct the heap by performing sink operations on all parent nodes (in a bottom-up fashion)
     private void constructHeap(int[] a, int N) {
         for (int k = N / 2; k >= 1; k--) {
             sink(a, k, N);
         }
     }
+
     //move parent node downwards if its less than its child
     private void sink(int[] a, int k, int N) {
         while (2 * k <= N) {

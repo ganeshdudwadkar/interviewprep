@@ -29,7 +29,7 @@ public class ReverseWordsInAString {
         return out + parts[0];
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         ReverseWordsInAString example = new ReverseWordsInAString();
         System.out.println(example.reverseWords("the sky is blue"));

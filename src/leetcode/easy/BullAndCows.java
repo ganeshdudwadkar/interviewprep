@@ -32,21 +32,21 @@ public class BullAndCows {
     public String getHint(String secret, String guess) {
         int bulls = 0;
         int cows = 0;
-        char s,g;
+        char s, g;
         int[] numbers = new int[10];
-        for (int i = 0; i<secret.length(); i++) {
+        for (int i = 0; i < secret.length(); i++) {
             s = secret.charAt(i);
             g = guess.charAt(i);
             if (s == g) bulls++;
             else {
-                if (numbers[s-'0']++ < 0) cows++;
-                if (numbers[g-'0']-- > 0) cows++;
+                if (numbers[s - '0']++ < 0) cows++;
+                if (numbers[g - '0']-- > 0) cows++;
             }
         }
         return bulls + "A" + cows + "B";
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         BullAndCows bullAndCows = new BullAndCows();
         System.out.println(bullAndCows.getHint("1807", "7810"));
         System.out.println(bullAndCows.getHint("1123", "0111"));

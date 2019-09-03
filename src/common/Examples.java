@@ -5,7 +5,7 @@ import common.nodes.TreeNode;
 
 public class Examples {
 
-    public static TreeNode getExampleTreeRoot(){
+    public static TreeNode getExampleTreeRoot() {
         TreeNode root = new TreeNode(15);
         root.left = new TreeNode(5);
         root.right = new TreeNode(7);
@@ -17,7 +17,7 @@ public class Examples {
         return root;
     }
 
-    public static TreeNode getExampleBSTRoot(){
+    public static TreeNode getExampleBSTRoot() {
         TreeNode root = new TreeNode(15);
         root.left = new TreeNode(10);
         root.right = new TreeNode(20);
@@ -29,7 +29,7 @@ public class Examples {
         return root;
     }
 
-    public static TreeNode getBalancedTreeRoot(){
+    public static TreeNode getBalancedTreeRoot() {
 
         TreeNode root = new TreeNode(3);
         root.right = new TreeNode(20);
@@ -39,7 +39,7 @@ public class Examples {
         return root;
     }
 
-    public static ListNode getLinkedListHead(){
+    public static ListNode getLinkedListHead() {
         LinkedList myLinkedList = new LinkedList(10);
         myLinkedList.add(13);
         myLinkedList.add(9);
@@ -52,10 +52,10 @@ public class Examples {
         return myLinkedList.getHead();
     }
 
-    public static ListNode getLinkedListHeadWithCycle(){
+    public static ListNode getLinkedListHeadWithCycle() {
         ListNode head = getLinkedListHead();
         ListNode iter = head, cycleNode;
-        while(iter.next != null){
+        while (iter.next != null) {
             iter = iter.next;
         }
         cycleNode = iter;

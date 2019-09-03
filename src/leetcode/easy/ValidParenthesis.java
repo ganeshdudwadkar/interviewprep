@@ -35,22 +35,22 @@ public class ValidParenthesis {
         Stack<Character> cStack = new Stack<Character>();
         int len = s.length();
         char c;
-        for(int i=0;i<len;i++){
+        for (int i = 0; i < len; i++) {
             c = s.charAt(i);
-            if(c==')'){
-                if(cStack.empty() || cStack.pop()!='('){
+            if (c == ')') {
+                if (cStack.empty() || cStack.pop() != '(') {
                     return false;
                 }
                 continue;
             }
-            if(c==']'){
-                if(cStack.empty() || cStack.pop()!='['){
+            if (c == ']') {
+                if (cStack.empty() || cStack.pop() != '[') {
                     return false;
                 }
                 continue;
             }
-            if(c=='}'){
-                if(cStack.empty() || cStack.pop()!='{'){
+            if (c == '}') {
+                if (cStack.empty() || cStack.pop() != '{') {
                     return false;
                 }
                 continue;
@@ -60,7 +60,7 @@ public class ValidParenthesis {
         return cStack.empty();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         ValidParenthesis obj = new ValidParenthesis();
         System.out.println(obj.isValid("()[]{}"));

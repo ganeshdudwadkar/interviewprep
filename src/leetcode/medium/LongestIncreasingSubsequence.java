@@ -39,8 +39,8 @@ public class LongestIncreasingSubsequence {
         return maxans;
     }
 
-    public static void main(String[] args){
-        int[] array = new int[]{10,9,2,5,3,7,101,18};
+    public static void main(String[] args) {
+        int[] array = new int[]{10, 9, 2, 5, 3, 7, 101, 18};
         System.out.print(new LongestIncreasingSubsequence().lengthOfLIS(array));
     }
 }

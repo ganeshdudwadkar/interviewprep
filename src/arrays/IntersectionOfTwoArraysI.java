@@ -66,7 +66,7 @@ class Solution {
 
 public class IntersectionOfTwoArraysI {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         int[] array1 = new int[]{4, 9, 5};
         int[] array2 = new int[]{9, 4, 9, 8, 4};
         Solution solution = new Solution();

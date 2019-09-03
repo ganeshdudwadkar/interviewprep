@@ -6,16 +6,18 @@ public class LinkedList {
 
     private ListNode head, tail;
 
-    public LinkedList(){}
+    public LinkedList() {
+    }
 
     public LinkedList(int val) {
         this.head = new ListNode(val);
         this.tail = head;
     }
 
-    public ListNode getHead(){
+    public ListNode getHead() {
         return this.head;
     }
+
     // adds new node at the end
     public void add(int val) {
         ListNode newNode = new ListNode(val);
@@ -53,7 +55,7 @@ public class LinkedList {
     }
 
     // covert linked list elements to string
-    public String toString(){
+    public String toString() {
 
         return head.getSeqNodesString();
     }

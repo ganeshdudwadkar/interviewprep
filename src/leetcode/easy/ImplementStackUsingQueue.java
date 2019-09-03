@@ -39,13 +39,13 @@ class MyStack {
     public int pop() {
         //add back all the front elements at the end except last one
         int elem;
-        for(int i=0;i<list.size()-1;i++){
-            elem = list.get(list.size()-1);
-            list.remove(list.size()-1);
+        for (int i = 0; i < list.size() - 1; i++) {
+            elem = list.get(list.size() - 1);
+            list.remove(list.size() - 1);
             push(elem);
         }
-        elem = list.get(list.size()-1);
-        list.remove(list.size()-1); //remove the top which is now at the front
+        elem = list.get(list.size() - 1);
+        list.remove(list.size() - 1); //remove the top which is now at the front
         return elem;
     }
 
@@ -62,7 +62,7 @@ class MyStack {
 
 public class ImplementStackUsingQueue {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         MyStack stack = new MyStack();
 

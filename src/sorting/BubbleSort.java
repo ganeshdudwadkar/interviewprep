@@ -1,4 +1,5 @@
 package sorting;
+
 import java.util.Arrays;
 
 //The idea is to push the max element to its final position in every iteration
@@ -19,14 +20,14 @@ public class BubbleSort {
         }
     }
 
-    private void exch(int[] array, int i, int j){
+    private void exch(int[] array, int i, int j) {
         int temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
 
-    public static void main(String[] args){
-        int[] array = {12,41,9,18,10};
+    public static void main(String[] args) {
+        int[] array = {12, 41, 9, 18, 10};
         new BubbleSort().sort(array);
         System.out.println(Arrays.toString(array));
     }

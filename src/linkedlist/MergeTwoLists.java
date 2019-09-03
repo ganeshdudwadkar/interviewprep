@@ -5,20 +5,20 @@ import common.nodes.ListNode;
 
 public class MergeTwoLists {
 
-    public ListNode mergeAlternate(ListNode node1, ListNode node2){
+    public ListNode mergeAlternate(ListNode node1, ListNode node2) {
         ListNode odd = node1;
         ListNode even = node2;
 
         ListNode temp1;
         //idea is to take head of odd list and merge it into even list as one element addition
-        while(odd.next != null && even.next != null){
+        while (odd.next != null && even.next != null) {
             temp1 = odd.next;
             odd.next = even.next;
             even.next = odd;
             even = odd.next;
             odd = temp1;
         }
-        if (odd != null){
+        if (odd != null) {
             even.next = odd;
         }
 

@@ -61,7 +61,7 @@ public class EvaluateReversePolishNotation {
         return stack.pop();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         EvaluateReversePolishNotation example = new EvaluateReversePolishNotation();
 

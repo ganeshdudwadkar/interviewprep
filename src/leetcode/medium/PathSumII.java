@@ -36,30 +36,30 @@ import java.util.List;
 
 public class PathSumII {
 
-    private void preOrderT(TreeNode root, List<List<Integer>> mls, List<Integer> ls, int sum){ //preorder traverse
-        if(root==null){
+    private void preOrderT(TreeNode root, List<List<Integer>> mls, List<Integer> ls, int sum) { //preorder traverse
+        if (root == null) {
             return;
         }
-        if(root.left == null && root.right == null && root.val==sum){
+        if (root.left == null && root.right == null && root.val == sum) {
             List<Integer> copyls = new ArrayList<>(ls);
             copyls.add(root.val);
             mls.add(copyls);
             return;
         }
         ls.add(root.val);
-        preOrderT(root.left,mls,ls,sum-root.val);
-        preOrderT(root.right,mls,ls,sum-root.val);
-        ls.remove(ls.size()-1);//remove last
+        preOrderT(root.left, mls, ls, sum - root.val);
+        preOrderT(root.right, mls, ls, sum - root.val);
+        ls.remove(ls.size() - 1);//remove last
     }
 
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         List<List<Integer>> mls = new ArrayList<>();
         List<Integer> ls = new ArrayList<Integer>();
-        preOrderT(root,mls,ls,sum);
+        preOrderT(root, mls, ls, sum);
         return mls;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         TreeNode root = Examples.getExampleTreeRoot();
         root.left.right = new TreeNode(13);

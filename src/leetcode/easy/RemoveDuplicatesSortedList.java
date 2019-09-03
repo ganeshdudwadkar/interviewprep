@@ -23,12 +23,12 @@ import common.nodes.ListNode;
 public class RemoveDuplicatesSortedList {
 
     public static ListNode deleteDuplicates(ListNode head) {
-        if (head == null){
+        if (head == null) {
             return null;
         }
-        ListNode iterator=head;
-        while(iterator.next != null ){
-            if(iterator.value == iterator.next.value) iterator.next = iterator.next.next;
+        ListNode iterator = head;
+        while (iterator.next != null) {
+            if (iterator.value == iterator.next.value) iterator.next = iterator.next.next;
             else {
                 iterator = iterator.next;
             }
@@ -36,7 +36,7 @@ public class RemoveDuplicatesSortedList {
         return head;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         LinkedList myLinkedList = new LinkedList(21);
         myLinkedList.add(21);

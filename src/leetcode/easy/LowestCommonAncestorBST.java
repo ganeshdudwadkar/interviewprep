@@ -18,21 +18,19 @@ import common.nodes.TreeNode;
 public class LowestCommonAncestorBST {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (p == null || q == null || root == null){
+        if (p == null || q == null || root == null) {
             return null;
         }
-        if (p.val < root.val && q.val < root.val){
-            return lowestCommonAncestor (root.left, p , q);
-        }
-        else if (p.val > root.val && q.val > root.val){
-            return lowestCommonAncestor (root.right, p , q);
-        }
-        else {
+        if (p.val < root.val && q.val < root.val) {
+            return lowestCommonAncestor(root.left, p, q);
+        } else if (p.val > root.val && q.val > root.val) {
+            return lowestCommonAncestor(root.right, p, q);
+        } else {
             return root;
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         TreeNode bstRoot = Examples.getExampleBSTRoot();
         LowestCommonAncestorBST obj = new LowestCommonAncestorBST();

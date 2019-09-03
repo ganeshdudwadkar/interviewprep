@@ -73,7 +73,7 @@ public class ListNode {
         return str + " NULL";
     }
 
-    public void printSeqNodes(){
+    public void printSeqNodes() {
         System.out.println(getSeqNodesString());
     }
 }

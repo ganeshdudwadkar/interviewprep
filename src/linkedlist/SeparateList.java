@@ -1,23 +1,24 @@
 package linkedlist;
+
 import common.LinkedList;
 import common.nodes.ListNode;
 
 class Solution {
 
-    public ListNode[] separateList(ListNode head){
+    public ListNode[] separateList(ListNode head) {
         ListNode even, odd, oddHead, evenHead;
         odd = head;
         oddHead = head;
         even = head.next;
         evenHead = even;
         //separate lists into odd-even lists
-        while(odd.next !=null && even.next != null){
+        while (odd.next != null && even.next != null) {
             odd.next = odd.next.next;
             even.next = even.next.next;
             odd = odd.next;
             even = even.next;
         }
-        if (odd.next != null){
+        if (odd.next != null) {
             odd.next = odd.next.next;
         }
 //        //print odd
@@ -28,9 +29,9 @@ class Solution {
     }
 }
 
-public class SeparateList{
+public class SeparateList {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         // ListNode head = new ListNode(10);
         LinkedList myLinkedList = new LinkedList(10);
         myLinkedList.add(13);

@@ -32,16 +32,16 @@ import common.nodes.TreeNode;
 public class InvertBinaryTree {
 
     public TreeNode invertTree(TreeNode root) {
-        if(root==null){
+        if (root == null) {
             return null;
         }
         TreeNode temp = root.left;
-        root.left=invertTree(root.right);
-        root.right=invertTree(temp);
+        root.left = invertTree(root.right);
+        root.right = invertTree(temp);
         return root;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         TreeNode root = Examples.getExampleBSTRoot();
         root.print_inorder();

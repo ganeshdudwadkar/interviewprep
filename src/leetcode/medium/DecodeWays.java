@@ -63,7 +63,7 @@ public class DecodeWays {
         return value >= 1 && value <= 26;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         DecodeWays obj = new DecodeWays();
         System.out.println(obj.numDecodings("226"));

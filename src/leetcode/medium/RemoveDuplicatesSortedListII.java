@@ -36,7 +36,7 @@ public class RemoveDuplicatesSortedListII {
         return head;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         LinkedList myLinkedList = new LinkedList(21);
         myLinkedList.add(21);

@@ -25,19 +25,19 @@ public class ContainsDuplicate {
 
     public boolean containsDuplicate(int[] nums) {
         Set<Integer> hs = new HashSet<>();
-        for (int n : nums){
-            if(!hs.contains(n)){
+        for (int n : nums) {
+            if (!hs.contains(n)) {
                 hs.add(n);
-            } else{
+            } else {
                 return true;
             }
         }
         return false;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         ContainsDuplicate obj = new ContainsDuplicate();
-        System.out.println(obj.containsDuplicate(new int[]{1,2,3,4}));
-        System.out.println(obj.containsDuplicate(new int[]{1,2,3,2}));
+        System.out.println(obj.containsDuplicate(new int[]{1, 2, 3, 4}));
+        System.out.println(obj.containsDuplicate(new int[]{1, 2, 3, 2}));
     }
 }

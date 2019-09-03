@@ -70,7 +70,7 @@ public class CompareVersionNumbers {
         return 0;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         CompareVersionNumbers obj = new CompareVersionNumbers();
         System.out.println(obj.compareVersion("0.1", "1.1"));

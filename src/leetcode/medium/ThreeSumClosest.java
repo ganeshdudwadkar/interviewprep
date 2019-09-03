@@ -48,7 +48,7 @@ public class ThreeSumClosest {
         return result;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         ThreeSumClosest obj = new ThreeSumClosest();
         System.out.println(obj.threeSumClosest(new int[]{-1, 2, 1, -4}, 1));

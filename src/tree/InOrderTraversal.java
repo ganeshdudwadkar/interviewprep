@@ -11,28 +11,28 @@ public class InOrderTraversal {
 
     // recursive
     public void inorderTraversal(TreeNode root, List<Integer> ls) {
-        if(root==null) return;
-        inorderTraversal(root.left,ls);
+        if (root == null) return;
+        inorderTraversal(root.left, ls);
         ls.add(root.val);
-        inorderTraversal(root.right,ls);
+        inorderTraversal(root.right, ls);
     }
 
     public List<Integer> inorderTraversalNonRec(TreeNode root) {
         List<Integer> result = new ArrayList<>();
-        if(root==null)
+        if (root == null)
             return result;
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
 
-        while(!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             TreeNode top = stack.peek();
-            if(top.left!=null){
+            if (top.left != null) {
                 stack.push(top.left);
-                top.left=null;
-            }else{
+                top.left = null;
+            } else {
                 result.add(top.val);
                 stack.pop();
-                if(top.right!=null){
+                if (top.right != null) {
                     stack.push(top.right);
                 }
             }

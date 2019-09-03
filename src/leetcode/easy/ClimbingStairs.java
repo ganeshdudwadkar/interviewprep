@@ -31,9 +31,9 @@ Explanation: There are three ways to climb to the top.
 public class ClimbingStairs {
 
     public int climbStairs(int n) {
-        if(n < 0)
+        if (n < 0)
             return 0;
-        if(n == 1)
+        if (n == 1)
             return 1;
 
         int[] stairs = new int[n];
@@ -41,17 +41,17 @@ public class ClimbingStairs {
         stairs[0] = 1;
         stairs[1] = 2;
 
-        for(int i = 2; i < n; ++i)
-            stairs[i] = stairs[i-1] + stairs[i-2];
+        for (int i = 2; i < n; ++i)
+            stairs[i] = stairs[i - 1] + stairs[i - 2];
 
-        return stairs[n-1];
+        return stairs[n - 1];
     }
 
     // In below solution -> Store the interim results to optimize it but for our problem we don't need the loop
 
     private static long fibonacci(int n) {
         if (n <= 1) return n;
-        else return fibonacci(n-1) + fibonacci(n-2);
+        else return fibonacci(n - 1) + fibonacci(n - 2);
     }
 
     public static void main(String[] args) {

@@ -1,4 +1,5 @@
 package leetcode.easy;
+
 import java.util.Arrays;
 
 public class TwoSum {
@@ -16,7 +17,7 @@ public class TwoSum {
         int[] array = {12, 41, 9, 18, 10};
         TwoSum twoSum = new TwoSum();
         int[] result = twoSum.solution(array, 27);
-        if (result != null);
+        if (result != null) ;
         System.out.println(Arrays.toString(result));
     }
 

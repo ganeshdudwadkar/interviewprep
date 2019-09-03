@@ -117,7 +117,7 @@ public class LRUCache {
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         LRUCache cache = new LRUCache(2); // capacity
 

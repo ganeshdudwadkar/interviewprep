@@ -61,7 +61,7 @@ public class RotateList {
         return head;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         ListNode head = Examples.getLinkedListHead();
         head.printSeqNodes();

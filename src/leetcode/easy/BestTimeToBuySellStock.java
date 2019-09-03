@@ -46,7 +46,7 @@ public class BestTimeToBuySellStock {
         return max_prof;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         BestTimeToBuySellStock obj = new BestTimeToBuySellStock();
         System.out.println(obj.maxProfit(new int[]{7, 1, 5, 3, 6, 4}));

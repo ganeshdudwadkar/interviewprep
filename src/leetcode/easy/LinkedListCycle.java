@@ -45,40 +45,40 @@ public class LinkedListCycle {
     }
 
     public ListNode detectCycle(ListNode head) {
-        if (head == null){
+        if (head == null) {
             return null;
         }
         ListNode slow = head;
         ListNode fast = head;
         boolean cycle = false;
-        while(fast.next != null && fast.next.next != null){
+        while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
-            if(slow==fast){
-                cycle=true;
-                fast=head;//reset fast back to head
+            if (slow == fast) {
+                cycle = true;
+                fast = head;//reset fast back to head
                 break;
             }
         }
-        if(!cycle){
+        if (!cycle) {
             return null;
         }
         //now head and slow are equidistant from the cycle start node
-        while(slow != fast){
+        while (slow != fast) {
             slow = slow.next;
             fast = fast.next;
         }
         return fast;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         ListNode head = Examples.getLinkedListHeadWithCycle();
 
         LinkedListCycle linkedListCycle = new LinkedListCycle();
         System.out.println(linkedListCycle.hasCycle(head));
         ListNode cycle = linkedListCycle.detectCycle(head);
-        if (cycle != null){
+        if (cycle != null) {
             System.out.println("Cycle starts at : " + cycle);
         }
         head.printSeqNodes();

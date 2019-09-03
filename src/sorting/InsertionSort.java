@@ -1,4 +1,5 @@
 package sorting;
+
 import java.util.Arrays;
 
 public class InsertionSort {
@@ -15,14 +16,14 @@ public class InsertionSort {
         }
     }
 
-    private void exch(int[] array, int i, int j){
+    private void exch(int[] array, int i, int j) {
         int temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
 
-    public static void main(String[] args){
-        int[] array = {12,41,9,18,10};
+    public static void main(String[] args) {
+        int[] array = {12, 41, 9, 18, 10};
         new InsertionSort().sort(array);
         System.out.println(Arrays.toString(array));
     }

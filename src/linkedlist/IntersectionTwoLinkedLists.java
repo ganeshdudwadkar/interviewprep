@@ -13,10 +13,10 @@ import common.nodes.ListNode;
 public class IntersectionTwoLinkedLists {
 
     public ListNode getIntersectionNodeOld(ListNode headA, ListNode headB) {
-        if (headA == null || headB == null){
+        if (headA == null || headB == null) {
             return null;
         }
-        if (headA == headB ){//same lists
+        if (headA == headB) {//same lists
             return headA;
         }
         ListNode iteratorA = headA;
@@ -24,33 +24,33 @@ public class IntersectionTwoLinkedLists {
         //get the length of both the lists
         int lenA = 1;
         int lenB = 1;
-        while(iteratorA.next != null){
+        while (iteratorA.next != null) {
             lenA++;
             iteratorA = iteratorA.next;
         }
-        while(iteratorB.next != null){
+        while (iteratorB.next != null) {
             lenB++;
             iteratorB = iteratorB.next;
         }
-        if (iteratorA != iteratorB){ //no intersection
+        if (iteratorA != iteratorB) { //no intersection
             return null;
         }
         //reset iterators
         iteratorA = headA;
         iteratorB = headB;
         int diff;
-        if (lenA > lenB){
+        if (lenA > lenB) {
             diff = lenA - lenB;
-            for(int i = 0; i< diff ; i++){
+            for (int i = 0; i < diff; i++) {
                 iteratorA = iteratorA.next;
             }
-        } else if (lenB > lenA ) {
+        } else if (lenB > lenA) {
             diff = lenB - lenA;
-            for(int i = 0; i< diff ; i++){
+            for (int i = 0; i < diff; i++) {
                 iteratorB = iteratorB.next;
             }
         }
-        while(iteratorA != iteratorB){
+        while (iteratorA != iteratorB) {
             iteratorA = iteratorA.next;
             iteratorB = iteratorB.next;
         }
@@ -59,22 +59,22 @@ public class IntersectionTwoLinkedLists {
 
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         //boundary check
-        if(headA == null || headB == null) return null;
+        if (headA == null || headB == null) return null;
 
         ListNode a = headA;
         ListNode b = headB;
 
         //if a & b have different len, then we will stop the loop after second iteration (how?)
-        while( a != b){
+        while (a != b) {
             //for the end of first iteration, we just reset the pointer to the head of another linkedlist
-            a = a == null? headB : a.next;
-            b = b == null? headA : b.next;
+            a = a == null ? headB : a.next;
+            b = b == null ? headA : b.next;
         }
 
         return a;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         ListNode head1 = new ListNode(3);
         ListNode head2 = new ListNode(5);
         head1.next = new ListNode(4);
