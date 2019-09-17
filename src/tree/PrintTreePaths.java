@@ -36,7 +36,7 @@ class Solution {
     }
 
     public List<String> binaryTreePaths(TreeNode root) {
-        List<String> ls = new ArrayList<String>();
+        List<String> ls = new ArrayList<>();
         if (root == null) {
             return ls;
         }
