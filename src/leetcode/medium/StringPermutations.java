@@ -34,7 +34,7 @@ public class StringPermutations {
             return single;
         }
         char c = s.charAt(0);
-        Set<String> returnSet = new HashSet<String>();
+        Set<String> returnSet = new HashSet<>();
         Set<String> remaining = getAllPermutations(s.substring(1));
         for (String perm : remaining) {
             for (int i = 0; i < len; i++) {

@@ -39,7 +39,7 @@ public class ThreeSum {
                 //System.out.println("Checking " + nums[i] + " , " + nums[j] + " , " + nums[k]);
                 sum = nums[i] + nums[j] + nums[k];
                 if (sum == 0) {
-                    List<Integer> ls = new ArrayList<Integer>();
+                    List<Integer> ls = new ArrayList<>();
                     ls.add(nums[i]);
                     ls.add(nums[j]);
                     ls.add(nums[k]);

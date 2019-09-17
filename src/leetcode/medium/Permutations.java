@@ -33,7 +33,7 @@ public class Permutations {
         List<List<Integer>> perms = new LinkedList<>();
         ;
         if (len == 1) {
-            LinkedList<Integer> last = new LinkedList<Integer>();
+            LinkedList<Integer> last = new LinkedList<>();
             last.add(nums[0]);
             perms.add(last);
             return perms;
@@ -60,7 +60,7 @@ public class Permutations {
 
         for (int i = 0; i < num.length; i++) {
             //list of list in current iteration of the array num
-            ArrayList<ArrayList<Integer>> current = new ArrayList<ArrayList<Integer>>();
+            ArrayList<ArrayList<Integer>> current = new ArrayList<>();
 
             for (List<Integer> l : result) {
                 // # of locations to insert is largest index + 1
@@ -68,7 +68,7 @@ public class Permutations {
                     // + add num[i] to different locations
                     l.add(j, num[i]);
 
-                    ArrayList<Integer> temp = new ArrayList<Integer>(l);
+                    ArrayList<Integer> temp = new ArrayList<>(l);
                     current.add(temp);
 
                     //System.out.println(temp);

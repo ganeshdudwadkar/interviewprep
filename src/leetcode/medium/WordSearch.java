@@ -28,7 +28,7 @@ Given word = "ABCB", return false.
 public class WordSearch {
 
     public boolean exist(char[][] board, String word) {
-        boolean ans = false;
+        boolean ans;
         boolean[][] visited = new boolean[board.length][board[0].length];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
@@ -49,7 +49,7 @@ public class WordSearch {
     private boolean checkString(char[][] board, int i, int j, String word, int index, boolean[][] visited) {
         //System.out.println("Checking for String " + word + " at index a["+i+"]["+j+"]");
         if (word.length() == index) return true;
-        boolean res = false;
+        boolean res;
         if (i < board.length - 1 && !visited[i + 1][j] && board[i + 1][j] == word.charAt(index)) {
             visited[i + 1][j] = true;
             res = checkString(board, i + 1, j, word, index + 1, visited);
