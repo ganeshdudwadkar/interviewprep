@@ -26,39 +26,39 @@ What should we return when needle is an empty string? This is a great question t
 public class NeedleInAHaystack {
 
     public int strStr(String haystack, String needle) {
-        if (haystack == null || needle == null){
+        if (haystack == null || needle == null) {
             return -1;
         }
-        if (haystack.equals(needle)){
+        if (haystack.equals(needle)) {
             return 0;
         }
         int hLength = haystack.length();
         int nLength = needle.length();
-        if (nLength == 0){
+        if (nLength == 0) {
             return 0;
         }
-        if (hLength == 0){
+        if (hLength == 0) {
             return -1;
         }
         boolean found;
-        for(int i = 0;i < hLength ;i++){
-            if(haystack.charAt(i)==needle.charAt(0) && (hLength-i)>=nLength){
+        for (int i = 0; i < hLength; i++) {
+            if (haystack.charAt(i) == needle.charAt(0) && (hLength - i) >= nLength) {
                 //System.out.println("First char matched " + haystack.charAt(i) + " at " + i);
                 found = true; // assumption
-                for(int j=1;j<nLength;j++){
+                for (int j = 1; j < nLength; j++) {
                     //System.out.println("Checking " + haystack.charAt(i+j) + " and " + needle.charAt(j));
-                    if(haystack.charAt(i+j)!=needle.charAt(j)){
+                    if (haystack.charAt(i + j) != needle.charAt(j)) {
                         //System.out.println(haystack.charAt(i+j) + " and " + needle.charAt(j) + " not matching.. ");
                         found = false;
                         break;
                     }
                 }
-                if(found){
+                if (found) {
                     return i;
                 }
             }
         }
-        System.out.println("Reached end");
+        // System.out.println("Reached end");
         return -1;
     }
 
@@ -74,22 +74,22 @@ public class NeedleInAHaystack {
     }
 
     public int strStrIII(String haystack, String needle) {
-        if(haystack==null || needle==null) return -1;
+        if (haystack == null || needle == null) return -1;
         int hlen = haystack.length();
         int nlen = needle.length();
-        for(int i=0;i+nlen<=hlen;i++){
-            if(haystack.substring(i,i+nlen).equals(needle))
+        for (int i = 0; i + nlen <= hlen; i++) {
+            if (haystack.substring(i, i + nlen).equals(needle))
                 return i;
         }
         return -1;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         NeedleInAHaystack obj = new NeedleInAHaystack();
-        System.out.println(obj.strStr("StrStrrrrStrrrrrrr","Strrrrrr"));
-        System.out.println(obj.strStrII("StrStrrrrStrrrrrrr","Strrrrrr1"));
-        System.out.println(obj.strStrIII("StrStrrrrStrrrrrrr","Strrrrrr"));
+        System.out.println(obj.strStr("StrStrrrrStrrrrrrr", "Strrrrrr"));
+        System.out.println(obj.strStrII("StrStrrrrStrrrrrrr", "Strrrrrr1"));
+        System.out.println(obj.strStrIII("StrStrrrrStrrrrrrr", "Strrrrrr"));
 
 //        Another simplest one liners :
 //        return haystack.indexOf(needle);

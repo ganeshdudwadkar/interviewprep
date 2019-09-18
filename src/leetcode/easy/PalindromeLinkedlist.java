@@ -99,7 +99,7 @@ public class PalindromeLinkedlist {
         return prev;
     }
 
-    // another recursive solution
+    // another recursive solution - from java-questions.com
     private ListNode left;
 
     public boolean isPalindromeAlternate(ListNode head) {
