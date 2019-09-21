@@ -20,6 +20,7 @@ public class FindFriends {
             level = levels.remove();
             List<String> currentFriends = friendMap.getOrDefault(current, new ArrayList<>());
             for (String friend: currentFriends){
+                if (done.contains(friend)) continue; // adds improvement
                 // System.out.println("Processing friend " + friend + " at level " + level);
                 List<String> levelList;
                 if (!levelMap.containsKey(level)){
@@ -34,8 +35,9 @@ public class FindFriends {
                     queue.add(friend);
                     levels.add(level+1);
                 }
+                if (levelList.size() == 0) levelMap.remove(level);
             }
-            System.out.println(levelMap);
+            // System.out.println(levelMap);
         }
 
         return levelMap;
@@ -53,7 +55,7 @@ public class FindFriends {
         friendMap.put("George", new ArrayList<>(Arrays.asList("Eric", "Ram")));
         FindFriends obj = new FindFriends();
         System.out.println(obj.getAllFriends("Bob", friendMap));
-        System.out.println(obj.getAllFriends("George", friendMap));
+        // System.out.println(obj.getAllFriends("George", friendMap));
 
     }
 }
