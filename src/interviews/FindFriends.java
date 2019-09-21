@@ -6,6 +6,7 @@ public class FindFriends {
 
     public Map<Integer, List<String>> getAllFriends(String name, Map<String, List<String>> friendMap){
         Map<Integer, List<String>> levelMap = new HashMap<>();
+        if (name == null || friendMap == null) return levelMap;
         Queue<String> queue = new LinkedList<>();
         Queue<Integer> levels = new LinkedList<>();
         Set<String> done = new HashSet<>();
@@ -19,7 +20,7 @@ public class FindFriends {
             level = levels.remove();
             List<String> currentFriends = friendMap.getOrDefault(current, new ArrayList<>());
             for (String friend: currentFriends){
-                System.out.println("Processing friend " + friend + " at level " + level);
+                // System.out.println("Processing friend " + friend + " at level " + level);
                 List<String> levelList;
                 if (!levelMap.containsKey(level)){
                     levelList = new ArrayList<>();
