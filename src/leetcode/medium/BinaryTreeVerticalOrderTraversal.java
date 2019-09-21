@@ -29,7 +29,7 @@ public class BinaryTreeVerticalOrderTraversal {
         if (map.containsKey(level)) {
             ls = map.get(level);
         } else {
-            ls = new ArrayList<Integer>();
+            ls = new ArrayList<>();
             map.put(level, ls);
         }
         ls.add(root.val);
@@ -73,7 +73,7 @@ public class BinaryTreeVerticalOrderTraversal {
         return res;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         BinaryTreeVerticalOrderTraversal obj = new BinaryTreeVerticalOrderTraversal();
         TreeNode root = Examples.getExampleTreeRoot();

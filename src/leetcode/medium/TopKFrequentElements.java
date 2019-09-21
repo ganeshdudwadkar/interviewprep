@@ -85,7 +85,7 @@ public class TopKFrequentElements {
         }
 
         // Iterate through treemap and add top k frequent elements into result lists
-        List<Integer> res = new ArrayList<Integer>(k);
+        List<Integer> res = new ArrayList<>(k);
         outer:
         for (int freq : tm.keySet()) {
             ls = tm.get(freq);

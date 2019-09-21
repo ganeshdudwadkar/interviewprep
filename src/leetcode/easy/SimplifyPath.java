@@ -6,7 +6,7 @@ import java.util.Stack;
 public class SimplifyPath {
 
     public String solution(String path) {
-        Stack<String> stack = new Stack<String>();
+        Stack<String> stack = new Stack<>();
         for (String s : path.split("/")) {
             if (s.equals("..")) {
                 if (!stack.empty()) {

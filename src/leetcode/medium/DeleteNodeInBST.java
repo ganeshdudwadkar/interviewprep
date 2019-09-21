@@ -95,6 +95,7 @@ public class DeleteNodeInBST {
         if (leftNode == null) return rightNode;
         if (rightNode == null) return leftNode;
         TreeNode iterator = rightNode;
+        // find a node which has left node empty
         while (iterator.left != null) {
             iterator = iterator.left;
         }

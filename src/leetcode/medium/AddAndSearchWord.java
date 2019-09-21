@@ -32,8 +32,9 @@ import java.util.Map;
 public class AddAndSearchWord {
 
     class TrieNode {
-        Map<Character,TrieNode> hm;
+        Map<Character, TrieNode> hm;
         boolean isEnd;
+
         // Initialize your data structure here.
         public TrieNode() {
             hm = new HashMap<>();
@@ -46,12 +47,13 @@ public class AddAndSearchWord {
     public AddAndSearchWord() {
         root = new TrieNode();
     }
+
     // Adds a word into the data structure.
     public void addWord(String word) {
         TrieNode iter = root;
-        for(char c : word.toCharArray()){
-            if(!iter.hm.containsKey(c)){
-                iter.hm.put(c,new TrieNode());
+        for (char c : word.toCharArray()) {
+            if (!iter.hm.containsKey(c)) {
+                iter.hm.put(c, new TrieNode());
             }
             iter = iter.hm.get(c);
         }
@@ -61,30 +63,30 @@ public class AddAndSearchWord {
     // Returns if the word is in the data structure. A word could
     // contain the dot character '.' to represent any one letter.
     public boolean search(String word) {
-        return search(word,root);
+        return search(word, root);
     }
 
     public boolean search(String word, TrieNode root) {
-        if(root == null) { // reached the leafNode where hm is empty?
+        if (root == null) { // reached the leafNode where hm is empty?
             return false;
         }
         TrieNode iter = root;
         //System.out.println("Searching " + word);
-        if(word.length() == 0){
+        if (word.length() == 0) {
             return iter.isEnd;
         }
         char[] w = word.toCharArray();
-        for(int i=0;i<w.length;i++){
-            if(w[i] == '.'){
+        for (int i = 0; i < w.length; i++) {
+            if (w[i] == '.') {
                 boolean res = false;
-                for(char c : iter.hm.keySet()){
-                    res = search(word.substring(i+1),iter.hm.get(c)); //DFS search
-                    if(res) {
+                for (char c : iter.hm.keySet()) {
+                    res = search(word.substring(i + 1), iter.hm.get(c)); //DFS search
+                    if (res) {
                         return true;
                     }
                 }
             }
-            if(!iter.hm.containsKey(w[i])){
+            if (!iter.hm.containsKey(w[i])) {
                 return false;
             }
             iter = iter.hm.get(w[i]);
@@ -92,7 +94,7 @@ public class AddAndSearchWord {
         return iter.isEnd;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         AddAndSearchWord obj = new AddAndSearchWord();
         obj.addWord("bad");

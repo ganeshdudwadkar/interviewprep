@@ -24,7 +24,7 @@ class Interval {
 
     @Override
     public String toString() {
-        return  start + " -> " + end;
+        return start + " -> " + end;
     }
 }
 
@@ -45,7 +45,7 @@ public class MeetingRoomsII {
         });
 
         // Use a min heap to track the minimum end time of merged intervals
-        PriorityQueue<Interval> heap = new PriorityQueue<Interval>(intervals.length, new Comparator<Interval>() {
+        PriorityQueue<Interval> heap = new PriorityQueue<>(intervals.length, new Comparator<Interval>() {
             public int compare(Interval a, Interval b) {
                 return a.end - b.end;
             }

@@ -28,6 +28,7 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
 
 public class BestTimeToBuySellStock {
 
+    // o(n) time complexity and o(n) space complexity
     public int maxProfit(int[] prices) {
         int days = prices.length;
         if (days == 0) {

@@ -35,13 +35,14 @@ So order them in anti-clockwise without duplicates and we have [1,3,4,2].
  */
 
 import common.nodes.TreeNode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class BoundaryOfBinaryTree {
 
     public List<Integer> boundaryOfBinaryTree(TreeNode root) {
-        List<Integer> ls = new ArrayList<Integer>();
+        List<Integer> ls = new ArrayList<>();
         if (root != null) {
             ls.add(root.val);
             lookupElems(root.left, ls, true, false);

@@ -48,7 +48,7 @@ class Node {
 public class LRUCache {
 
     private int capacity;
-    private Map<Integer, Node> map = new HashMap<Integer, Node>();
+    private Map<Integer, Node> map = new HashMap<>();
 
     private Node head = null;
     private Node end = null;
