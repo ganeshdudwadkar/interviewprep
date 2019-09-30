@@ -32,13 +32,13 @@ public class SerializeDeserializeBinaryTree {
 
     public static void main(String[] args) {
         TreeNode root = Examples.getExampleTreeRoot();
-        root.print_inorder();
+        root.printInorder();
         System.out.println();
         SerializeDeserializeBinaryTree obj = new SerializeDeserializeBinaryTree();
 
         String serializedTree = obj.serialize(root);
         System.out.println(serializedTree);
         TreeNode treeNode = obj.deserialize(serializedTree);
-        treeNode.print_inorder();
+        treeNode.printInorder();
     }
 }

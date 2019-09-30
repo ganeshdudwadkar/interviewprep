@@ -31,8 +31,6 @@ Merged tree:
 
 import common.nodes.TreeNode;
 
-import java.util.Stack;
-
 public class MergeTrees {
 
     public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
@@ -71,6 +69,6 @@ public class MergeTrees {
         t2.right.right = new TreeNode(7);
 
         TreeNode t = new MergeTrees().mergeTrees(t1, t2);
-        t.print_inorder();
+        t.printInorder();
     }
 }

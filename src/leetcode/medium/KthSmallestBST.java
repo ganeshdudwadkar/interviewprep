@@ -66,7 +66,7 @@ public class KthSmallestBST {
         root.right.right = new TreeNode(25);
         root.right.right.left = new TreeNode(22);
         root.right.right.right = new TreeNode(30);
-        root.print_inorder();
+        root.printInorder();
         System.out.println();
         KthSmallestBST solution = new KthSmallestBST();
         System.out.println(solution.kthSmallest(root, 3));

@@ -9,14 +9,19 @@ public class TreeNode {
         this.val = x;
     }
 
-    public void print_inorder() {
+    public void printInorder() {
+        inorder();
+        System.out.println();
+    }
+
+    private void inorder(){
         if (this.left != null) {
-            this.left.print_inorder();
+            this.left.inorder();
         }
         System.out.print(val);
         System.out.print(" ");
         if (this.right != null) {
-            this.right.print_inorder();
+            this.right.inorder();
         }
     }
 

@@ -50,7 +50,7 @@ public class PrintTreePaths {
 
     public static void main(String[] args) {
         TreeNode root = Examples.getExampleTreeRoot();
-        root.print_inorder();
+        root.printInorder();
         Solution s = new Solution();
         List<String> resultLs = s.binaryTreePaths(root);
         System.out.println(resultLs);

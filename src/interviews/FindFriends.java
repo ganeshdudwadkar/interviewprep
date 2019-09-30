@@ -52,10 +52,14 @@ public class FindFriends {
         friendMap.put("Eric", new ArrayList<>(Arrays.asList("Sandra", "Tim")));
         friendMap.put("Tim", new ArrayList<>(Arrays.asList("Sandra", "Ram")));
         friendMap.put("Ram", new ArrayList<>(Arrays.asList("Eric", "Tim", "George")));
-        friendMap.put("George", new ArrayList<>(Arrays.asList("Eric", "Ram")));
+        friendMap.put("George", new ArrayList<>(Arrays.asList("Eric", "Ram", "Sam")));
+        friendMap.put("Sam", new ArrayList<>(Arrays.asList("Eric", "Tom")));
+        friendMap.put("Tom", new ArrayList<>(Arrays.asList("Eric", "Bill")));
+        friendMap.put("Tom", new ArrayList<>(Arrays.asList("Ram", "Bill")));
+        friendMap.put("Bill", new ArrayList<>(Arrays.asList("Ram", "Jimmy")));
         FindFriends obj = new FindFriends();
         System.out.println(obj.getAllFriends("Bob", friendMap));
         // System.out.println(obj.getAllFriends("George", friendMap));
-
+        System.out.println();
     }
 }

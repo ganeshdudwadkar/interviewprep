@@ -44,12 +44,12 @@ public class InvertBinaryTree {
     public static void main(String[] args) {
 
         TreeNode root = Examples.getExampleBSTRoot();
-        root.print_inorder();
+        root.printInorder();
         System.out.println();
 
         InvertBinaryTree invertBinaryTree = new InvertBinaryTree();
         invertBinaryTree.invertTree(root);
 
-        root.print_inorder();
+        root.printInorder();
     }
 }
