@@ -1,5 +1,11 @@
 package interviews;
 
+/*
+
+Given :- a map of friends which contains name of each person as key and their friends list as value
+Return :- Friends of a given person at each level.
+ */
+
 import java.util.*;
 
 public class FindFriends {
@@ -59,7 +65,7 @@ public class FindFriends {
         friendMap.put("Bill", new ArrayList<>(Arrays.asList("Ram", "Jimmy")));
         FindFriends obj = new FindFriends();
         System.out.println(obj.getAllFriends("Bob", friendMap));
-        // System.out.println(obj.getAllFriends("George", friendMap));
+        System.out.println(obj.getAllFriends("George", friendMap));
         System.out.println();
     }
 }
