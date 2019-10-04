@@ -81,7 +81,7 @@ Stable sorts -> Insertion Sort, Merge Sort (All these depends on code and when t
 
 Merge Sort is efficient and stable
 
-Quick Sort doesn’t take extra space like Merge Sort. Suffering is required for performance guarantees because quick sort worst case scenario is when array is already sorted.
+Quick Sort doesn’t take extra space like Merge Sort. Shuffling is required for performance guarantees because quick sort worst case scenario is when array is already sorted.
 
 Quick Sort is not stable and hence used to sort primitive types by Java.
 Tunes Quick Sort is used for sorting primitives and Tuned Merge Sort is used for Objects for stability.

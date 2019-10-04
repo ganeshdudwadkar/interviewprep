@@ -28,13 +28,13 @@ public class OverlappingIntervals {
 
     public static void main(String[] args) {
         OverlappingIntervals obj = new OverlappingIntervals();
-        // System.out.println(obj.isOverlapping(new Interval(8,7), new Interval(2,10)));
+
         System.out.println(obj.isOverlapping(new Interval(7,8), new Interval(2,10)));
         System.out.println(obj.isOverlapping(new Interval(2,5), new Interval(7,8)));
         System.out.println(obj.isOverlapping(new Interval(2,8), new Interval(7,8)));
         System.out.println(obj.isOverlapping(new Interval(7,8), new Interval(2,5)));
-        System.out.println(obj.isOverlapping(new Interval(7,8), new Interval(2,10)));
-
+        System.out.println(obj.isOverlapping(new Interval(3,8), new Interval(2,10)));
+        // System.out.println(obj.isOverlapping(new Interval(8,7), new Interval(2,10)));
 
     }
 }

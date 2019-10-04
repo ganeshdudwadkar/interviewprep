@@ -90,7 +90,37 @@ public class WildcardMatching {
         return match[m];
     }
 
-    public static void main(String[] args){
+    // my solution that worked for 1707 test cases out of 1809 test cases - failed due to TLE
+    public boolean isMatchRecursive(String s, String p) {
+        //System.out.println(s + " " + p);
+        if (s.equals(p)) return true;
+        if (p.equals("")) return false;
+        if (s.equals("")) {
+            while (p.charAt(0) == '*') {
+                if (p.equals("*")) return true;
+                // skip all continuous stars
+                p = p.substring(1);
+            }
+            return false;
+        }
+        if (s.charAt(0) == p.charAt(0) || p.charAt(0) == '?') return isMatch(s.substring(1), p.substring(1));
+        if (p.charAt(0) == '*') {
+            while (p.charAt(0) == '*') {
+                if (p.length() == 1) return true;
+                // skip all continuous stars
+                p = p.substring(1);
+            }
+            for (int i = 0; i < s.length(); i++) {
+                if (p.charAt(0) == '?' || s.charAt(i) == p.charAt(0)) {
+                    boolean check = isMatch(s.substring(i), p);
+                    if (check) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
 
         WildcardMatching obj = new WildcardMatching();
         System.out.println(obj.isMatch("aa", "a*"));

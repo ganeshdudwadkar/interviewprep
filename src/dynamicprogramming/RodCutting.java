@@ -1,4 +1,4 @@
-package leetcode.dynamicprogramming;
+package dynamicprogramming;
 
 // From book - Introduction to Algorithms
 

@@ -58,12 +58,37 @@ class ParenthesisPermutation {
         return ans;
     }
 
+    // solve it using backtracking
+
+    public List<String> generateParenthesis(int n) {
+        List<String> results = new ArrayList<>();
+        backtrack(n, n, "", results);
+        return results;
+    }
+
+    private void backtrack(int left, int right, String currentState, List<String> results) {
+        if (left == 0 && right == 0) {
+            results.add(currentState);
+            return;
+        }
+
+        if (left > 0) {
+            backtrack(left - 1, right, currentState + "(", results);
+        }
+        if (left < right) {
+            backtrack(left, right - 1, currentState + ")", results);
+        }
+    }
+
     public static void main(String[] args) {
         Set<String> ans = new ParenthesisPermutation().permute(3);
 
         for (String string : ans) {
             System.out.println(string);
         }
+
+        List<String> res = new ParenthesisPermutation().generateParenthesis(3);
+        System.out.println(res);
     }
 }
 
