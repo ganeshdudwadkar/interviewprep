@@ -47,6 +47,19 @@ Publisher / Subscriber or Queue
 Map Reduce
 Multithreading, concurrency, locks, synchronization, CAS
 
+HTTP Long Polling ->
+Web app developers can implement a technique called HTTP long polling, where the client polls the server requesting new information.
+The server holds the request open until new data is available. Once available, the server responds and sends the new information.
+When the client receives the new information, it immediately sends another request, and the operation is repeated. This effectively emulates a server push feature.
+
+WebSockets ->
+WebSocket provides Full duplex communication channels over a single TCP connection. It provides a persistent connection
+between a client and a server that both parties can use to start sending data at any time. The client establishes a WebSocket connection
+through a process known as the WebSocket handshake. If the process succeeds, then the server and client can exchange
+data in both directions at any time. The WebSocket protocol enables communication between a client and a server with
+lower overheads, facilitating real-time data transfer from and to the server.
+
+
 Read about Technologies ->
 
 Cassandra
@@ -59,6 +72,25 @@ Kafka
 Nginx
 HAProxy
 Solr, ElasticSearch
-Blobstore like Amazon S3
+
+Blobstore like Amazon S3 -> https://en.wikipedia.org/wiki/Amazon_S3
+Amazon S3 or Amazon Simple Storage Service is a service offered by Amazon Web Services (AWS) that provides object storage through a web service interface.
+Amazon S3 uses the same scalable storage infrastructure that Amazon.com uses to run its global e-commerce network.
+Amazon S3 can be employed to store any type of object which allows for uses like storage for Internet applications, backup and recovery,
+disaster recovery, data archives, data lakes for analytics, and hybrid cloud storage.[3] In its service-level agreement,
+Amazon S3 guarantees 99.9% monthly uptime, which works out to less than 43 minutes of downtime per month.
+
 Docker - Kubernetes / Mesos
 Hadoop/Spark -> HDFS
+
+Hadoop -> https://en.wikipedia.org/wiki/Apache_Hadoop
+
+The core of Apache Hadoop consists of a storage part, known as Hadoop Distributed File System (HDFS), and a processing part which is a MapReduce programming model.
+Hadoop splits files into large blocks and distributes them across nodes in a cluster.
+
+The base Apache Hadoop framework is composed of the following modules:
+
+Hadoop Common – contains libraries and utilities needed by other Hadoop modules;
+Hadoop Distributed File System (HDFS) – a distributed file-system that stores data on commodity machines, providing very high aggregate bandwidth across the cluster;
+Hadoop YARN – (introduced in 2012) a platform responsible for managing computing resources in clusters and using them for scheduling users' applications;[10][11]
+Hadoop MapReduce – an implementation of the MapReduce programming model for large-scale data processing.

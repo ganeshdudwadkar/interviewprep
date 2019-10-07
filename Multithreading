@@ -1,0 +1,1294 @@
+Multithreading
+
+//Starting threads by extending the Thread class
+class Runner extends Thread {
+
+    @Override
+    public void run() {
+        for(int i=0; i<5; i++) {
+            System.out.println("Hello: " + i);
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+}
+
+
+public class Application {
+
+
+    public static void main(String[] args) {
+        Runner runner1 = new Runner();
+        runner1.start();
+
+        Runner runner2 = new Runner();
+        runner2.start();
+
+    }
+
+}
+
+------------------------------------------------------------------------------------------
+
+//Starting threads using the Thread class directly
+
+class Runner implements Runnable {
+
+    @Override
+    public void run() {
+        for(int i=0; i<5; i++) {
+            System.out.println("Hello: " + i);
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+}
+
+
+public class Application {
+
+
+    public static void main(String[] args) {
+        Thread thread1 = new Thread(new Runner());
+        thread1.start();
+    }
+
+}
+
+------------------------------------------------------------------------------------------
+
+//Starting threads using the Thread constructor with anonymous classes
+
+public class Application {
+
+
+    public static void main(String[] args) {
+        Thread thread1 = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                for(int i=0; i<5; i++) {
+                    System.out.println("Hello: " + i);
+
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+        });
+
+        thread1.start();
+    }
+}
+
+------------------------------------------------------------------------------------------
+
+// Gracefully terminating a thread from another thread using volatile
+
+import java.util.Scanner;
+
+class Processor extends Thread {
+
+    private volatile boolean running = true;
+
+    public void run() {
+
+        while(running) {
+            System.out.println("Running");
+
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void shutdown() {
+        running = false;
+    }
+}
+
+public class App {
+
+    public static void main(String[] args) {
+        Processor pro = new Processor();
+        pro.start();
+
+        // Wait for the enter key
+        new Scanner(System.in).nextLine();
+
+        pro.shutdown();
+    }
+
+}
+
+------------------------------------------------------------------------------------------
+
+// In this example, if there is no synchronization, then the output is inconsistent.
+// example of java synchronized method
+
+class Table {
+    synchronized void printTable(int n) { //synchronized method
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(n * i);
+            try {
+                Thread.sleep(400);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+    }
+}
+
+public class TestSynchronization {
+    public static void main(String args[]) {
+        final Table obj = new Table(); //only one object
+
+        Thread t1 = new Thread() { //inner class?
+            public void run() {
+                obj.printTable(5);
+            }
+        };
+        Thread t2 = new Thread() {
+            public void run() {
+                obj.printTable(100);
+            }
+        };
+
+        t1.start();
+        t2.start();
+    }
+}
+
+------------------------------------------------------------------------------------------
+
+In the same above example, we can apply synchronized keyword on the static method to perform static synchronization.
+
+class Table {
+
+    synchronized static void printTable(int n) {
+        for (int i = 1; i <= 10; i++) {
+            System.out.println(n * i);
+            try {
+                Thread.sleep(400);
+            } catch (Exception e) {}
+        }
+    }
+}
+
+public class TestSynchronization5 {
+    public static void main(String[] args) {
+
+        Thread t1 = new Thread() {
+            public void run() {
+                Table.printTable(1);
+            }
+        };
+
+        Thread t2 = new Thread() {
+            public void run() {
+                Table.printTable(10);
+            }
+        };
+
+        t1.start();
+        t2.start();
+    }
+}
+
+------------------------------------------------------------------------------------------
+
+The block synchronizes on the lock of the object denoted by the reference .class name .class. A static synchronized method printTable(int n) in class Table is equivalent to the following declaration:
+
+static void printTable(int n) {
+    synchronized (Table.class) {       // Synchronized block on class A
+        // ...
+    }
+}
+------------------------------------------------------------------------------------------
+
+// synchronized keyword demo
+
+package synchronizeddemo;
+
+public class Worker {
+
+	private int count = 0;
+
+	public synchronized void increment() {
+		count++;
+	}
+
+	public void doWork() {
+		Thread thread1 = new Thread(new Runnable() {
+			public void run() {
+				for (int i = 0; i < 10000; i++) {
+					increment();
+				}
+			}
+		});
+		thread1.start();
+
+		Thread thread2 = new Thread(new Runnable() {
+			public void run() {
+				for (int i = 0; i < 10000; i++) {
+					increment();
+				}
+			}
+		});
+		thread2.start();
+
+		try {
+			thread1.join();
+			thread2.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println("Count is: " + count);
+	}
+
+	public static void main(String[] args){
+		Worker w = new Worker();
+		w.doWork();
+	}
+
+}
+
+------------------------------------------------------------------------------------------
+
+// Lock Objects
+
+Worker.java:
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class Worker {
+
+    private Random random = new Random();
+
+    private Object lock1 = new Object();
+    private Object lock2 = new Object();
+
+    private List<Integer> list1 = new ArrayList<Integer>();
+    private List<Integer> list2 = new ArrayList<Integer>();
+
+    public void stageOne() {
+
+        synchronized (lock1) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            list1.add(random.nextInt(100));
+        }
+
+    }
+
+    public void stageTwo() {
+
+        synchronized (lock2) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            list2.add(random.nextInt(100));
+        }
+
+    }
+
+    public void process() {
+        for(int i=0; i<1000; i++) {
+            stageOne();
+            stageTwo();
+        }
+    }
+
+    public void main() {
+        System.out.println("Starting ...");
+
+        long start = System.currentTimeMillis();
+
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                process();
+            }
+        });
+
+        Thread t2 = new Thread(new Runnable() {
+            public void run() {
+                process();
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        long end = System.currentTimeMillis();
+
+        System.out.println("Time taken: " + (end - start));
+        System.out.println("List1: " + list1.size() + "; List2: " + list2.size());
+    }
+}
+
+App.java:
+
+public class App {
+
+    public static void main(String[] args) {
+        Worker worker = new Worker();
+        worker.main();
+    }
+
+}
+
+------------------------------------------------------------------------------------------
+
+// Thread Pools using ExecutorService
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+
+class Processor implements Runnable {
+
+    private int id;
+
+    public Processor(int id) {
+        this.id = id;
+    }
+
+    public void run() {
+        System.out.println("Starting: " + id);
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+        }
+
+        System.out.println("Completed: " + id);
+    }
+}
+
+
+public class App {
+
+    public static void main(String[] args) {
+
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
+        for(int i=0; i<5; i++) {
+            executor.submit(new Processor(i)); // executor will automatically start the thread
+        }
+
+        executor.shutdown();
+
+        System.out.println("All tasks submitted.");
+
+        try {
+            executor.awaitTermination(1, TimeUnit.DAYS);
+        } catch (InterruptedException e) {
+        }
+
+        System.out.println("All tasks completed.");
+    }
+
+Output :
+
+Starting: 0
+Starting: 1
+All tasks submitted.
+Completed: 0
+Completed: 1
+Starting: 2
+Starting: 3
+Completed: 3
+Completed: 2
+Starting: 4
+Completed: 4
+All tasks completed.
+
+------------------------------------------------------------------------------------------
+
+// CountDown latches - Instead of using executor.awaitTermination() logic for unpredictable time, we can use CountDownLatch to keep track of total threads to be submitted and when all threads are submitted, just call executor.await() method which will wait till CountDownLatch reaches 0.
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+class Processor implements Runnable {
+    private CountDownLatch latch;
+
+    public Processor(CountDownLatch latch) {
+        this.latch = latch;
+    }
+
+    public void run() {
+        System.out.println("Started.");
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        latch.countDown();
+    }
+}
+
+public class App {
+
+    public static void main(String[] args) {
+
+        CountDownLatch latch = new CountDownLatch(5);
+
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+
+        for(int i=0; i < 5; i++) {
+            executor.submit(new Processor(latch));
+        }
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        System.out.println("Completed.");
+    }
+
+}
+
+O/p :
+
+Started.
+Started.
+Started.
+Started.
+Started.
+Completed.
+------------------------------------------------------------------------------------------
+
+// Producer Consumer using ArrayBlockingQueue
+
+import java.util.Random;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
+
+public class App {
+
+    private static BlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(10);
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    producer();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Thread t2 = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    consumer();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+    }
+
+    private static void producer() throws InterruptedException {
+        Random random = new Random();
+
+        while(true) {
+            queue.put(random.nextInt(100));
+        }
+    }
+
+    private static void consumer() throws InterruptedException {
+        Random random = new Random();
+
+        while(true) {
+            Thread.sleep(100);
+
+            if(random.nextInt(10) == 0) {
+                Integer value = queue.take();
+
+                System.out.println("Taken value: " + value + "; Queue size is: " + queue.size());
+            }
+        }
+    }
+}
+
+------------------------------------------------------------------------------------------
+
+// wait and notify demo
+
+Processor.java
+
+import java.util.Scanner;
+
+public class Processor {
+
+    public void produce() throws InterruptedException {
+        synchronized (this) {
+            System.out.println("Producer thread running ....");
+            wait();
+            System.out.println("Resumed.");
+        }
+    }
+
+    public void consume() throws InterruptedException {
+
+        Scanner scanner = new Scanner(System.in);
+        Thread.sleep(2000);
+
+        synchronized (this) {
+            System.out.println("Waiting for return key.");
+            scanner.nextLine();
+            System.out.println("Return key pressed.");
+            notify();
+            Thread.sleep(5000);
+        }
+    }
+}
+
+App.java
+
+public class App {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        final Processor processor = new Processor();
+
+        Thread t1 = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    processor.produce();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Thread t2 = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    processor.consume();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+    }
+}
+
+------------------------------------------------------------------------------------------
+
+// wait notify demo2
+
+class Customer {
+    private int balance = 10000;
+
+    synchronized void withdraw(int amount) {
+        System.out.println("going to withdraw...");
+
+        if (this.balance < amount) {
+            System.out.println("Less balance; waiting for deposit...");
+            try {
+                wait();
+            } catch (Exception e) {}
+        }
+        this.balance -= amount;
+        System.out.println("withdraw completed...");
+    }
+
+    synchronized void deposit(int amount) {
+        System.out.println("going to deposit...");
+        this.balance += amount;
+        System.out.println("deposit completed... ");
+        notify();
+    }
+}
+
+class Test {
+    public static void main(String args[]) {
+        final Customer c = new Customer();
+        new Thread() {
+            public void run() {
+                c.withdraw(15000);
+            }
+        }.start();
+        new Thread() {
+            public void run() {
+                c.deposit(10000);
+            }
+        }.start();
+
+    }
+}
+
+------------------------------------------------------------------------------------------
+
+// low-level producer consumer
+
+Processor.java
+
+import java.util.LinkedList;
+import java.util.Random;
+
+public class Processor {
+
+    private LinkedList<Integer> list = new LinkedList<Integer>();
+    private final int LIMIT = 10;
+    private Object lock = new Object();
+
+    public void produce() throws InterruptedException {
+
+        int value = 0;
+
+        while (true) {
+
+            synchronized (lock) {
+
+                while(list.size() == LIMIT) {
+                    lock.wait();
+					// Waiting for consumer to consume
+                }
+
+                list.add(value++);
+                lock.notify();
+            }
+
+        }
+    }
+
+    public void consume() throws InterruptedException {
+
+        Random random = new Random();
+
+        while (true) {
+
+            synchronized (lock) {
+
+                while(list.size() == 0) {
+                    lock.wait();
+					// Waiting for producer to produce
+                }
+
+                System.out.print("List size is: " + list.size());
+                int value = list.removeFirst();
+                System.out.println("; value is: " + value);
+                lock.notify();
+            }
+
+            Thread.sleep(random.nextInt(1000));
+        }
+    }
+}
+
+App.java
+
+public class App {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        final Processor processor = new Processor();
+
+        Thread t1 = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    processor.produce();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Thread t2 = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    processor.consume();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+    }
+}
+
+------------------------------------------------------------------------------------------
+
+// Re-entrant locks
+
+Processor.java
+
+import java.util.Scanner;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Processor {
+
+    private int count = 0;
+    private Lock lock = new ReentrantLock();
+    private Condition cond = lock.newCondition();
+
+    private void increment() {
+        for (int i = 0; i < 10000; i++) {
+            count++;
+        }
+    }
+
+    public void firstThread() throws InterruptedException {
+        lock.lock();
+
+        System.out.println("Waiting ....");
+        cond.await();
+
+        System.out.println("Woken up!");
+
+        try {
+            increment();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void secondThread() throws InterruptedException {
+
+        Thread.sleep(1000);
+        lock.lock();
+
+        System.out.println("Press the return key!");
+        new Scanner(System.in).nextLine();
+        System.out.println("Got return key!");
+
+        cond.signal();
+
+        try {
+            increment();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void finished() {
+        System.out.println("Count is: " + count);
+    }
+}
+
+App.java
+
+public class App {
+
+    public static void main(String[] args) throws Exception {
+
+        final Runner runner = new Runner();
+
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    runner.firstThread();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Thread t2 = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    runner.secondThread();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        runner.finished();
+    }
+}
+
+------------------------------------------------------------------------------------------
+
+// The causes of deadlock and two things you can do about it. This video also covers how to write a method that can safely acquire any number of locks in any order without causing deadlock, using the tryLock() method of ReentrantLock.
+
+// The main program just runs the firstThread() and secondThread() methods in different threads. finish() is called after both threads finish. The Runner class contains the synchronization code.
+
+Runner.java
+
+import java.util.Random;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Runner {
+    private Account acc1 = new Account();
+    private Account acc2 = new Account();
+
+    private Lock lock1 = new ReentrantLock();
+    private Lock lock2 = new ReentrantLock();
+
+    private void acquireLocks(Lock firstLock, Lock secondLock) throws InterruptedException {
+
+        while(true) {
+            // Acquire locks
+            boolean gotFirstLock = false;
+            boolean gotSecondLock = false;
+
+            try {
+                gotFirstLock = firstLock.tryLock();
+                gotSecondLock = secondLock.tryLock();
+            }
+            finally {
+                if(gotFirstLock && gotSecondLock) {
+                    return;
+                }
+
+                if(gotFirstLock) {
+                    firstLock.unlock();
+                }
+
+                if(gotSecondLock) {
+                    secondLock.unlock();
+                }
+            }
+
+            // Locks not acquired
+            Thread.sleep(1);
+        }
+    }
+
+    public void firstThread() throws InterruptedException {
+
+        Random random = new Random();
+
+        for (int i = 0; i < 10000; i++) {
+
+            acquireLocks(lock1, lock2);
+
+            try {
+                Account.transfer(acc1, acc2, random.nextInt(100));
+            } finally {
+                lock1.unlock();
+                lock2.unlock();
+            }
+        }
+    }
+
+    public void secondThread() throws InterruptedException {
+        Random random = new Random();
+
+        for (int i = 0; i < 10000; i++) {
+
+            acquireLocks(lock2, lock1);
+
+            try {
+                Account.transfer(acc2, acc1, random.nextInt(100));
+            } finally {
+                lock1.unlock();
+                lock2.unlock();
+            }
+        }
+    }
+
+    public void finished() {
+        System.out.println("Account 1 balance: " + acc1.getBalance());
+        System.out.println("Account 2 balance: " + acc2.getBalance());
+        System.out.println("Total balance: "
+                + (acc1.getBalance() + acc2.getBalance()));
+    }
+}
+
+// Main program
+
+App.java
+
+public class App {
+
+
+    public static void main(String[] args) throws Exception {
+
+        final Runner runner = new Runner();
+
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    runner.firstThread();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Thread t2 = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    runner.secondThread();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        runner.finished();
+    }
+}
+
+Account.java
+
+class Account {
+    private int balance = 10000;
+
+    public void deposit(int amount) {
+        balance += amount;
+    }
+
+    public void withdraw(int amount) {
+        balance -= amount;
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public static void transfer(Account acc1, Account acc2, int amount) {
+        acc1.withdraw(amount);
+        acc2.deposit(amount);
+    }
+}
+
+Output -
+
+Account 1 balance: 13175
+Account 2 balance: 6825
+Total balance: 20000
+
+------------------------------------------------------------------------------------------
+
+// Semaphores demo
+
+Connection.java: shows how to limit 'connections' with a semaphore
+
+import java.util.concurrent.Semaphore;
+
+public class Connection {
+
+    private static Connection instance = new Connection();
+    private Semaphore sem = new Semaphore(10, true);
+    private int connections = 0;
+
+    private Connection() {}
+
+    public static Connection getInstance() {
+        return instance;
+    }
+
+    public void connect() {
+        try {
+            sem.acquire();
+        } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        try {
+            doConnect();
+        } finally {
+            sem.release();
+        }
+    }
+
+    public void doConnect() {
+
+        synchronized (this) {
+            connections++;
+            System.out.println("Current connections: " + connections);
+        }
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        synchronized (this) {
+            connections--;
+        }
+
+    }
+}
+
+App.java: creates 200 threads and fires them off simultaneously. They all try to run the connect() method of the Connection class at the same time.
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+public class App {
+
+    public static void main(String[] args) throws Exception {
+
+        ExecutorService executor = Executors.newCachedThreadPool();
+
+        for(int i=0; i < 200; i++) {
+            executor.submit(new Runnable() {
+                public void run() {
+                    Connection.getInstance().connect();
+                }
+            });
+        }
+
+        executor.shutdown();
+        executor.awaitTermination(1, TimeUnit.DAYS);
+    }
+}
+
+------------------------------------------------------------------------------------------
+
+// Callable and Future demo - How to use Callable and Future in Java to get results from your threads and to allow your threads to throw exceptions. Plus, Future allows you to control your threads, checking to see if they're running or not, waiting for results and even interrupting them or descheduling them.
+
+
+import java.io.IOException;
+import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+
+public class App {
+
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newCachedThreadPool();
+
+        Future<Integer> future = executor.submit(new Callable<Integer>() {
+
+            @Override
+            public Integer call() throws Exception {
+                Random random = new Random();
+                int duration = random.nextInt(4000);
+
+                if(duration > 2000) {
+                    throw new IOException("Sleeping for too long.");
+                }
+
+                System.out.println("Starting ...");
+
+                try {
+                    Thread.sleep(duration);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                System.out.println("Finished.");
+
+                return duration;
+            }
+
+        });
+
+        executor.shutdown();
+
+        try {
+            System.out.println("Result is: " + future.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            IOException ex = (IOException) e.getCause();
+
+            System.out.println(ex.getMessage());
+        }
+    }
+
+}
+
+------------------------------------------------------------------------------------------
+
+// Interrupting threads using the built-in thread interruption mechanism.
+
+import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
+public class App {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        System.out.println("Starting.");
+
+        ExecutorService exec = Executors.newCachedThreadPool();
+
+        Future<?> fu = exec.submit(new Callable<Void>() {
+
+            @Override
+            public Void call() throws Exception {
+                Random ran = new Random();
+
+                for (int i = 0; i < 1E8; i++) {
+
+                    if (Thread.currentThread().isInterrupted()) {
+                        System.out.println("Interrupted!");
+                        break;
+                    }
+
+                    Math.sin(ran.nextDouble());
+                }
+                return null;
+            }
+
+        });
+
+        exec.shutdown();
+
+        Thread.sleep(500);
+
+        exec.shutdownNow();
+        //fu.cancel(true);
+
+        exec.awaitTermination(1, TimeUnit.DAYS);
+
+        System.out.println("Finished.");
+    }
+}
+
+------------------------------------------------------------------------------------------
+
+// ThreadGroup demo
+
+ThreadGroupDemo.java
+
+public class ThreadGroupDemo implements Runnable{
+    public void run() {
+          System.out.println(Thread.currentThread().getName());
+    }
+
+   	public static void main(String[] args) {
+      	  ThreadGroupDemo runnable = new ThreadGroupDemo();
+          ThreadGroup tg1 = new ThreadGroup("Parent ThreadGroup");
+
+          Thread t1 = new Thread(tg1, runnable,"one");
+          t1.start();
+          Thread t2 = new Thread(tg1, runnable,"two");
+          t2.start();
+          Thread t3 = new Thread(tg1, runnable,"three");
+          t3.start();
+
+          System.out.println("Thread Group Name: "+tg1.getName());
+          tg1.list();
+    }
+}
+
+Output :
+
+one
+two
+three
+Thread Group Name: Parent ThreadGroup
+java.lang.ThreadGroup[name=Parent ThreadGroup,maxpri=10]
+    Thread[one,5,Parent ThreadGroup]
+    Thread[two,5,Parent ThreadGroup]
+    Thread[three,5,Parent ThreadGroup]
+
+------------------------------------------------------------------------------------------
+
+
+
+------------------------------------------------------------------------------------------
+

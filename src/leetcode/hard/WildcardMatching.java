@@ -91,6 +91,9 @@ public class WildcardMatching {
     }
 
     // my solution that worked for 1707 test cases out of 1809 test cases - failed due to TLE
+    // probably using index it might work w/o TLE as there won't be substring operations
+    // https://leetcode.com/problems/wildcard-matching/discuss/17839/C++-recursive-solution-16-ms/356450
+
     public boolean isMatchRecursive(String s, String p) {
         //System.out.println(s + " " + p);
         if (s.equals(p)) return true;
@@ -103,7 +106,7 @@ public class WildcardMatching {
             }
             return false;
         }
-        if (s.charAt(0) == p.charAt(0) || p.charAt(0) == '?') return isMatch(s.substring(1), p.substring(1));
+        if (s.charAt(0) == p.charAt(0) || p.charAt(0) == '?') return isMatchRecursive(s.substring(1), p.substring(1));
         if (p.charAt(0) == '*') {
             while (p.charAt(0) == '*') {
                 if (p.length() == 1) return true;
@@ -112,8 +115,34 @@ public class WildcardMatching {
             }
             for (int i = 0; i < s.length(); i++) {
                 if (p.charAt(0) == '?' || s.charAt(i) == p.charAt(0)) {
-                    boolean check = isMatch(s.substring(i), p);
+                    boolean check = isMatchRecursive(s.substring(i), p);
                     if (check) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Even using index instead of substring, it resulted in TLE (at 1708 test case) as it is exponential - O(2^n)
+    public boolean isMatchRecursiveII(String s, String p, int si, int pi) {
+        if (s.length() == si && p.length() == pi) return true;
+        if (p.length() == pi) return false;
+        if (s.length() == si) {
+            while (p.charAt(pi) == '*') {
+                if (p.length() == pi + 1) return true;
+                pi++;
+            }
+            return false;
+        }
+        if (s.charAt(si) == p.charAt(pi) || p.charAt(pi) == '?') return isMatchRecursiveII(s, p, si + 1, pi + 1);
+        if (p.charAt(pi) == '*') {
+            while (p.charAt(pi) == '*') {
+                if (p.length() == pi + 1) return true;
+                pi++;
+            }
+            for (int i = 0; i < s.length() - si; i++) {
+                if (p.charAt(pi) == '?' || s.charAt(si + i) == p.charAt(pi)) {
+                    if (isMatchRecursiveII(s, p , si + i, pi)) return true;
                 }
             }
         }

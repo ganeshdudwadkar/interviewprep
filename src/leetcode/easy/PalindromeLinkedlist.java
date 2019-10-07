@@ -100,6 +100,8 @@ public class PalindromeLinkedlist {
     }
 
     // another recursive solution - from java-questions.com
+    // but not working
+
     private ListNode left;
 
     public boolean isPalindromeAlternate(ListNode head) {
@@ -110,9 +112,34 @@ public class PalindromeLinkedlist {
     private boolean checkValue(ListNode right) {
         if (right == null)
             return true;
+        System.out.println("Inside " + left.value + " " + right.value);
         boolean val = checkValue(right.next);
         if (!val)
             return false;
+        boolean v = left.value == right.value;
+        left = left.next;
+        return v;
+    }
+
+    public boolean isPalindromeAlternateII(ListNode head) {
+        return checkValue(head, head, 0);
+    }
+
+    private boolean checkValue(ListNode left, ListNode right, int i) {
+        if (right == null)
+            return true;
+        System.out.println("i " + i);
+        System.out.println("Inside " + left.value + " " + right.value);
+        /*
+        if (right.next == null){
+            System.out.println("Calling " + left.value + " null");
+        } else {
+            System.out.println("Calling " + left.value + " " + right.next.value);
+        }*/
+        boolean val = checkValue(left, right.next, i+1);
+        if (!val)
+            return false;
+        System.out.println("Comparing " + left.value + " " + right.value);
         boolean v = left.value == right.value;
         left = left.next;
         return v;
@@ -122,8 +149,23 @@ public class PalindromeLinkedlist {
 
         PalindromeLinkedlist obj = new PalindromeLinkedlist();
         ListNode head = Examples.getLinkedListHead();
+        head.printSeqNodes();
         System.out.println(obj.isPalindrome(head));
-        System.out.println(obj.isPalindrome(head));
+        //System.out.println(obj.isPalindromeAlternate(head));
+        System.out.println(obj.isPalindromeAlternateII(head));
+
+        ListNode head1 = new ListNode(1);
+        head1.next = new ListNode(2);
+        head1.next.next = new ListNode(3);
+        head1.next.next.next = new ListNode(2);
+        head1.next.next.next.next = new ListNode(1);
+        head1.next.next.next.next.next = new ListNode(5);
+
+        head1.printSeqNodes();
+        System.out.println(obj.isPalindrome(head1));
+        //System.out.println(obj.isPalindromeAlternate(head1));
+        System.out.println(obj.isPalindromeAlternateII(head1));
+
     }
 
 }
