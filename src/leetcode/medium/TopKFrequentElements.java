@@ -78,7 +78,7 @@ public class TopKFrequentElements {
             if (tm.containsKey(freq)) {
                 ls = tm.get(freq);
             } else {
-                ls = new ArrayList<Integer>();
+                ls = new ArrayList<>();
             }
             ls.add(num);
             tm.put(freq, ls);
@@ -104,7 +104,7 @@ public class TopKFrequentElements {
     public List<Integer> topKFrequentBucketSort(int[] nums, int k) {
 
         List<Integer>[] bucket = new List[nums.length + 1];
-        Map<Integer, Integer> frequencyMap = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> frequencyMap = new HashMap<>();
 
         for (int n : nums) {
             frequencyMap.put(n, frequencyMap.getOrDefault(n, 0) + 1);

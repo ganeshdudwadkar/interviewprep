@@ -44,7 +44,7 @@ class Solution {
         Arrays.sort(nums1);
         Arrays.sort(nums2);
         int l1 = nums1.length;
-        List<Integer> intersect = new ArrayList<Integer>();
+        List<Integer> intersect = new ArrayList<>();
 
         for (int i = 0; i < l1; i++) {
             if (i > 0 && nums1[i] == nums1[i - 1]) {

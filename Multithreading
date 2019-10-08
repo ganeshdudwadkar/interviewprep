@@ -657,7 +657,7 @@ class Customer {
     synchronized void withdraw(int amount) {
         System.out.println("going to withdraw...");
 
-        if (this.balance < amount) {
+        if (this.balance < amount) { // change this to "while"??
             System.out.println("Less balance; waiting for deposit...");
             try {
                 wait();
@@ -936,7 +936,7 @@ public class Runner {
                 }
             }
 
-            // Locks not acquired
+            // Locks not acquired so wait
             Thread.sleep(1);
         }
     }

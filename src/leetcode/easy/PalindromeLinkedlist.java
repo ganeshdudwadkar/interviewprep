@@ -53,7 +53,7 @@ public class PalindromeLinkedlist {
             slow = slow.next;
             fast = fast.next.next;
         }
-        Stack<Integer> stack = new Stack<Integer>();
+        Stack<Integer> stack = new Stack<>();
         while(slow!=null){
             stack.push(slow.value);
             slow=slow.next;
