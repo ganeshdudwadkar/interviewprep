@@ -63,6 +63,7 @@ public class FindMissingPositive {
         return n + 1;
     }
 
+    // The idea is to keep the numbers at the intended positions
     public int firstMissingPositiveII(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
             while (nums[i] > 0 && nums[i] <= nums.length && nums[nums[i] - 1] != nums[i]) {
