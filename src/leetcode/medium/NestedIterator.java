@@ -4,7 +4,7 @@ package leetcode.medium;
 
 /*
 
-341. Flatten Nested List Iterator
+341. Flatten Nested List iterator
 
 Given a nested list of integers, implement an iterator to flatten it.
 
@@ -81,7 +81,7 @@ public class NestedIterator implements Iterator<Integer> {
 
 /*
 
-public class NestedIterator implements Iterator<Integer> {
+public class NestedIterator implements iterator<Integer> {
     List<List<NestedInteger>> superList;
     List<Integer> countList;
     int level;

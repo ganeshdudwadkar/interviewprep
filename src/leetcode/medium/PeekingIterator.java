@@ -3,9 +3,9 @@ package leetcode.medium;
 // https://leetcode.com/problems/peeking-iterator/
 
 /*
-284. Peeking Iterator
+284. Peeking iterator
 
-Given an Iterator class interface with methods: next() and hasNext(), design and implement a PeekingIterator that
+Given an iterator class interface with methods: next() and hasNext(), design and implement a PeekingIterator that
 support the peek() operation -- it essentially peek() at the element that will be returned by the next call to next().
 
 Example:
@@ -40,7 +40,7 @@ public class PeekingIterator implements Iterator<Integer> {
         return next;
     }
 
-    // hasNext() and next() should behave the same as in the Iterator interface.
+    // hasNext() and next() should behave the same as in the iterator interface.
     // Override them if needed.
     @Override
     public Integer next() {

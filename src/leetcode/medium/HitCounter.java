@@ -81,7 +81,7 @@ public class HitCounter {
     }
 
     public int getHits(int timestamp) {
-        Iterator<Map.Entry<Integer, Integer>> iterator = map.entrySet().iterator();
+        iterator<Map.Entry<Integer, Integer>> iterator = map.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<Integer, Integer> entry = iterator.next();
             int key = entry.getKey();

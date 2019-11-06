@@ -47,7 +47,7 @@ public class BinaryTreeVerticalOrderTraversal {
 
         q.add(root);
         cols.add(0);
-
+        // keep track of min and max columns to find the width
         int min = 0, max = 0;
         while (!q.isEmpty()) {
             TreeNode node = q.poll();
